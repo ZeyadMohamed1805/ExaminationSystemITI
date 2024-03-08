@@ -361,26 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-.vscode/
-.idea/
-.vs/
-
-# Ignore build artifacts
-bin/
-obj/
-dist/
-node_modules/
-
-# Ignore temporary files
-*.log
-*.tmp
-*.bak
-
-# Ignore user-specific files
-*.suo
-*.user
-
-# Ignore configuration files
-.env
-*.config
