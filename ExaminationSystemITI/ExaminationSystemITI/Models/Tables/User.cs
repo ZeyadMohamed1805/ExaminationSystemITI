@@ -6,7 +6,11 @@ namespace ExaminationSystemITI.Models.Tables
     {
         [Key]
         public string UserEmail { get; set; }
+        [Required]
         public string UserPassword { get; set; }
-        public ICollection<Role> Roles { get; set; }
+        public Student? Student { get; set; }
+        public Instructor? Instructor { get; set; }
+        public Admin? Admin { get; set; }
+        public ICollection<Role> Roles { get; set; } = new HashSet<Role>();
     }
 }
