@@ -1,4 +1,4 @@
-namespace ExaminationSystemITI.Models
+namespace ExaminationSystemITI.Models.ViewModels
 {
     public class ErrorViewModel
     {
