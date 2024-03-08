@@ -5,12 +5,14 @@ namespace ExaminationSystemITI.Models.Tables
 {
     public class Department
     {
-        public int DepartmentID { get; set; }
+        [Key]
+        public int DepartmentId { get; set; }
         [Required]
         public string DepartmentName { get; set; }
+        public ICollection<Course> Courses { get; set; } = new HashSet<Course>();
+        public ICollection<Student> Students { get; set; } = new HashSet<Student>();
 
-
-        //Supervisor?
+        //Supervisor
         public int DepartmentSP { get; set; }
         [ForeignKey("DepartmentSP")]
         public Instructor Instructor { get; set; }
