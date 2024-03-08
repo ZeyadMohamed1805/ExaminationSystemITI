@@ -15,7 +15,7 @@ namespace ExaminationSystemITI.Models.Tables
         public string InstructorAddress { get; set; }
         public ICollection<Course> Courses { get; set; }
 
-        public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
+        public Department? Department { get; set; }
 
         [Required(ErrorMessage = "The Email field is required.")]
         [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address.")]
