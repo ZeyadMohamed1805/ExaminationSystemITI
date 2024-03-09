@@ -7,18 +7,18 @@ namespace ExaminationSystemITI.Models.Tables
     public class Admin
     {
         [Key]
-        public int AdminId { get; set; }
+        public int Id { get; set; }
         [Required]
-        public string AdminFirstName { get; set; }
-        public string AdminLastName { get; set; }
-        public int AdminAge { get; set; }
-        public string AdminAddress { get; set; }
-        public EGender AdminGender { get; set; }
+        public string FirstName { get; set; }
+        public string? LastName { get; set; }
+        public int? Age { get; set; }
+        public string? Address { get; set; }
+        public EGender Gender { get; set; }
 
         [Required(ErrorMessage = "The Email field is required.")]
         [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address.")]
-        public string AdminEmail { get; set; }
-        [ForeignKey("AdminEmail")]
+        public string Email { get; set; }
+        [ForeignKey("Email")]
         public User User { get; set; }
     }
 }

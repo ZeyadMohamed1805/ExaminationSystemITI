@@ -1,3 +1,9 @@
+using ExaminationSystemITI.Abstractions.Interfaces;
+using ExaminationSystemITI.Database;
+using ExaminationSystemITI.Services;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 namespace ExaminationSystemITI
 {
     public class Program
@@ -8,7 +14,9 @@ namespace ExaminationSystemITI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                 options.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=.;Initial Catalog=ExaminationDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True")));
+            builder.Services.AddScoped<IInstructorService, InstructorService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

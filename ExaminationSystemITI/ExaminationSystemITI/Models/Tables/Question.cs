@@ -7,13 +7,13 @@ namespace ExaminationSystemITI.Models.Tables
     public class Question
     {
         [Key]
-        public int QuestionId { get; set; }
-        [Required]
-        public EQuestionType QuestionType { get; set; }
-        [Required]
-        public string QuestionTitle { get; set; }
-        [Required]
-        public string QuestionCorrectAnswer { get; set; }
+        public int Id { get; set; }
+        
+        public EQuestionType Type { get; set; }
+        
+        public string Title { get; set; }
+        
+        public string CorrectAnswer { get; set; }
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         public Course Course { get; set; }
