@@ -6,14 +6,14 @@ namespace ExaminationSystemITI.Models.Tables
     public class Exam
     {
         [Key]
-        public int ExamID { get; set; }
-        [Required]
-        public int ExamDuration { get; set; }
-        public DateTime ExamDate { get; set; }
-        [Required]
-        public int ExamQCount { get; set; }
-        [Required]
-        public int ExamTotalMarks { get; set; }
+        public int ID { get; set; }
+        
+        public int Duration { get; set; }
+        public DateTime Date { get; set; }
+        
+        public int QCount { get; set; }
+        
+        public int TotalMarks { get; set; }
         public int CourseID { get; set; }
         [ForeignKey("CourseID")]
         public Course Course { get; set; }

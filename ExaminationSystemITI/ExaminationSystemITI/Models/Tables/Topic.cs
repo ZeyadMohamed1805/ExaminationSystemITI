@@ -6,9 +6,9 @@ namespace ExaminationSystemITI.Models.Tables
     public class Topic
     {
         [Key]
-        public int TopicId { get; set; }
+        public int Id { get; set; }
         [Required]
-        public string TopicName { get; set; }
+        public string Name { get; set; }
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         public Course Course { get; set; }

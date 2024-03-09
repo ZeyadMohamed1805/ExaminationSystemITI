@@ -5,10 +5,10 @@ namespace ExaminationSystemITI.Models.Tables
     public class Course
     {
         [Key]
-        public int CourseId { get; set; }
+        public int Id { get; set; }
         [Required]
-        public string CourseName { get; set; }
-        public int CourseGrade { get; set; }
+        public string Name { get; set; }
+        public int Grade { get; set; }
         public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
         public ICollection<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();

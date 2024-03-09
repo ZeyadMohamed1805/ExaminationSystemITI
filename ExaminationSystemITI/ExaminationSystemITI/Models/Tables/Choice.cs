@@ -4,10 +4,10 @@ namespace ExaminationSystemITI.Models.Tables
 {
     public class Choice
     {
-        public string ChoiceText { get; set; }
-        public int QuestionId { get; set; }
+        public string Text { get; set; }
+        public int Id { get; set; }
 
-        [ForeignKey("QuestionId")]
+        [ForeignKey("Id")]
         public Question Question { get; set; }
     }
 }

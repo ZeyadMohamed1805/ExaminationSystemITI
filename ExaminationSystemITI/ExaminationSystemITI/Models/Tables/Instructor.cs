@@ -6,21 +6,21 @@ namespace ExaminationSystemITI.Models.Tables
     public class Instructor
     {
         [Key]
-        public int InstructorID { get; set; }
+        public int ID { get; set; }
         [Required]
-        public string InstructorFirstName { get; set; }
-        public string InstructorLastName { get; set; }
-        public int InstructorAge { get; set; }
-        public int InstructorSalary { get; set; }
-        public string InstructorAddress { get; set; }
+        public string FirstName { get; set; }
+        public string? LastName { get; set; }
+        public int? Age { get; set; }
+        public int Salary { get; set; }
+        public string? Address { get; set; }
         public ICollection<Course> Courses { get; set; }
 
-        public Department? Department { get; set; }
+        public Department Department { get; set; }
 
         [Required(ErrorMessage = "The Email field is required.")]
         [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address.")]
-        public string InstructorEmail { get; set; }
-        [ForeignKey("InstructorEmail")]
+        public string Email { get; set; }
+        [ForeignKey("Email")]
         public User User { get; set; }
     }
 }
