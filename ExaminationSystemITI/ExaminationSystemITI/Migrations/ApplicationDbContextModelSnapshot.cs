@@ -105,15 +105,15 @@ namespace ExaminationSystemITI.Migrations
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Choice", b =>
                 {
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Id")
+                    b.Property<int>("Text")
                         .HasColumnType("int");
 
-                    b.HasKey("Text", "Id");
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("Id");
+                    b.HasKey("Text", "QuestionId");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Choices");
                 });
@@ -476,8 +476,8 @@ namespace ExaminationSystemITI.Migrations
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Choice", b =>
                 {
                     b.HasOne("ExaminationSystemITI.Models.Tables.Question", "Question")
-                        .WithMany("Chioces")
-                        .HasForeignKey("Id")
+                        .WithMany("Choices")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -646,7 +646,7 @@ namespace ExaminationSystemITI.Migrations
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Question", b =>
                 {
-                    b.Navigation("Chioces");
+                    b.Navigation("Choices");
 
                     b.Navigation("StudentExamQuestions");
                 });

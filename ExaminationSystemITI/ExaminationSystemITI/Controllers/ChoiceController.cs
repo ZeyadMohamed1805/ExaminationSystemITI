@@ -1,11 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExaminationSystemITI.Abstractions.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExaminationSystemITI.Controllers
 {
     public class ChoiceController : Controller
     {
-        // GET: ChoiceController
+        IChoiceService _choiceService;
+        public ChoiceController(IChoiceService choiceService)
+        {
+            _choiceService = choiceService;
+        }
+
         public ActionResult Index()
         {
             return View();

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExaminationSystemITI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240308235808_First")]
-    partial class First
+    [Migration("20240310133729_new first migration")]
+    partial class newfirstmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,15 +108,15 @@ namespace ExaminationSystemITI.Migrations
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Choice", b =>
                 {
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Id")
+                    b.Property<int>("Text")
                         .HasColumnType("int");
 
-                    b.HasKey("Text", "Id");
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("Id");
+                    b.HasKey("Text", "QuestionId");
+
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Choices");
                 });
@@ -425,13 +425,13 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Course", null)
                         .WithMany()
                         .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.Department", null)
                         .WithMany()
                         .HasForeignKey("DepartmentsId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -440,13 +440,13 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Course", null)
                         .WithMany()
                         .HasForeignKey("CoursesId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.Instructor", null)
                         .WithMany()
                         .HasForeignKey("InstructorsID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -455,13 +455,13 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Exam", null)
                         .WithMany()
                         .HasForeignKey("ExamsID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.Question", null)
                         .WithMany()
                         .HasForeignKey("QuestionsId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -470,7 +470,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.User", "User")
                         .WithOne("Admin")
                         .HasForeignKey("ExaminationSystemITI.Models.Tables.Admin", "Email")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -479,9 +479,9 @@ namespace ExaminationSystemITI.Migrations
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Choice", b =>
                 {
                     b.HasOne("ExaminationSystemITI.Models.Tables.Question", "Question")
-                        .WithMany("Chioces")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany("Choices")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Question");
@@ -492,7 +492,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Instructor", "Instructor")
                         .WithOne("Department")
                         .HasForeignKey("ExaminationSystemITI.Models.Tables.Department", "SP")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Instructor");
@@ -503,7 +503,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Course", "Course")
                         .WithMany("Exams")
                         .HasForeignKey("CourseID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -514,7 +514,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.User", "User")
                         .WithOne("Instructor")
                         .HasForeignKey("ExaminationSystemITI.Models.Tables.Instructor", "Email")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -525,7 +525,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -536,13 +536,13 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Department", "Department")
                         .WithMany("Students")
                         .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.User", "User")
                         .WithOne("Student")
                         .HasForeignKey("ExaminationSystemITI.Models.Tables.Student", "Email")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Department");
@@ -555,13 +555,13 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Course", "Course")
                         .WithMany("CourseStudents")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.Student", "Student")
                         .WithMany("StudentCourses")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -574,19 +574,19 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Exam", "Exam")
                         .WithMany("StudentExamQuestions")
                         .HasForeignKey("ExamId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.Question", "Question")
                         .WithMany("StudentExamQuestions")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.Student", "Student")
                         .WithMany("StudentExamQuestions")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Exam");
@@ -601,7 +601,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Course", "Course")
                         .WithMany("Topics")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -612,13 +612,13 @@ namespace ExaminationSystemITI.Migrations
                     b.HasOne("ExaminationSystemITI.Models.Tables.Role", null)
                         .WithMany()
                         .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("ExaminationSystemITI.Models.Tables.User", null)
                         .WithMany()
                         .HasForeignKey("UsersEmail")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -649,7 +649,7 @@ namespace ExaminationSystemITI.Migrations
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Question", b =>
                 {
-                    b.Navigation("Chioces");
+                    b.Navigation("Choices");
 
                     b.Navigation("StudentExamQuestions");
                 });

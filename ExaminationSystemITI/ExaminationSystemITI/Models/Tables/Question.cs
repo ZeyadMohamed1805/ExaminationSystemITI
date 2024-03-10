@@ -13,12 +13,12 @@ namespace ExaminationSystemITI.Models.Tables
         
         public string Title { get; set; }
         
-        public string CorrectAnswer { get; set; }
+        public string CorrectAnswer { get; set; } //EChoice type
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         public Course Course { get; set; }
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
-        public ICollection<Choice> Chioces { get; set; } = new HashSet<Choice>();
+        public ICollection<Choice> Choices { get; set; } = new HashSet<Choice>();
         public ICollection<StudentExamQuestion> StudentExamQuestions { get; set; }
     }
 }
