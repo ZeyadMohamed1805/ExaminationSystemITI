@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\Enums\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
