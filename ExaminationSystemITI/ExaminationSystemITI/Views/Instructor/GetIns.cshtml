@@ -11,6 +11,7 @@
             <th>Salary</th>
             <th>Address</th>
             <th>Email</th>
+            <th> </th>
         </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
                 <td>@instructor.Salary</td>
                 <td>@instructor.Address</td>
                 <td>@instructor.Email</td>
+                <td><a asp-controller="Instructor" asp-action="Edit" asp-route-id="@instructor.ID" class="btn btn-primary">EDIT</a></td>
             </tr>
         }
     </tbody>
