@@ -19,6 +19,11 @@
   <ItemGroup>
     <Folder Include="Abstractions\Enums\" />
     <Folder Include="Repositories\" />
+    <Folder Include="Views\Dashboard\" />
+    <Folder Include="wwwroot\assets\icons\" />
+    <Folder Include="wwwroot\assets\images\avatars\" />
+    <Folder Include="wwwroot\assets\images\backgrounds\" />
+    <Folder Include="wwwroot\assets\images\logos\" />
   </ItemGroup>
 
   <ItemGroup>

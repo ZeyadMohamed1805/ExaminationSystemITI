@@ -1,0 +1,24 @@
+﻿@using ExaminationSystemITI.Models.Tables
+@model ExaminationSystemITI.Models.Tables.Topic
+
+<h1>Edit Topic</h1>
+
+<form action="/Topic/Edit" method="post">
+    <div class="form-group">
+        <label for="Id">ID</label>
+        <input type="text" id="Id" name="Id" class="form-control" value="@Model.Id" readonly />
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" id="Name" name="Name" class="form-control" value="@Model.Name" />
+    </div>
+
+    <div class="form-group">
+        <label for="CourseId">Course ID</label>
+        <input type="text" id="CourseId" name="CourseId" class="form-control" value="@Model.CourseId" />
+    </div>
+
+    <input type="submit" value="SAVE" class="btn btn-primary" />
+    <input type="submit" value="Delete" class="btn btn-danger" asp-action="Delete" asp-controller="Topic" />
+</form>

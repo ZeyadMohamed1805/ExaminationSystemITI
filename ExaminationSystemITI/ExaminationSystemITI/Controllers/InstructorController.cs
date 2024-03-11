@@ -13,7 +13,11 @@ namespace ExaminationSystemITI.Controllers
         public InstructorController(IInstructorService instructor)
         {
             _instructor = instructor;
-            
+        }
+
+        public IActionResult Index(int Id)
+        {
+            return View();
         }
         public IActionResult GetIns()
         {
