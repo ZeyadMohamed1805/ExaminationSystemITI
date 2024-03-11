@@ -105,8 +105,8 @@ namespace ExaminationSystemITI.Migrations
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Choice", b =>
                 {
-                    b.Property<int>("Text")
-                        .HasColumnType("int");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");

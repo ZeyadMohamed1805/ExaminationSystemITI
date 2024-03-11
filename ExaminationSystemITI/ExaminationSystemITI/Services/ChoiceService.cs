@@ -9,6 +9,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ExaminationSystemITI.Services
 {
@@ -21,33 +22,36 @@ namespace ExaminationSystemITI.Services
         }
 
         #region StoredProcedures
-        //alter proc GetAllChoices @QId int
-        //as
-        //select* from Choices where QuestionId=@QId
+         //create proc GetAllChoices @QId int
+         //as
+         //select* from Choices where QuestionId=@QId
 
-        //--GetAllChoices 2
-        //----------------------------------------------------------------
-        //alter proc AddChoice @text int  , @Qid int
-        //as
-        //insert into Choices values(@text, @Qid)
+         //--GetAllChoices 1
+         //----------------------------------------------------------------
+         //go
+         //create proc AddChoice @text nvarchar(450)  , @Qid int
+         //as
+         //insert into Choices values(@text, @Qid)
 
-        //--AddChoice 6,2
-        //----------------------------------------------------------------
-        //create proc DeleteChoice @text int , @Qid int
-        //as
-        //delete from Choices where Text=@text and QuestionId=@Qid
+         //--AddChoice 'kkk',2
+         //----------------------------------------------------------------
+         //go
+         //create proc DeleteChoice @text nvarchar(450) , @Qid int
+         //as
+         //delete from Choices where Text=@text and QuestionId=@Qid
 
-        //--DeleteChoice 2,2
-        //----------------------------------------------------------------
-        //alter proc UpdateChoice @textOld int, @textNew int , @Qid int
-        //as 
-        //update Choices
-        //set Text = @textNew
-        //where QuestionId = @Qid and Text = @textOld
+         //--DeleteChoice 'kkk',2
+         //----------------------------------------------------------------
+         //go
+         //create proc UpdateChoice @textOld nvarchar(450), @textNew nvarchar(450) , @Qid int
+         //as 
+         //update Choices
+         //set Text = @textNew
+         //where QuestionId = @Qid and Text = @textOld
 
-        //--updatechoice 6,4,2
-        //---------------------------------------------------------------- 
-        #endregion
+         //--updatechoice aaaa, ddddd,2
+         //---------------------------------------------------------------- 
+         #endregion
 
         public List<Choice> GetAll(int questionId)
         {
@@ -56,17 +60,17 @@ namespace ExaminationSystemITI.Services
 
         public void Add(Choice choice)
         {
-            _db.Choices.FromSqlInterpolated($"AddChoice {choice.Text},{choice.QuestionId}");
+            _db.Choices.FromSqlInterpolated($"AddChoice '{choice.Text}',{choice.QuestionId}");
         }
 
         public void Delete(Choice choice)
         {
-            _db.Choices.FromSqlInterpolated($"DeleteChoice {choice.Text},{choice.QuestionId}");
+            _db.Choices.FromSqlInterpolated($"DeleteChoice '{choice.Text}',{choice.QuestionId}");
         }
 
-        public void Update(Choice choice,EChoice eChoiceNew)
+        public void Update(Choice choice,string newChoiceText)
         {
-            _db.Choices.FromSqlInterpolated($"UpdateChoice {choice.Text},{eChoiceNew},{choice.QuestionId} ");
+            _db.Choices.FromSqlInterpolated($"UpdateChoice '{choice.Text}','{newChoiceText}',{choice.QuestionId} ");
         }
     }
 }

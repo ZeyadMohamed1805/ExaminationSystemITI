@@ -9,8 +9,11 @@ namespace ExaminationSystemITI.Abstractions.Interfaces
         List<Choice> GetAll(int questionId); //gets all choices in a question
         void Add(Choice choice);
         void Delete(Choice choice);
-        void Update(Choice choice, EChoice eChoiceNew);
-        
+        void Update(Choice choice, string newChoiceText);
+
+
+        //void Update(Choice choice, EChoice eChoiceNew);
+
 
     }
 }

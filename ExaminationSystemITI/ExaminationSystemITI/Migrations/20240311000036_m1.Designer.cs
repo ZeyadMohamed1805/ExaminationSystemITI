@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExaminationSystemITI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240310133729_new first migration")]
-    partial class newfirstmigration
+    [Migration("20240311000036_m1")]
+    partial class m1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -108,8 +108,8 @@ namespace ExaminationSystemITI.Migrations
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Choice", b =>
                 {
-                    b.Property<int>("Text")
-                        .HasColumnType("int");
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ExaminationSystemITI.Migrations
 {
     /// <inheritdoc />
-    public partial class newfirstmigration : Migration
+    public partial class m1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -191,7 +191,7 @@ namespace ExaminationSystemITI.Migrations
                 name: "Choices",
                 columns: table => new
                 {
-                    Text = table.Column<int>(type: "int", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

@@ -13,7 +13,7 @@ namespace ExaminationSystemITI.Models.Tables
         
         public string Title { get; set; }
         
-        public string CorrectAnswer { get; set; } //EChoice type
+        public string CorrectAnswer { get; set; }
         public int CourseId { get; set; }
         [ForeignKey("CourseId")]
         public Course Course { get; set; }
