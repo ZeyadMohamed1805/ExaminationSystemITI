@@ -1,9 +1,55 @@
-﻿@{
+
+@using ExaminationSystemITI.Models.Tables
+@model IEnumerable<Student>
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
 }
 
-<div class="text-center">
-    <input asp-route-id="Id" type="hidden" />
-    <h1 class="display-4">Student</h1>
-</div>
+<h1>All Students</h1>
+    <a asp-action="create" asp-controller="student" class="btn btn-success">Create</a>
+    <table class="table table-border table-hover">
+    <thead>
+       <tr>
+           <th>Id</th>
+           <th>FirstName</th>
+           <th>LastName</th>
+           <th>Age</th>
+           <th>Gender</th>
+           <th>Address</th>
+           <th>Faculty</th>
+           <th>GraduationYear</th>
+           <th>Department</th>
+           <th>Options</th>
+       </tr>
+    </thead>
+    <tbody>
+        @if(Model.Count()==0)
+            {
+                <tr>
+                    <td colspan="9">No Student Exist!!</td>
+                </tr>
+            }
+            else
+            {
+                foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.Age</td>
+                        <td>@item.Gender</td>
+                        <td>@item.Address</td>
+                        <td>@item.Faculty</td>
+                        <td>@item.GraduationYear</td>
+                        <td>@item.Department</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-primary">Update</a>
+                            <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-danger" onclick="return confirm('are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+</table>
