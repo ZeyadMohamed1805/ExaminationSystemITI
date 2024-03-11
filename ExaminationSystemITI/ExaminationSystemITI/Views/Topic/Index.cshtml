@@ -1,0 +1,24 @@
+﻿@using ExaminationSystemITI.Models.Tables
+@model List<Topic>
+<h1>All Topics</h1>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Course</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var topic in Model)
+        {
+            <tr>
+                <td>@topic.Id</td>
+                <td>@topic.Name</td>
+                <td>@topic.Course.Name</td>
+                <td><a asp-controller="Topic" asp-action="Edit" asp-route-id="@topic.Id" class="btn btn-primary">EDIT</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

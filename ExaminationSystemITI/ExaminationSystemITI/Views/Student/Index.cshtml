@@ -1,8 +1,9 @@
-﻿@using ExaminationSystemITI.Models.Tables
-@model IEnumerable<Student>
 
+@using ExaminationSystemITI.Models.Tables
+@model IEnumerable<Student>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dashboard";
+    Layout = "_DashboardLayout";
 }
 
 <h1>All Students</h1>
@@ -52,4 +53,3 @@
             }
         </tbody>
 </table>
-

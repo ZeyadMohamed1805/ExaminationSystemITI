@@ -1,4 +1,4 @@
-﻿using ExaminationSystemITI.Abstractions.Interfaces;
+using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,10 @@ namespace ExaminationSystemITI.Controllers
 {
     public class StudentController : Controller
     {
- 
+        public IActionResult Active(int Id)
+        {
+            return View("Index");
+        }
 
         IStudentService _student;
         
