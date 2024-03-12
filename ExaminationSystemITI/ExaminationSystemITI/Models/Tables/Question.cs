@@ -18,7 +18,7 @@ namespace ExaminationSystemITI.Models.Tables
         [ForeignKey("CourseId")]
         public Course Course { get; set; }
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
-        public ICollection<Choice> Chioces { get; set; } = new HashSet<Choice>();
+        public ICollection<Choice> Choices { get; set; } = new HashSet<Choice>();
         public ICollection<StudentExamQuestion> StudentExamQuestions { get; set; }
     }
 }

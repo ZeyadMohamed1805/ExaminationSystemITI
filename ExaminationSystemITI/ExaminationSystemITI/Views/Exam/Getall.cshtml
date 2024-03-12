@@ -1,0 +1,44 @@
+﻿@using ExaminationSystemITI.Models.Tables
+@model List<Exam>
+
+<h1>All Exams</h1>
+<h1>Exams Information</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Exam ID</th>
+            <th>Duration (minutes)</th>
+            <th>Date</th>
+            <th>Number of Questions</th>
+            <th>Total Marks</th>
+            <th>Course</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exam in Model)
+        {
+           @*  var courseName = ""; // Initialize the course name variable
+            if (exam.CourseID != null) // Check if CourseID is not null
+            {
+                // Fetch the corresponding course name from the database based on CourseID
+                var course = _dbcontext.Courses.FirstOrDefault(c => c.ID == exam.CourseID);
+                if (course != null)
+                {
+                    courseName = course.Name; // Assign the course name to the variable
+                }
+            } *@
+            <tr>
+                <td>@exam.ID</td>
+                <td>@exam.Duration</td>
+                <td>@exam.Date.ToString("yyyy-MM-dd")</td>
+                <td>@exam.QCount</td>
+                <td>@exam.TotalMarks</td>
+                <td>@exam.Course.Name</td>
+                <td><a asp-controller="Exam" asp-action="Display" asp-route-id="@exam.ID" class="btn btn-primary">Enter</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

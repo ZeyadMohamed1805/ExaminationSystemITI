@@ -1,0 +1,28 @@
+﻿@using ExaminationSystemITI.Models.Tables
+@model List<Department>
+<h1>All Departments</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Department ID</th>
+            <th>Department Name</th>
+            <th>Branch Name</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var department in Model)
+        {
+            <tr>
+                <td>@department.Id</td>
+                <td>@department.Name</td>
+                <td>@department.Branch</td>
+                <td>
+                    <a href="/Department/Edit/@department.Id">Edit</a> |
+                    <a href="/Department/Delete/@department.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -14,7 +14,6 @@
     --custom-overlay: rgba(32, 57, 71, 0.5);
 }
 
-
 .poppins-light {
     font-weight: 300;
 }
@@ -37,4 +36,20 @@
 
 .poppins-extrabold {
     font-weight: 800;
+}
+
+.custom-wrapper {
+    padding: 24px 160px;
+}
+
+@media ( max-width: 1000px ) {
+    .custom-wrapper {
+        padding: 24px 80px;
+    }
+}
+
+@media ( max-width: 500px ) {
+    .custom-wrapper {
+        padding: 24px 40px;
+    }
 }
