@@ -1,0 +1,115 @@
+﻿@{
+    string view = this.ViewContext.View.Path.Split("/")[2].ToLower();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ExaminationSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/global/global.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ExaminationSystem.styles.css" asp-append-version="true" />
+    <style>
+        button:hover {
+            opacity: 0.5;
+        }
+
+        li:hover {
+            background-color: var(--custom-black);
+            opacity: 0.5;
+        }
+
+        @@media (max-width: 500px)
+        {
+            .side-text {
+                display: none;
+            }
+
+            .side-bar {
+                width: 80px !important;
+            }
+
+            .avatar-name {
+                min-width: 48px !important;
+                min-height: 48px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="w-100 custom-wrapper d-flex justify-content-center align-items-center shadow" style="background-color: var(--custom-white); height: 120px;">
+        <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 120px;" alt="ITI Logo" />
+    </header>
+    <section class="w-100 d-flex" style="min-height: calc(100vh - 120px);">
+        <div class="side-bar d-flex flex-column align-items-center" style="width: 160px; background-color: var(--custom-blue); padding: 32px 16px; gap: 32px;">
+            <div class="avatar-name shadow d-flex justify-content-center align-items-center poppins-semibold rounded-circle" style="min-width: 100px; min-height: 100px; background-color: var(--custom-white); font-size: 20px;">
+                @switch(view)
+                {
+                    case "student": <span>S</span>; break;
+                    case "instructor": <span>I</span> break;
+                    default: <span>A</span> break;
+                }
+            </div>
+            <hr class="w-100" style="height: 1px; background-color: var(--custom-white)" />
+            <div class="d-flex flex-column align-items-center justify-content-between" style="height: 100%; min-height: fit-content; gap: 32px;">
+                <ul class="w-100 d-flex flex-column list-group" style="gap: 16px;">
+                    @if (view == "student" || view == "instructor")
+                    {
+                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                            <img src="~/assets/icons/active.svg" style="width: 24px; height: 24px;" alt="Active" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                Active
+                            </p>
+                        </li>
+                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                            <img src="~/assets/icons/done.svg" style="width: 24px; height: 24px;" alt="Done" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                Done
+                            </p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                            <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                CRUD
+                            </p>
+                        </li>
+                    }
+                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                        <img src="~/assets/icons/reports.svg" style="width: 24px; height: 24px;" alt="Reports" />
+                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                            Reports
+                        </p>
+                    </li>
+                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                        <img src="~/assets/icons/account.svg" style="width: 24px; height: 24px;" alt="Account" />
+                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white); font-size: 16px;">
+                            Account
+                        </p>
+                    </li>
+                </ul>
+                <button class="w-100 border-0 d-flex align-items-center justify-content-between rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; background-color: var(--custom-red); transition-duration: 0.25s;">
+                    <img src="~/assets/icons/signout.svg" style="width: 24px; height: 24px;" alt="Sign Out" />
+                    <p class="poppins-medium side-text m-0" style="color: var(--custom-white); font-size: 15.75px;">
+                        Sign Out
+                    </p>
+                </button>
+            </div>
+        </div>
+        <main role="main" class="pb-3">
+            <h1>Dashboard</h1>
+            @RenderBody()
+        </main>
+    </section>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

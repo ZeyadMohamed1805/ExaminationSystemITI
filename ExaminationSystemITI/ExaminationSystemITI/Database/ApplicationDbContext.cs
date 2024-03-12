@@ -20,7 +20,7 @@ namespace ExaminationSystemITI.Database
         {
             modelBuilder
                .Entity<Choice>()
-               .HasKey(a => new { a.Text, a.Id });
+               .HasKey(a => new { a.Text, a.QuestionId });
 
             modelBuilder
                 .Entity<StudentCourse>()

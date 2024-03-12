@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ExaminationSystemITI.Migrations
 {
     /// <inheritdoc />
-    public partial class First : Migration
+    public partial class m1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,7 +69,8 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_Exams_Courses_CourseID",
                         column: x => x.CourseID,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,7 +91,8 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_Questions_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,7 +111,8 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_Topics_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,7 +135,8 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_Admins_Users_Email",
                         column: x => x.Email,
                         principalTable: "Users",
-                        principalColumn: "Email");
+                        principalColumn: "Email",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -155,7 +159,8 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_Instructors_Users_Email",
                         column: x => x.Email,
                         principalTable: "Users",
-                        principalColumn: "Email");
+                        principalColumn: "Email",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,12 +177,14 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_RoleUser_Roles_RolesId",
                         column: x => x.RolesId,
                         principalTable: "Roles",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RoleUser_Users_UsersEmail",
                         column: x => x.UsersEmail,
                         principalTable: "Users",
-                        principalColumn: "Email");
+                        principalColumn: "Email",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,16 +192,17 @@ namespace ExaminationSystemITI.Migrations
                 columns: table => new
                 {
                     Text = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Choices", x => new { x.Text, x.Id });
+                    table.PrimaryKey("PK_Choices", x => new { x.Text, x.QuestionId });
                     table.ForeignKey(
-                        name: "FK_Choices_Questions_Id",
-                        column: x => x.Id,
+                        name: "FK_Choices_Questions_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,12 +219,14 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_ExamQuestion_Exams_ExamsID",
                         column: x => x.ExamsID,
                         principalTable: "Exams",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ExamQuestion_Questions_QuestionsId",
                         column: x => x.QuestionsId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -233,12 +243,14 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_CourseInstructor_Courses_CoursesId",
                         column: x => x.CoursesId,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CourseInstructor_Instructors_InstructorsID",
                         column: x => x.InstructorsID,
                         principalTable: "Instructors",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,7 +270,8 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_Departments_Instructors_SP",
                         column: x => x.SP,
                         principalTable: "Instructors",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,12 +288,14 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_CourseDepartment_Courses_CoursesId",
                         column: x => x.CoursesId,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CourseDepartment_Departments_DepartmentsId",
                         column: x => x.DepartmentsId,
                         principalTable: "Departments",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,12 +321,14 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_Students_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Students_Users_Email",
                         column: x => x.Email,
                         principalTable: "Users",
-                        principalColumn: "Email");
+                        principalColumn: "Email",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -329,12 +346,14 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_StudentCourses_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentCourses_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -353,17 +372,20 @@ namespace ExaminationSystemITI.Migrations
                         name: "FK_StudentExamQuestions_Exams_ExamId",
                         column: x => x.ExamId,
                         principalTable: "Exams",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentExamQuestions_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_StudentExamQuestions_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -373,9 +395,9 @@ namespace ExaminationSystemITI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Choices_Id",
+                name: "IX_Choices_QuestionId",
                 table: "Choices",
-                column: "Id");
+                column: "QuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseDepartment_DepartmentsId",

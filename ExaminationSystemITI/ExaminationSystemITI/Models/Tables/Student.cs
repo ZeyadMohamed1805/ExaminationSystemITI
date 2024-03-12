@@ -18,6 +18,8 @@ namespace ExaminationSystemITI.Models.Tables
         public int GraduationYear { get; set; }
         public ICollection<StudentCourse> StudentCourses { get; set; }
         public ICollection<StudentExamQuestion> StudentExamQuestions { get; set; }
+        public int DepartmentId {  get; set; }
+        [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
         public string Email { get; set; }
         [ForeignKey("Email")]

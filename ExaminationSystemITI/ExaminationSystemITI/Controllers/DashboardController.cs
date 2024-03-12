@@ -6,7 +6,7 @@ namespace ExaminationSystemITI.Controllers
     {
         public IActionResult Admin(int Id)
         {
-            return View("Admin");
+            return View("Dashboard/Admin/Index");
         }
         public IActionResult Student(int Id)
         {
