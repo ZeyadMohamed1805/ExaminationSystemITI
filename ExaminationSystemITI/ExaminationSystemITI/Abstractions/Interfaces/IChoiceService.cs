@@ -6,14 +6,10 @@ namespace ExaminationSystemITI.Abstractions.Interfaces
 {
     public interface IChoiceService
     {
-        List<Choice> GetAll(int questionId); //gets all choices in a question
+        List<Choice> GetAll(); 
+        List<Choice> GetAllInQuestion(int questionId); //gets all choices in a question
         void Add(Choice choice);
         void Delete(Choice choice);
         void Update(Choice choice, string newChoiceText);
-
-
-        //void Update(Choice choice, EChoice eChoiceNew);
-
-
     }
 }

@@ -14,9 +14,14 @@ namespace ExaminationSystemITI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                 options.UseSqlServer(builder.Configuration.GetConnectionString("conn1")));
+           
+           
             builder.Services.AddScoped<IInstructorService, InstructorService>();
+            builder.Services.AddScoped<IChoiceService, ChoiceService>();
+           
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("conn1")));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
