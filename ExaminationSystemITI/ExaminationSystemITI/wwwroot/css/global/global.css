@@ -6,26 +6,14 @@
     box-sizing: border-box;
 }
 
-.custom-red {
-    color: #9A3333;
+:root {
+    --custom-red: #9A3333;
+    --custom-white: #FFFFFF;
+    --custom-black: #424143;
+    --custom-blue: #203947;
+    --custom-overlay: rgba(32, 57, 71, 0.5);
 }
 
-.custom-white {
-    color: #FFFFFF;
-}
-
-.custom-black {
-    color: #424143;
-}}
-}
-
-.custom-blue {
-    color: #203947;
-}
-
-.custom-overlay {
-    color: rgba(32, 57, 71, 0.5);
-}
 
 .poppins-light {
     font-weight: 300;

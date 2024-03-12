@@ -32,12 +32,20 @@ namespace ExaminationSystemITI.Services
      
         public List<Student> GetAll()
         {
-           // var students=_context.Students.FromSqlRaw("Exec SelectAllStudents").Include(a=>a.Department).ToList();
+
             var students = _context.Students.FromSqlRaw("EXEC SelectAllStudents").ToList();
-            foreach ( var student in students )
+            foreach (var student in students)
             {
-                student.Department=_context.Departments.FromSql($"EXEC SelectDepartmentById {student.DepartmentId}").ToList()[0];
+                student.Department = _context.Departments.FromSql($"EXEC SelectDepartmentById {student.DepartmentId}").ToList()[0];
             }
+
+
+
+            //all sttudents join with department
+
+            //var students = _context.Students
+            //     .FromSqlRaw("EXEC SelectAllStudentsWithDepartments")
+            //     .ToList();
 
             return students;
         }
@@ -48,8 +56,6 @@ namespace ExaminationSystemITI.Services
 
             var std = _context.Students.FromSql($"EXEC SelectStudentById {id}").ToList()[0];
             std.Department = _context.Departments.FromSql($"EXEC SelectDepartmentById {std.DepartmentId}").ToList()[0];
-            //var student = _context.Students.SingleOrDefault(a=>a.Id==id);
-            //return student;
             return std;
 
         }
