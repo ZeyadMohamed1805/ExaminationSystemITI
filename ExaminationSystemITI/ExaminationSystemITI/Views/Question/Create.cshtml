@@ -1,0 +1,62 @@
+﻿@using ExaminationSystemITI.Models.Tables
+@model Question
+
+<h1>Create New Question</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Type">Question Type:</label>
+        <select asp-for="Type" id="questionType" class="form-control">
+            <option value="TrueOrFalse">True/False</option>
+            <option value="MCQ">Multiple Choice</option>
+        </select>
+        <span asp-validation-for="Type" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Title">Question Title:</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CorrectAnswer">Correct Answer:</label>
+        <input type="text" asp-for="CorrectAnswer" class="form-control" />
+        <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Select Course:</label>
+        <select asp-for="CourseId" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))" class="form-control">
+            <option value="">-- Select Course --</option>
+        </select>
+        <span asp-validation-for="CourseId" class="text-danger"></span>
+    </div>
+
+    <div id="choiceFields" style="display: none;">
+        <div class="form-group">
+            <label>Choices:</label>
+            <input type="text" name="choices" class="form-control" placeholder="Enter choice 1" />
+            <input type="text" name="choices" class="form-control" placeholder="Enter choice 2" />
+            <input type="text" name="choices" class="form-control" placeholder="Enter choice 3" />
+            <input type="text" name="choices" class="form-control" placeholder="Enter choice 4" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create Question</button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var questionTypeSelect = document.getElementById("questionType");
+        var choiceFields = document.getElementById("choiceFields");
+
+        questionTypeSelect.addEventListener("change", function () {
+            if (questionTypeSelect.value === "MCQ") {
+                choiceFields.style.display = "block";
+            } else {
+                choiceFields.style.display = "none";
+            }
+        });
+    });
+</script>

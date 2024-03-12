@@ -14,5 +14,6 @@ namespace ExaminationSystemITI.Models.Tables
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
         public ICollection<Topic> Topics { get; set; } = new HashSet<Topic>();
         public ICollection<StudentCourse> CourseStudents { get; set; }
+        public ICollection<Question> Questions { get; set; }
     }
 }
