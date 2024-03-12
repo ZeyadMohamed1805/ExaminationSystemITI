@@ -1,0 +1,22 @@
+﻿@using ExaminationSystemITI.Models.Tables
+@model List<Question>
+
+<h1>Display</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Question ID</th>
+            <th>Question</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var question in Model)
+        {
+            <tr>
+                <td>@question.Id</td>
+                <td>@question.Title</td>
+            </tr>
+        }
+    </tbody>
+</table>
