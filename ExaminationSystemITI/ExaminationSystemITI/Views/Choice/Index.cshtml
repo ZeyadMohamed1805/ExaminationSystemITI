@@ -1,0 +1,38 @@
+﻿
+@model List<Choice>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@* @foreach(var item in Model)
+{
+    
+} *@
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Choice Text</th>
+            <th>Question Id</th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Text</td>
+                <td>@item.QuestionId</td>
+                <td>
+                    <a asp-controller="Choice" asp-action="Create" asp-route-id="@item.QuestionId" class="btn btn-primary">Create</a>
+
+                    <a asp-controller="Choice" asp-action="Update" asp-route-Text="@item.Text" asp-route-QuestionId="@item.QuestionId" class="btn btn-primary">Update</a>
+
+                    <a asp-controller="Choice" asp-action="Delete" asp-route-Text="@item.Text" asp-route-QuestionId="@item.QuestionId" class="btn btn-primary">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

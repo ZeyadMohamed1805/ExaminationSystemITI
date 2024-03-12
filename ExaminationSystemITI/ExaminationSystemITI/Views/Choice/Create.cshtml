@@ -1,0 +1,30 @@
+﻿
+@model Choice
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<form method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Text"></label>
+        <input asp-for="@Model.Text" class="form-control" />
+        <span asp-validation-for="@Model.Text"></span>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="@Model.QuestionId"></label>
+        <input asp-for="@Model.QuestionId" class="form-control" />
+        <span asp-validation-for="@Model.QuestionId"></span>
+
+    </div>
+
+    <input type="submit" value="Add Choice" class="btn btn-primary" />
+</form>
+
+@section Scripts{
+    <partial src="_ValidationScriptsPartial"></partial>
+}
