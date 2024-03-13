@@ -46,7 +46,7 @@ namespace ExaminationSystemITI.Controllers
                 {
                     foreach (var choiceText in choices)
                     {
-                        var choice = new Choice { Text = choiceText, QuestionId = question.Id };
+                        var choice = new Choice { Text = choiceText, Id = question.Id };
                         _context.Choices.Add(choice);
                     }
                     _context.SaveChanges();

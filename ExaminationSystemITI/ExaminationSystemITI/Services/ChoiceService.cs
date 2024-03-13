@@ -35,19 +35,19 @@ namespace ExaminationSystemITI.Services
 
         public void Add(Choice choice)
         {
-            _db.Database.ExecuteSqlInterpolated($"AddChoice {choice.Text},{choice.QuestionId}");
+            _db.Database.ExecuteSqlInterpolated($"AddChoice {choice.Text},{choice.Id}");
         }
         //--------------------------------------------------------------------------
 
         public void Delete(Choice choice)
         {
-            _db.Database.ExecuteSqlInterpolated($"DeleteChoice {choice.Text},{choice.QuestionId}");
+            _db.Database.ExecuteSqlInterpolated($"DeleteChoice {choice.Text},{choice.Id}");
         }
         //--------------------------------------------------------------------------
 
         public void Update(Choice choice,string newChoiceText)
         {
-            _db.Database.ExecuteSqlInterpolated($"UpdateChoice {choice.Text},{newChoiceText},{choice.QuestionId} ");
+            _db.Database.ExecuteSqlInterpolated($"UpdateChoice {choice.Text},{newChoiceText},{choice.Id} ");
         }
     }
 }

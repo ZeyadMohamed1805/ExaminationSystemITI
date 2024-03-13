@@ -23,13 +23,13 @@
         {
             <tr>
                 <td>@item.Text</td>
-                <td>@item.QuestionId</td>
+                <td>@item.Id</td>
                 <td>
-                    <a asp-controller="Choice" asp-action="Create" asp-route-id="@item.QuestionId" class="btn btn-primary">Create</a>
+                    <a asp-controller="Choice" asp-action="Create" asp-route-id="@item.Id" class="btn btn-primary">Create</a>
 
-                    <a asp-controller="Choice" asp-action="Update" asp-route-Text="@item.Text" asp-route-QuestionId="@item.QuestionId" class="btn btn-primary">Update</a>
+                    <a asp-controller="Choice" asp-action="Update" asp-route-Text="@item.Text" asp-route-QuestionId="@item.Id" class="btn btn-primary">Update</a>
 
-                    <a asp-controller="Choice" asp-action="Delete" asp-route-Text="@item.Text" asp-route-QuestionId="@item.QuestionId" class="btn btn-primary">Delete</a>
+                    <a asp-controller="Choice" asp-action="Delete" asp-route-Text="@item.Text" asp-route-QuestionId="@item.Id" class="btn btn-primary">Delete</a>
                 </td>
             </tr>
         }

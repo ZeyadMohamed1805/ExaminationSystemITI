@@ -43,7 +43,7 @@
                         <td>@item.Address</td>
                         <td>@item.Faculty</td>
                         <td>@item.GraduationYear</td>
-                        <td>@item.Department</td>
+                        <td>@item.Department.Name</td>
                         <td>
                             <a asp-action="Edit" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-primary">Update</a>
                             <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-danger" onclick="return confirm('are you sure?')">Delete</a>
