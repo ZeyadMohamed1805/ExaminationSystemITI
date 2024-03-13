@@ -40,35 +40,38 @@
         }
     </style>
 </head>
-<body>
+<body style="height: 100vh; overflow-y: hidden">
     <header class="w-100 custom-wrapper d-flex justify-content-center align-items-center shadow" style="background-color: var(--custom-white); height: 120px;">
         <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 120px;" alt="ITI Logo" />
     </header>
-    <section class="w-100 d-flex" style="min-height: calc(100vh - 120px);">
+    <section class="w-100 d-flex" style="height: calc(100vh - 120px);">
         <div class="side-bar d-flex flex-column align-items-center" style="width: 160px; background-color: var(--custom-blue); padding: 32px 16px; gap: 32px;">
             <div class="avatar-name shadow d-flex justify-content-center align-items-center poppins-semibold rounded-circle" style="min-width: 100px; min-height: 100px; background-color: var(--custom-white); font-size: 20px;">
                 @switch(view)
                 {
-                    case "student": <span>S</span>; break;
-                    case "instructor": <span>I</span> break;
+                    case "": <span>S</span>; break;
+                    case " ": <span>I</span> break;
                     default: <span>A</span> break;
                 }
             </div>
             <hr class="w-100" style="height: 1px; background-color: var(--custom-white)" />
             <div class="d-flex flex-column align-items-center justify-content-between" style="height: 100%; min-height: fit-content; gap: 32px;">
                 <ul class="w-100 d-flex flex-column list-group" style="gap: 16px;">
-                    @if (view == "student" || view == "instructor")
+                    @if (view == "")
                     {
                         <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
                             <img src="~/assets/icons/active.svg" style="width: 24px; height: 24px;" alt="Active" />
                             <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
-                                Active
+                                Exams
                             </p>
                         </li>
+                    }
+                    else if (view == "")
+                    {
                         <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
-                            <img src="~/assets/icons/done.svg" style="width: 24px; height: 24px;" alt="Done" />
+                            <img src="~/assets/icons/active.svg" style="width: 24px; height: 24px;" alt="Active" />
                             <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
-                                Done
+                                Generate
                             </p>
                         </li>
                     }
@@ -102,8 +105,7 @@
                 </button>
             </div>
         </div>
-        <main role="main" class="pb-3">
-            <h1>Dashboard</h1>
+        <main role="main" style="padding: 32px; overflow-y: scroll;" class="w-100">
             @RenderBody()
         </main>
     </section>
