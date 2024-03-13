@@ -1,57 +1,65 @@
 using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
+using ExaminationSystemITI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExaminationSystemITI.Controllers
 {
     public class StudentController : Controller
     {
-        public IActionResult Active(int Id)
-        {
-            return View("Index");
-        }
-
         IStudentService _student;
-        
-        public StudentController(IStudentService student) 
+        IDepartmentService _department;
+        public StudentController(IStudentService student, IDepartmentService department)
         {
             _student = student;
-        
+            _department = department;
         }
-        public IActionResult Index()
+        public IActionResult Read()
         {
             var students = _student.GetAll();
             return View(students);
         }
+
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new StudentDepartmentsViewModel();
+            ViewBag.Departments = _department.GetDepartments();
+            return View(viewModel);
         }
         [HttpPost]
         public IActionResult Create(Student student)
         {
             _student.Add(student);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var student=_student.GetById(id);
-            return View(student);
+            var viewModel = new StudentDepartmentsViewModel();
+            viewModel.Student =_student.GetById(id);
+            ViewBag.Departments = _department.GetDepartments();
+            return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Edit(Student student)
+        public IActionResult Edit(StudentDepartmentsViewModel viewModel)
         {
-            _student.Update(student);
-            return RedirectToAction("Index");
+            _student.Update(viewModel.Student);
+            return RedirectToAction("Read");
         }
         public IActionResult Delete(int id)
         {
             _student.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
+        }
+
+        public IActionResult Exams(int Id)
+        {
+            return View();
         }
     }
 }

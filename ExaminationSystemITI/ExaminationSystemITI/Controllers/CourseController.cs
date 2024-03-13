@@ -1,5 +1,6 @@
 ﻿using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExaminationSystemITI.Controllers
@@ -11,23 +12,23 @@ namespace ExaminationSystemITI.Controllers
         {
             _course = course;
         }
-        public IActionResult Index()
+        public IActionResult Read()
         {
-            ICollection<Course> courses = _course.GetCourses();
+            var courses = _course.GetCourses();
             return View(courses);
         }
 
         [HttpGet]
-        public IActionResult AddCourse()
+        public IActionResult Create()
         {
-            return View("Add");
+            return View();
         }
 
         [HttpPost]
-        public IActionResult AddCourse(Course course)
+        public IActionResult Create(Course course)
         {
             _course.InsertCourse(course);
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
         }
 
         [HttpGet]
@@ -36,19 +37,16 @@ namespace ExaminationSystemITI.Controllers
             var course = _course.FindCourse(id);
             return View(course);
         }
-
         [HttpPost]
         public IActionResult Edit(Course course)
         {
             _course.EditCourse(course);
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
         }
-
-        [HttpPost]
-        public IActionResult Delete(Course course)
+        public IActionResult Delete(int id)
         {
-            _course.DeleteCourse(course.Id);
-            return RedirectToAction("Index");
+            _course.DeleteCourse(id);
+            return RedirectToAction("Read");
         }
     }
 }

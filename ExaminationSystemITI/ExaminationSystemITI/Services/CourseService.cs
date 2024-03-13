@@ -19,6 +19,10 @@ namespace ExaminationSystemITI.Services
             foreach( var course in courses )
             {
                 course.Topics = new TopicService(_context).GetCourseTopics(course.Id);
+                course.Departments = _context.Departments.FromSqlInterpolated($"SELECT * FROM DEPARTMENTS JOIN COURSEDEPARTMENT ON COURSEDEPARTMENT.COURSESID = {course.Id}").ToList();
+                course.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON COURSEINSTRUCTOR.COURSESID = {course.Id}").ToList();
+                course.CourseStudents = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {course.Id}").ToList();
+                course.CourseStudents = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {course.Id}").ToList();
             }
                  
             return courses;

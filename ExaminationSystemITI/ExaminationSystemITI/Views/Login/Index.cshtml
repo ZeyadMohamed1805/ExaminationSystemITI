@@ -1,29 +1,43 @@
 ﻿@{
     ViewData["Title"] = "Login Page";
 }
+<style>
+    .submit-button:hover {
+        opacity: 0.5;
+    }
 
+    @@media (max-width: 1000px) {
+        .side-form {
+            width: 100%;
+            height: fit-content !important;
+            padding: 48px 24px !important;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+        }
+    }
 
+    @@media (max-width: 500px) {
+        .side-form {
+            max-width: 100% !important;
+            width: 100%;
+            height: 100vh !important;
+            position: absolute;
+        }
+    }
+</style>
 
-
-<div style="display:flex;width: 100%; height: 100vh;">
-
+<div style="display:flex;width: 100%; height: 100vh; position: relative;">
     <div style=" background-image:url(' /assets/images/backgrounds/login.svg'); background-size: cover; background-position: center; background-repeat: no-repeat;width: 100%; height: 100vh;"></div>
-   
-
-
-    <div class="shadow  d-flex justify-content-center align-items-center" style="background-color:var(--custom-white); width: 400px; height: 100vh; padding: 80px 24px; background-color: var(--custom-white); z-index: 1;">
-    
-        <div class="d-flex flex-column w-100 " style="gap:120px;align-items:center;">
-       
-          <img src="~/assets/images/logos/logo.svg" />
-          
-                <form class="d-flex flex-column w-100" style="gap:16px;gap:16px;">
-                    <input type="text" value="Email" class="form-control" />
-                    <input type="text" value="Password" class="form-control" />
-                <input type="submit" value="LogIn" class="form-control" style="background-color:var(--custom-red);color:var(--custom-white)" />
-
-               </form>
-            
+    <div class="shadow side-form d-flex justify-content-center align-items-center" style="background-color:var(--custom-white); max-width: 400px; height: 100vh; padding: 80px 24px; background-color: var(--custom-white); z-index: 1;">
+        <div class="d-flex flex-column w-100 " style="max-width: 400px; gap:120px;align-items:center;">
+          <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 197px;" />
+          <form class="d-flex flex-column w-100" style="gap:16px;">
+                <input type="text" placeholder="Email" class="poppins-medium form-control" style="padding: 16px 24px; font-size: 16px; color: var(--custom-black);" />
+                <input type="text" placeholder="Password" class="poppins-medium form-control" style="padding: 16px 24px; font-size: 16px; color: var(--custom-black);" />
+                <input type="submit" value="Login" class="submit-button rounded poppins-semibold" style="padding: 16px 24px; background-color:var(--custom-red);color:var(--custom-white); border: none; font-size: 20px; transition-duration: 0.25s;" />
+          </form>
     </div>
-
 </div>
