@@ -1,22 +1,118 @@
 ﻿@using ExaminationSystemITI.Models.Tables
 @model List<Question>
 
-<h1>Display</h1>
+@{
+    int counter = 0;
+    string progres = "0%";
+}
 
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Question ID</th>
-            <th>Question</th>
-        </tr>
-    </thead>
-    <tbody>
+
+<header class="w-100 custom-wrapper d-flex justify-content-center align-items-center shadow" style="background-color: var(--custom-white); height: 120px;">
+    <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 120px;" alt="ITI Logo" />
+</header>
+
+
+
+<section style="padding:0 160px ;">
+
+
+    <div class="progress" style="display:flex;margin-left:15%">
+        <div class="progress-bar" role="progressbar" style="width:@progres ;" aria-valuenow="@counter" aria-valuemin="0" aria-valuemax="100">@progres</div>
+    </div>
+
+
+
+
+    <div style="display:flex; justify-content: center; width: 100%;height: 100%vh;">
+        <h1>ITI EXAMS</h1>
+    </div>
+
+    <br />
+
+    <div>
+   
+        <form >
+
+
+            <div class=" d-flex flex-column" style="gap:40px;">
+
+
+            @foreach (var item in Model)
+            {
+
+                <div id="@item.Title">
+
+
+                    <label >@item.Title</label>
+                       
+                    <br />
+                    <input type="radio" id="option1" name="@item.Title" value="@item.Choices." onclick="()=>{@counter+=(1/@Model.Count())*100 ; @progres=$"@counter %"}">
+                    <label for="option1">Option 1</label>
+
+                    <br>
+                    <input type="radio" id="option1" name="@item.Title" value="option2">
+                    <label for="option2">Option 2</label>
+
+                    <br>
+
+                    <input type="radio" id="option2" name="@item.Title" value="option3">
+                    <label for="option3">Option 3</label>
+
+                    <br>
+
+                        <input type="radio" id="option4" name="@item.Title" value="option4">
+                        <label for="option4">Option 4</label>
+
+                        <br>
+
+                </div>
+
+        
+            }
+         
+           <br />
+
+          </div>
+          <div class="d-flex flex-row justify-content-center">
+                <input type="button" value="Submit" class="btn btn-lg  d-flex justify-content-center " style="background-color:var(--custom-red) ;color:var(--custom-white);margin-bottom:20px" />
+
+          </div>
+
+        </form>
+
+    </div>
+
+
+
+</section>
+
+
+
+
+
+
+@*     <form>
         @foreach (var question in Model)
         {
-            <tr>
-                <td>@question.Id</td>
-                <td>@question.Title</td>
-            </tr>
+            <label>@question.Title</label>
+
+            <br>
+
+            @foreach (var choice in Model)
+            {
+                <input type="radio" id="@choice.Id" name="@question.Id" value="@choice.Id">
+                <label for="@choice.Id">@choice.Text</label>
+
+                <br>
+            }
+
+            <br>
         }
-    </tbody>
-</table>
+    </form>
+ *@
+
+
+
+
+
+
