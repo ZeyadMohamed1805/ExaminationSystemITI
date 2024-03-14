@@ -19,23 +19,25 @@ namespace ExaminationSystemITI.Controllers
         {
             return View();
         }
-        public IActionResult GetIns()
+        
+
+        public IActionResult Read()
         {
             var instructors = _instructor.GetInstructors();
             return View(instructors);
         }
 
         [HttpGet]
-        public IActionResult AddIns()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddIns(Instructor instructor)
+        public IActionResult Create(Instructor instructor)
         {
             _instructor.InsertInstructor(instructor);
-            return RedirectToAction("GetIns");
+            return RedirectToAction("Read");
         }
 
         [HttpGet]
@@ -49,14 +51,14 @@ namespace ExaminationSystemITI.Controllers
         public IActionResult Edit(Instructor ins)
         {
             _instructor.EditInstructor(ins);
-            return RedirectToAction("Getins");
+            return RedirectToAction("Read");
         }
 
         [HttpPost]
         public IActionResult Delete(Instructor ins)
         {
             _instructor.DeleteInstructor(ins.ID);
-            return RedirectToAction("Getins");
+            return RedirectToAction("Read");
         }
     }
 }
