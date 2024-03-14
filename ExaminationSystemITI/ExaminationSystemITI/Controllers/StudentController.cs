@@ -11,10 +11,16 @@ namespace ExaminationSystemITI.Controllers
     {
         IStudentService _student;
         IDepartmentService _department;
-        public StudentController(IStudentService student, IDepartmentService department)
+        ICourseService _course;
+        IInstructorService _instructor;
+        IExamService _exam;
+        public StudentController(IStudentService student, IDepartmentService department, ICourseService course, IInstructorService instructor, IExamService exam)
         {
             _student = student;
             _department = department;
+            _course = course;
+            _instructor = instructor;
+            _exam = exam;
         }
         public IActionResult Read()
         {
@@ -59,7 +65,8 @@ namespace ExaminationSystemITI.Controllers
 
         public IActionResult Exams(int Id)
         {
-            return View();
+            var viewModel = _course.FindStudentExams(Id);
+            return View(viewModel);
         }
     }
 }
