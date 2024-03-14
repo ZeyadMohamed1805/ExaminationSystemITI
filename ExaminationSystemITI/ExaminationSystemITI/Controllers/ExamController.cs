@@ -1,5 +1,6 @@
 ﻿using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -66,12 +67,60 @@ namespace ExaminationSystemITI.Controllers
 
         [Route("Exam/Display/{ExamId}")] 
         public IActionResult Display(int ExamId)
-        {          
+        {
+            //var questions = _dbcontext.Questions
+            //    .FromSqlRaw("SELECT q.Id, q.Title, q.CorrectAnswer, q.Type, q.CourseId FROM questions q INNER JOIN ExamQuestion eq ON q.Id = eq.QuestionsId WHERE eq.ExamsId = {0} ORDER BY NEWID()", ExamId)
+            //    .Include(a=>a.Choices)
+            //    .ToList();
+
+            //return View(questions);
+
             var questions = _dbcontext.Questions
-                .FromSqlRaw("SELECT q.Id, q.Title, q.CorrectAnswer, q.Type, q.CourseId FROM questions q INNER JOIN ExamQuestion eq ON q.Id = eq.QuestionsId WHERE eq.ExamsId = {0} ORDER BY NEWID()", ExamId)
-                .ToList();
+               .FromSqlRaw("SELECT q.Id, q.Title, q.CorrectAnswer, q.Type, q.CourseId FROM questions q INNER JOIN ExamQuestion eq ON q.Id = eq.QuestionsId WHERE eq.ExamsId = {0}", ExamId)
+               .Include(a => a.Choices)
+               .ToList();
+
+           
 
             return View(questions);
         }
+
+
+        [HttpPost]
+        public IActionResult SubmitAnswers(SubmitAnswersViewModel model)
+        {
+            
+            var submittedQuestionIds = model.Answers.Select(a => a.QuestionId).ToList();
+
+            
+            var correctAnswers = _dbcontext.Questions
+                .Where(q => submittedQuestionIds.Contains(q.Id))
+                .ToDictionary(q => q.Id, q => q.CorrectAnswer);
+
+            // Retrieve correct answers from the database
+            //var correctAnswers = _dbcontext.Questions.ToDictionary(q => q.Id, q => q.CorrectAnswer);
+
+
+            int totalQuestions = model.Answers.Count;
+            int correctCount = 0;
+            foreach (var answer in model.Answers)
+            {
+                if (correctAnswers.TryGetValue(answer.QuestionId, out var correctAnswer) && correctAnswer == answer.Answer)
+                {
+                    correctCount++;
+                }
+            }
+
+            
+            double percentage = (double)correctCount / totalQuestions * 100;
+
+            
+            ViewBag.CorrectCount = correctCount;
+            ViewBag.TotalQuestions = totalQuestions;
+            ViewBag.Percentage = percentage;
+
+            return View("SubmitAnswers");
+        }
+
     }
 }

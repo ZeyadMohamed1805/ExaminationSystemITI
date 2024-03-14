@@ -1,29 +1,53 @@
+using ExaminationSystemITI.Abstractions.Enums;
 using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Security.Claims;
 
 namespace ExaminationSystemITI.Controllers
 {
     public class StudentController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        IStudentService _student;
+
+        public StudentController(ApplicationDbContext context , IStudentService student)
+        {
+            _context = context;
+            _student = student;
+        }
         public IActionResult Active(int Id)
         {
             return View("Index");
         }
 
-        IStudentService _student;
         
-        public StudentController(IStudentService student) 
-        {
-            _student = student;
-        
-        }
         public IActionResult Index()
         {
-            var students = _student.GetAll();
-            return View(students);
+            
+            if (User.IsInRole(ERole.Student.ToString()))
+            {
+
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+
+                var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable().Include(s=>s.StudentCourses).ThenInclude(c => c.Course);
+               
+
+                return View(students.ToList());
+            }
+            else
+            {
+                // For other roles get all students
+                var students = _student.GetAll().AsQueryable().Include(s => s.StudentCourses).ThenInclude(c=>c.Course);
+                return View(students.ToList());
+            }
         }
+
+
         [HttpGet]
         public IActionResult Create()
         {

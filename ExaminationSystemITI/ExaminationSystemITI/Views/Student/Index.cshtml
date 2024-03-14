@@ -1,13 +1,18 @@
 
+@using ExaminationSystemITI.Abstractions.Enums
 @using ExaminationSystemITI.Models.Tables
 @model IEnumerable<Student>
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
+    bool isUserAdmin = User.IsInRole(ERole.Admin.ToString());
 }
 
 <h1>All Students</h1>
-    <a asp-action="create" asp-controller="student" class="btn btn-success">Create</a>
+@if (isUserAdmin)
+    {
+        <a asp-action="create" asp-controller="student" class="btn btn-success">Create</a>
+    }
     <table class="table table-border table-hover">
     <thead>
        <tr>
@@ -20,7 +25,12 @@
            <th>Faculty</th>
            <th>GraduationYear</th>
            <th>Department</th>
-           <th>Options</th>
+           <th>Courses</th>
+              @if (isUserAdmin)
+            {
+                <th>Options</th>
+            }
+           
        </tr>
     </thead>
     <tbody>
@@ -43,13 +53,31 @@
                         <td>@item.Address</td>
                         <td>@item.Faculty</td>
                         <td>@item.GraduationYear</td>
-                        <td>@item.Department</td>
+                        <td>@item.Department.Name</td>
+                        <td>
+                            @foreach (var studentCourse in item.StudentCourses)
+                            {
+                            
+                            <span>@studentCourse.Course.Name</span>
+
+                                <br />
+                            }
+                         </td>
+                    @if (isUserAdmin)
+                    {
                         <td>
                             <a asp-action="Edit" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-primary">Update</a>
                             <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-danger" onclick="return confirm('are you sure?')">Delete</a>
                         </td>
+                    }
+                    
                     </tr>
                 }
             }
         </tbody>
 </table>
+
+@* @foreach(var m in Model)
+{
+    <p>@m.</p>
+} *@
