@@ -2,6 +2,7 @@
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace ExaminationSystemITI.Services
 {
@@ -30,5 +31,11 @@ namespace ExaminationSystemITI.Services
                 var exam = _dbcontext.Exams.Find(id);
                 return exam;
             }
+
+            public void Update(Exam exam)
+            {
+            //_dbcontext.Database.ExecuteSqlInterpolated($"EXEC EditExamById {exam.ID},{exam.Duration},{exam.Date},{exam.Questions.Count},{exam.TotalMarks}");
+            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC EditExamById {exam.ID},{exam.Duration},{exam.Questions.Count},{exam.TotalMarks}");
         }
+    }
 }

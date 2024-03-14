@@ -52,7 +52,7 @@ namespace ExaminationSystemITI.Controllers
                     _context.SaveChanges();
                 }
 
-                return RedirectToAction("Getall", "Exam"); 
+                return RedirectToAction("Read", "Exam"); 
            // }
 
             
