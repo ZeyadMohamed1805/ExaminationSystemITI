@@ -22,13 +22,15 @@
         <div class="rounded shadow d-flex flex-column w-100" style="gap: 16px; padding: 16px; color: var(--custom-black); max-width: 320px;">
             <div class="d-flex flex-column">
                 <h2 class="poppins-bold" style="font-size: 24px;">
-                    @card.Course.Name
+                    @if(card.Course != null)
+                        @card.Course.Name
                 </h2>
                 <h3 class="poppins-semibold" style="font-size: 20px;">
-                    @foreach( var instructor in card.Instructors )
-                    {
-                        @instructor.FirstName
-                    }
+                    @if (card.Instructors != null)
+                        @foreach( var instructor in card.Instructors )
+                        {
+                            @instructor.FirstName
+                        }
                 </h3>
             </div>
             <p class="poppins-regular" style="font-size: 16px;">
@@ -36,10 +38,12 @@
             </p>
             <div class="d-flex align-items-center" style="gap: 8px;">
                 <button disabled style="border: none; border-radius: 16px; background-color: var(--custom-blue); color: var(--custom-white); padding: 4px 8px; transition-duration: 0.25s;">
-                    @card.Exam.QCount Questions
+                    @if(card.Exam != null)
+                        @card.Exam.QCount Questions
                 </button>
                 <button disabled style="border: none; border-radius: 16px; background-color: var(--custom-blue); color: var(--custom-white); padding: 4px 8px; transition-duration: 0.25s;">
-                    @card.Exam.Duration Minutes
+                    @if (card.Exam != null)
+                        @card.Exam.Duration Minutes
                 </button>
             </div>
             <a asp-action="read" asp-controller="student" class="poppins-medium rounded" style="background-color: var(--custom-red) !important; color: var(--custom-white); padding: 8px 16px; font-size: 20px; border: none;text-decoration: none; text-align: center; transition-duration: 0.25s !important;">

@@ -58,11 +58,21 @@ namespace ExaminationSystemITI.Services
             for ( int index = 0; index < exams.Count(); index++) 
             {
                 var model = new StudentExamCardViewModel();
-                model.Exam = exams[index];
-                model.Course = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID = {model.Exam.ID}").ToList()[0];
-                model.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {model.Course.Id}").ToList();
+
+                if (exams.Count() > 0)
+                {
+                    model.Exam = exams[index];
+                    var courseId = _context.Database.ExecuteSqlInterpolated($"SELECT COURSEID FROM EXAMS WHERE ID = {model.Exam.ID}");
+                    if (courseId > 0)
+                    {
+                        model.Course = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID = {courseId}").ToList()[0];
+                        model.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {model.Course.Id}").ToList();
+                    }
+                }
+
                 viewModel.Add(model);
             }
+
             return viewModel;
         }
     }
