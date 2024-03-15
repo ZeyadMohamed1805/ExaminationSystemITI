@@ -1,4 +1,161 @@
-﻿@using ExaminationSystemITI.Models.Tables
+﻿@* @using ExaminationSystemITI.Models.Tables
+@using ExaminationSystemITI.Abstractions.Enums
+
+@model List<Question>
+
+<h1>Display</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Question ID</th>
+            <th>Question</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var question in Model)
+        {
+            <tr>
+                <td>@question.Id</td>
+                <td>
+                    @question.Title<br /> <ul>
+                        @if (question.Type == EQuestionType.TrueOrFalse)
+                        {
+                            <li>True</li>
+                            <li>False</li>
+                        }
+                        else
+                        {
+                            @foreach (var choice in question.Choices)
+                            {
+                                <li>@choice.Text</li>
+                            }
+                        }
+                    </ul>
+                    <br />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@
+
+@* @using ExaminationSystemITI.Models.Tables
+@using ExaminationSystemITI.Abstractions.Enums
+
+@model List<Question>
+
+<form method="post" action="/Exam/SubmitAnswers">
+    <h1>Exam Questions</h1>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Question Number</th>
+                <th>Question</th>
+                <th>Choices</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var question = Model[i];
+                var questionNumber = i + 1;
+                <tr>
+                    <td>@questionNumber</td>
+                    <td>@question.Title</td>
+                    <td>
+                        @if (question.Type == EQuestionType.TrueOrFalse)
+                        {
+
+                            <input type="radio" id="true @questionNumber" name="@questionNumber" value="True">
+                            <label for="@questionNumber">True</label>
+
+                            <input type="radio" id="false @questionNumber" name="@questionNumber" value="False">
+                            <label for="@questionNumber">False</label>
+                        }
+                        else
+                        {
+                            foreach (var choice in question.Choices)
+                            {
+                                <div>
+                                    <input type="radio" id="choice @choice.QuestionId" name="@choice.QuestionId" value="@choice.Text">
+                                    <label for="@choice.QuestionId">@choice.Text</label>
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Submit Answers</button>
+</form> *@
+
+
+ 
+@using ExaminationSystemITI.Models.Tables
+@using ExaminationSystemITI.Abstractions.Enums
+@using ExaminationSystemITI.Models.ViewModels
+@model List<Question>
+
+
+<form method="post" action="/Exam/SubmitAnswers">
+    <h1>Exam Questions</h1>
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Question Number</th>
+                <th>Question</th>
+                <th>Choices</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var question = Model[i];
+                var questionNumber = i + 1;
+                <tr>
+                    <td>@questionNumber</td>
+                    <td>@question.Title</td>
+                    <td>
+                        <input type="hidden" name="Answers[@i].QuestionId" value="@question.Id" />
+                        @if (question.Type == EQuestionType.TrueOrFalse)
+                        {
+                            <input type="radio" id="true@questionNumber" name="Answers[@i].Answer" value="True" />
+                            <label for="true@questionNumber">True</label>
+
+                            <input type="radio" id="false@questionNumber" name="Answers[@i].Answer" value="False" />
+                            <label for="false@questionNumber">False</label>
+                        }
+                        else
+                        {
+                            foreach (var choice in question.Choices)
+                            {
+                                <div>
+                                    <input type="radio" id="choice@choice.Id" name="Answers[@i].Answer" value="@choice.Text" />
+                                    <label for="choice@choice.Id">@choice.Text</label>
+                                </div>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Submit Answers</button>
+</form>
+
+
+
+
+@*
+    Tarek's View DONT DELETE!!!!!!
+
+    @using ExaminationSystemITI.Models.Tables
 @model List<Question>
 
 @{
@@ -110,9 +267,3 @@
         }
     </form>
  *@
-
-
-
-
-
-

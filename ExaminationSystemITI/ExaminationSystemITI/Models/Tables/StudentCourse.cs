@@ -9,5 +9,11 @@ namespace ExaminationSystemITI.Models.Tables
         public int? Grade { get; set; }
         public Student Student { get; set; }
         public Course Course { get; set; }
+
+        public StudentCourse()
+        {
+            Student = new Student();
+            Course = new Course();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using ExaminationSystemITI.Models.ViewModels;
+using ExaminationSystemITI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,9 +14,7 @@ namespace ExaminationSystemITI.Controllers
         IExamService _examService;
         ICourseService _courseService;
         IQuestionInterface _QuestionServices;
-        
-        
-        public ExamController(ApplicationDbContext dbcontext,IExamService examService, ICourseService courseService, IQuestionInterface questionServices)
+        public ExamController(ApplicationDbContext dbcontext, IExamService examService, ICourseService courseService, IQuestionInterface questionServices)
         {
             _dbcontext = dbcontext;
             _examService = examService;
@@ -23,7 +22,7 @@ namespace ExaminationSystemITI.Controllers
             _QuestionServices = questionServices;
         }
 
-        public IActionResult Read()
+        public IActionResult Read(int Id)
         {
             //var Exams = _dbcontext.Exams.ToList();
             var Exams = _dbcontext.Exams.Include(e => e.Course).ToList();
@@ -38,7 +37,6 @@ namespace ExaminationSystemITI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-         
             ViewBag.Courses = _dbcontext.Courses.ToList();
             ViewBag.Questions = _dbcontext.Questions.ToList();
             return View();
@@ -70,35 +68,76 @@ namespace ExaminationSystemITI.Controllers
             }
            // _dbcontext.SaveChanges();
 
-            return RedirectToAction("Read");
+            return RedirectToAction("Getall","Exam");
            
         }
 
 
         [Route("Exam/Display/{ExamId}")] 
         public IActionResult Display(int ExamId)
-        {          
+        {
+            //var questions = _dbcontext.Questions
+            //    .FromSqlRaw("SELECT q.Id, q.Title, q.CorrectAnswer, q.Type, q.CourseId FROM questions q INNER JOIN ExamQuestion eq ON q.Id = eq.QuestionsId WHERE eq.ExamsId = {0} ORDER BY NEWID()", ExamId)
+            //    .Include(a=>a.Choices)
+            //    .ToList();
+
+            //return View(questions);
+
             var questions = _dbcontext.Questions
-                .FromSqlRaw("SELECT q.Id, q.Title, q.CorrectAnswer, q.Type, q.CourseId FROM questions q INNER JOIN ExamQuestion eq ON q.Id = eq.QuestionsId WHERE eq.ExamsId = {0} ORDER BY NEWID()", ExamId)
-                .ToList();
+               .FromSqlRaw("SELECT q.Id, q.Title, q.CorrectAnswer, q.Type, q.CourseId FROM questions q INNER JOIN ExamQuestion eq ON q.Id = eq.QuestionsId WHERE eq.ExamsId = {0}", ExamId)
+               .Include(a => a.Choices)
+               .ToList();
+
+           
 
             return View(questions);
         }
 
 
-        //var viewModel = new StudentDepartmentsViewModel();
-        //viewModel.Student =_student.GetById(id);
-        //    ViewBag.Departments = _department.GetDepartments();
-        //    return View(viewModel);
+        [HttpPost]
+        public IActionResult SubmitAnswers(SubmitAnswersViewModel model)
+        {
+            
+            var submittedQuestionIds = model.Answers.Select(a => a.QuestionId).ToList();
+
+            
+            var correctAnswers = _dbcontext.Questions
+                .Where(q => submittedQuestionIds.Contains(q.Id))
+                .ToDictionary(q => q.Id, q => q.CorrectAnswer);
+
+            // Retrieve correct answers from the database
+            //var correctAnswers = _dbcontext.Questions.ToDictionary(q => q.Id, q => q.CorrectAnswer);
+
+
+            int totalQuestions = model.Answers.Count;
+            int correctCount = 0;
+            foreach (var answer in model.Answers)
+            {
+                if (correctAnswers.TryGetValue(answer.QuestionId, out var correctAnswer) && correctAnswer == answer.Answer)
+                {
+                    correctCount++;
+                }
+            }
+
+            
+            double percentage = (double)correctCount / totalQuestions * 100;
+
+            
+            ViewBag.CorrectCount = correctCount;
+            ViewBag.TotalQuestions = totalQuestions;
+            ViewBag.Percentage = percentage;
+
+            return View("SubmitAnswers");
+        }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var viewModel=new ExamCourseQuestionViewModel();
+            var viewModel = new ExamCourseQuestionViewModel();
 
             viewModel.Exam = _examService.FindExam(id);
             ViewBag.Courses = _courseService.GetCourses();
-            ViewBag.Questions=_QuestionServices.GetQuestions();
+            ViewBag.Questions = _QuestionServices.GetQuestions();
             return View(viewModel);
 
         }
@@ -114,19 +153,6 @@ namespace ExaminationSystemITI.Controllers
             _examService.DeleteExam(id);
             return RedirectToAction("Read");
         }
-       
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

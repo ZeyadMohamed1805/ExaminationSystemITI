@@ -34,7 +34,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("DepartmentsId");
 
-                    b.ToTable("CourseDepartment");
+                    b.ToTable("CourseDepartment", (string)null);
                 });
 
             modelBuilder.Entity("CourseInstructor", b =>
@@ -49,7 +49,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("InstructorsID");
 
-                    b.ToTable("CourseInstructor");
+                    b.ToTable("CourseInstructor", (string)null);
                 });
 
             modelBuilder.Entity("ExamQuestion", b =>
@@ -64,7 +64,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("QuestionsId");
 
-                    b.ToTable("ExamQuestion");
+                    b.ToTable("ExamQuestion", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Admin", b =>
@@ -100,7 +100,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Choice", b =>
@@ -115,7 +115,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Choices");
+                    b.ToTable("Choices", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Course", b =>
@@ -135,7 +135,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Department", b =>
@@ -162,7 +162,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasIndex("SP")
                         .IsUnique();
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Exam", b =>
@@ -192,7 +192,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("CourseID");
 
-                    b.ToTable("Exams");
+                    b.ToTable("Exams", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Instructor", b =>
@@ -228,7 +228,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Instructors");
+                    b.ToTable("Instructors", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Question", b =>
@@ -257,7 +257,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Role", b =>
@@ -273,7 +273,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Student", b =>
@@ -321,7 +321,7 @@ namespace ExaminationSystemITI.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.StudentCourse", b =>
@@ -339,7 +339,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourses");
+                    b.ToTable("StudentCourses", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.StudentExamQuestion", b =>
@@ -363,7 +363,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("StudentExamQuestions");
+                    b.ToTable("StudentExamQuestions", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.Topic", b =>
@@ -385,7 +385,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("Topics");
+                    b.ToTable("Topics", (string)null);
                 });
 
             modelBuilder.Entity("ExaminationSystemITI.Models.Tables.User", b =>
@@ -399,7 +399,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasKey("Email");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -414,7 +414,7 @@ namespace ExaminationSystemITI.Migrations
 
                     b.HasIndex("UsersEmail");
 
-                    b.ToTable("RoleUser");
+                    b.ToTable("RoleUser", (string)null);
                 });
 
             modelBuilder.Entity("CourseDepartment", b =>

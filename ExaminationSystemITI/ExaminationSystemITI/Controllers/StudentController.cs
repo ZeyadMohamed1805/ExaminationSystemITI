@@ -1,27 +1,56 @@
+using ExaminationSystemITI.Abstractions.Enums;
 using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using ExaminationSystemITI.Models.ViewModels;
-using ExaminationSystemITI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Security.Claims;
 
 namespace ExaminationSystemITI.Controllers
 {
     public class StudentController : Controller
     {
+        private readonly ApplicationDbContext _context;
         IStudentService _student;
         IDepartmentService _department;
         ICourseService _course;
         IInstructorService _instructor;
         IExamService _exam;
-        public StudentController(IStudentService student, IDepartmentService department, ICourseService course, IInstructorService instructor, IExamService exam)
+
+        public StudentController(ApplicationDbContext context , IStudentService student, IDepartmentService department, ICourseService course, IInstructorService instructor, IExamService exam)
         {
+            _context = context;
             _student = student;
             _department = department;
             _course = course;
             _instructor = instructor;
             _exam = exam;
         }
+        
+        public IActionResult Index()
+        {
+            
+            if (User.IsInRole(ERole.Student.ToString()))
+            {
+
+                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+
+                var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable().Include(s=>s.StudentCourses).ThenInclude(c => c.Course);
+               
+
+                return View(students.ToList());
+            }
+            else
+            {
+                // For other roles get all students
+                var students = _student.GetAll().AsQueryable().Include(s => s.StudentCourses).ThenInclude(c=>c.Course);
+                return View(students.ToList());
+            }
+        }
+
         public IActionResult Read()
         {
             var students = _student.GetAll();
@@ -35,6 +64,7 @@ namespace ExaminationSystemITI.Controllers
             ViewBag.Departments = _department.GetDepartments();
             return View(viewModel);
         }
+
         [HttpPost]
         public IActionResult Create(Student student)
         {
@@ -47,16 +77,18 @@ namespace ExaminationSystemITI.Controllers
         public IActionResult Edit(int id)
         {
             var viewModel = new StudentDepartmentsViewModel();
-            viewModel.Student =_student.GetById(id);
+            viewModel.Student = _student.GetById(id);
             ViewBag.Departments = _department.GetDepartments();
             return View(viewModel);
         }
+
         [HttpPost]
         public IActionResult Edit(StudentDepartmentsViewModel viewModel)
         {
             _student.Update(viewModel.Student);
             return RedirectToAction("Read");
         }
+
         public IActionResult Delete(int id)
         {
             _student.Delete(id);

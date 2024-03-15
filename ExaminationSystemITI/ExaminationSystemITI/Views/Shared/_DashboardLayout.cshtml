@@ -97,12 +97,14 @@
                         </p>
                     </li>
                 </ul>
-                <button class="w-100 border-0 d-flex align-items-center justify-content-between rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; background-color: var(--custom-red); transition-duration: 0.25s;">
-                    <img src="~/assets/icons/signout.svg" style="width: 24px; height: 24px;" alt="Sign Out" />
-                    <p class="poppins-medium side-text m-0" style="color: var(--custom-white); font-size: 15.75px;">
-                        Sign Out
-                    </p>
-                </button>
+                <form asp-controller="Account" asp-action="LogOut" method="post">
+                    <button type="submit" class="w-100 border-0 d-flex align-items-center justify-content-between rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; background-color: var(--custom-red); transition-duration: 0.25s;">
+                        <img src="~/assets/icons/signout.svg" style="width: 24px; height: 24px;" alt="Sign Out" />
+                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white); font-size: 15.75px;">
+                            Sign Out
+                        </p>
+                    </button>
+                </form>
             </div>
         </div>
         <main role="main" style="padding: 32px; overflow-y: scroll;" class="w-100">
