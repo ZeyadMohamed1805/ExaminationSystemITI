@@ -1,0 +1,75 @@
+﻿@using ExaminationSystemITI.Models.Tables
+@model List<Instructor>
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_DashboardLayout";
+}
+<seciton class="w-100 d-flex flex-column" style="gap: 16px;">
+    <select class="form-select w-100">
+        <option class="form-control">Admin</option>
+        <option class="form-control">Choice</option>
+        <option class="form-control" selected>Course</option>
+        <option class="form-control">Department</option>
+        <option class="form-control">Exam</option>
+        <option class="form-control">Instructor</option>
+        <option class="form-control">Question</option>
+        <option class="form-control">Student</option>
+        <option class="form-control">Topic</option>
+        <option class="form-control">User</option>
+        <option class="form-control">Admin</option>
+    </select>
+    <a asp-action="create" asp-controller="Instructor" class="btn btn-success poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;">
+        Create
+    </a>
+
+
+    <table class="get-data table table-border table-hover">
+        <thead>
+            <tr>
+                <th>Instructor ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Salary</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if(Model.Count()==0)
+            {
+                <tr>
+                    <td colspan="9">No Istructor Exit</td>
+                </tr>
+            }else
+            {
+                @foreach (var instructor in Model)
+                {
+                    <tr>
+                        <td>@instructor.ID</td>
+                        <td>@instructor.FirstName</td>
+                        <td>@instructor.LastName</td>
+                        <td>@instructor.Age</td>
+                        <td>@instructor.Salary</td>
+                        <td>@instructor.Address</td>
+                        <td>@instructor.Email</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Instructor" asp-route-id="@instructor.ID" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                                Update
+                            </a>
+                            <a asp-action="Delete" asp-controller="Instructor" asp-route-id="@instructor.ID" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+
+</seciton>

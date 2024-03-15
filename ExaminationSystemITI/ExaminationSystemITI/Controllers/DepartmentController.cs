@@ -13,22 +13,22 @@ namespace ExaminationSystemITI.Controllers
            _department = department;
         }
 
-        public IActionResult GetDep()
+        public IActionResult Read()
         {
             var departments = _department.GetDepartments();
             return View(departments);
         }
         [HttpGet]
-        public IActionResult AddDep()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddDep(Department department)
+        public IActionResult Create(Department department)
         {
             _department.InsertDepartment(department);
-            return RedirectToAction("GetDep");
+            return RedirectToAction("Read");
         }
 
         [HttpGet]
@@ -42,14 +42,15 @@ namespace ExaminationSystemITI.Controllers
         public IActionResult Edit(Department dep)
         {
             _department.EditDepartment(dep);
-            return RedirectToAction("GetDep");
+            return RedirectToAction("Read");
         }
 
-        [HttpPost]
-        public IActionResult Delete(Department dep)
+ 
+        public IActionResult Delete(int id)
         {
-            _department.DeleteDepartment(dep.Id);
-            return RedirectToAction("GetDep");
+            _department.DeleteDepartment(id);
+             return RedirectToAction("Read");
+
         }
 
 

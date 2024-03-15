@@ -2,6 +2,7 @@ using ExaminationSystemITI.Abstractions.Enums;
 using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -13,17 +14,20 @@ namespace ExaminationSystemITI.Controllers
     {
         private readonly ApplicationDbContext _context;
         IStudentService _student;
+        IDepartmentService _department;
+        ICourseService _course;
+        IInstructorService _instructor;
+        IExamService _exam;
 
-        public StudentController(ApplicationDbContext context , IStudentService student)
+        public StudentController(ApplicationDbContext context , IStudentService student, IDepartmentService department, ICourseService course, IInstructorService instructor, IExamService exam)
         {
             _context = context;
             _student = student;
+            _department = department;
+            _course = course;
+            _instructor = instructor;
+            _exam = exam;
         }
-        public IActionResult Active(int Id)
-        {
-            return View("Index");
-        }
-
         
         public IActionResult Index()
         {
@@ -47,35 +51,54 @@ namespace ExaminationSystemITI.Controllers
             }
         }
 
+        public IActionResult Read()
+        {
+            var students = _student.GetAll();
+            return View(students);
+        }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new StudentDepartmentsViewModel();
+            ViewBag.Departments = _department.GetDepartments();
+            return View(viewModel);
         }
+
         [HttpPost]
         public IActionResult Create(Student student)
         {
             _student.Add(student);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var student=_student.GetById(id);
-            return View(student);
+            var viewModel = new StudentDepartmentsViewModel();
+            viewModel.Student = _student.GetById(id);
+            ViewBag.Departments = _department.GetDepartments();
+            return View(viewModel);
         }
+
         [HttpPost]
-        public IActionResult Edit(Student student)
+        public IActionResult Edit(StudentDepartmentsViewModel viewModel)
         {
-            _student.Update(student);
-            return RedirectToAction("Index");
+            _student.Update(viewModel.Student);
+            return RedirectToAction("Read");
         }
+
         public IActionResult Delete(int id)
         {
             _student.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
+        }
+
+        public IActionResult Exams(int Id)
+        {
+            var viewModel = _course.FindStudentExams(Id);
+            return View(viewModel);
         }
     }
 }

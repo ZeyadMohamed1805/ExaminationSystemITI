@@ -1,5 +1,6 @@
 ﻿using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
@@ -8,52 +9,50 @@ namespace ExaminationSystemITI.Controllers
 {
     public class ChoiceController : Controller
     {
-        IChoiceService _choiceService;
-        public ChoiceController(IChoiceService choiceService)
+        IChoiceService _choice;
+        public ChoiceController(IChoiceService choice)
         {
-            _choiceService = choiceService;
+            _choice = choice;
         }
-        //--------------------------------------------------------------------------
-        public IActionResult Index()
+        public IActionResult Read()
         {
-            var choices = _choiceService.GetAll();
+            var choices = _choice.GetAll();
             return View(choices);
         }
-        //--------------------------------------------------------------------------
-        public IActionResult Read(int id)
-        {
-            var choices = _choiceService.GetAllInQuestion(id);
-            return View(choices);
-        }
-        //--------------------------------------------------------------------------
+
         [HttpGet]
         public IActionResult Create()
         {
-            Choice choice = new Choice();
-            return View(choice);
+            return View();
         }
+
         [HttpPost]
         public IActionResult Create(Choice choice)
         {
-            _choiceService.Add(choice);
-            return RedirectToAction("Index");
+            _choice.Add(choice);
+            return RedirectToAction("Read");
         }
-        //--------------------------------------------------------------------------
-        public IActionResult Update(Choice model)
+
+        [HttpGet]
+        public IActionResult Edit(int Qid, string text)
         {
-            return View(model);
+            var choice = _choice.FindChoice(new Choice() { Id = Qid, Text = text });
+            var viewModel = new ChoiceViewModel();
+            viewModel.Choice.Id = Qid;
+            viewModel.Choice.Text = text;
+            viewModel.NewText = "";
+            return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Update(Choice choice, string newText)
+        public IActionResult Edit(ChoiceViewModel viewModel)
         {
-            _choiceService.Update(choice, newText);
-            return RedirectToAction("Index");
+            _choice.Update(new Choice() { Id = viewModel.Choice.Id, Text = viewModel.Choice.Text }, viewModel.NewText);
+            return View();
         }
-        //--------------------------------------------------------------------------
-        public IActionResult Delete(Choice choice)
+        public IActionResult Delete(int Qid, string text)
         {
-            _choiceService.Delete(choice);
-            return RedirectToAction("Index");
+            _choice.Delete(new Choice() { Id = Qid, Text = text });
+            return RedirectToAction("Read");
         }
     }
 }

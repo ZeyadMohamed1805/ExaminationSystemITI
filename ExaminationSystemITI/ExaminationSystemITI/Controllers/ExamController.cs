@@ -1,6 +1,8 @@
-﻿using ExaminationSystemITI.Database;
+﻿using ExaminationSystemITI.Abstractions.Interfaces;
+using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using ExaminationSystemITI.Models.ViewModels;
+using ExaminationSystemITI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,12 +11,18 @@ namespace ExaminationSystemITI.Controllers
     public class ExamController : Controller
     {
         ApplicationDbContext _dbcontext;
-        public ExamController(ApplicationDbContext dbcontext)
+        IExamService _examService;
+        ICourseService _courseService;
+        IQuestionInterface _QuestionServices;
+        public ExamController(ApplicationDbContext dbcontext, IExamService examService, ICourseService courseService, IQuestionInterface questionServices)
         {
             _dbcontext = dbcontext;
+            _examService = examService;
+            _courseService = courseService;
+            _QuestionServices = questionServices;
         }
 
-        public IActionResult Getall()
+        public IActionResult Read(int Id)
         {
             //var Exams = _dbcontext.Exams.ToList();
             var Exams = _dbcontext.Exams.Include(e => e.Course).ToList();
@@ -120,6 +128,30 @@ namespace ExaminationSystemITI.Controllers
             ViewBag.Percentage = percentage;
 
             return View("SubmitAnswers");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var viewModel = new ExamCourseQuestionViewModel();
+
+            viewModel.Exam = _examService.FindExam(id);
+            ViewBag.Courses = _courseService.GetCourses();
+            ViewBag.Questions = _QuestionServices.GetQuestions();
+            return View(viewModel);
+
+        }
+        [HttpPost]
+        public IActionResult Edit(ExamCourseQuestionViewModel model)
+        {
+            _examService.Update(model.Exam);
+            return RedirectToAction("Read");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _examService.DeleteExam(id);
+            return RedirectToAction("Read");
         }
 
     }

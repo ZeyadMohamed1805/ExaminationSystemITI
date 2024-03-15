@@ -26,6 +26,9 @@ namespace ExaminationSystemITI
                 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
                 builder.Services.AddScoped<IStudentService, StudentService>();
                 builder.Services.AddScoped<IChoiceService, ChoiceService>();
+                builder.Services.AddScoped<IExamService, ExamService>();
+                builder.Services.AddScoped<IQuestionInterface, QuestionService>();
+                builder.Services.AddScoped<IAdminService, AdminService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

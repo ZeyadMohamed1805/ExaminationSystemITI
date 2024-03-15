@@ -1,5 +1,5 @@
 ﻿@using ExaminationSystemITI.Models.Tables
-@model List<Choice>
+@model List<Topic>
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
@@ -8,8 +8,8 @@
 <seciton class="w-100 d-flex flex-column" style="gap: 16px;">
     <select class="form-select w-100">
         <option class="form-control">Admin</option>
-        <option class="form-control" selected>Choice</option>
-        <option class="form-control">Course</option>
+        <option class="form-control">Choice</option>
+        <option class="form-control" selected>Course</option>
         <option class="form-control">Department</option>
         <option class="form-control">Exam</option>
         <option class="form-control">Instructor</option>
@@ -19,14 +19,15 @@
         <option class="form-control">User</option>
         <option class="form-control">Admin</option>
     </select>
-    <a asp-action="create" asp-controller="choice" class="btn btn-success poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;">
+    <a asp-action="create" asp-controller="Topic" class="btn btn-success poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;">
         Create
     </a>
     <table class="get-data table table-border table-hover">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Text</th>
+                <th>Name</th>
+                <th>Course</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -34,21 +35,22 @@
             @if (Model.Count() == 0)
             {
                 <tr>
-                    <td colspan="9">No Choices Exist!</td>
+                    <td colspan="5">No Topic Exist!</td>
                 </tr>
             }
             else
             {
-                foreach (var choice in Model)
+                foreach (var topic in Model)
                 {
                     <tr>
-                        <td>@choice.Id</td>
-                        <td>@choice.Text</td>
+                        <td>@topic.Id</td>
+                        <td>@topic.Name</td>
+                        <td>@topic.Course.Name</td>                       
                         <td>
-                            <a asp-action="Edit" asp-controller="Choice" asp-route-qid="@choice.Id" asp-route-text="@choice.Text" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                            <a asp-action="Edit" asp-controller="Topic" asp-route-id="@topic.Id" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
-                            <a asp-action="Delete" asp-controller="Choice" asp-route-qid="@choice.Id" asp-route-text="@choice.Text" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
+                            <a asp-action="Delete" asp-controller="Topic" asp-route-id="@topic.Id" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
                                 Delete
                             </a>
                         </td>
@@ -58,3 +60,16 @@
         </tbody>
     </table>
 </seciton>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,9 +11,9 @@ namespace ExaminationSystemITI.Models.Tables
         public string Text { get; set; }
         [Range(1,50,ErrorMessage ="Invalid Question ID!")]
         [Required]
-        public int QuestionId { get; set; }
+        public int Id { get; set; }
 
-        [ForeignKey("QuestionId")]
+        [ForeignKey("Id")]
         public Question Question { get; set; }
     }
 }

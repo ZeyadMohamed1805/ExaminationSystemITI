@@ -11,23 +11,25 @@ namespace ExaminationSystemITI.Controllers
         {
             _topic = topic;
         }
-        public IActionResult Index()
+     
+        public IActionResult Read()
         {
             ICollection<Topic> topics = _topic.GetTopics();
             return View(topics);
         }
 
+
         [HttpGet]
-        public IActionResult AddTopic()
+        public IActionResult Create()
         {
-            return View("Add");
+            return View();
         }
 
         [HttpPost]
-        public IActionResult AddTopic(Topic topic)
+        public IActionResult Create(Topic topic)
         {
             _topic.InsertTopic(topic);
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
         }
 
         [HttpGet]
@@ -41,14 +43,14 @@ namespace ExaminationSystemITI.Controllers
         public IActionResult Edit(Topic topic)
         {
             _topic.EditTopic(topic);
-            return RedirectToAction("Index");
+            return RedirectToAction("Read");
         }
 
-        [HttpPost]
-        public IActionResult Delete(Topic topic)
+    
+        public IActionResult Delete(int id)
         {
-            _topic.DeleteTopic(topic.Id);
-            return RedirectToAction("Index");
+            _topic.DeleteTopic(id);
+            return RedirectToAction("Read");
         }
     }
 }

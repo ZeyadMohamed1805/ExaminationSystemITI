@@ -11,5 +11,6 @@ namespace ExaminationSystemITI.Abstractions.Interfaces
         void Add(Choice choice);
         void Delete(Choice choice);
         void Update(Choice choice, string newChoiceText);
+        public Choice? FindChoice(Choice choice);
     }
 }
