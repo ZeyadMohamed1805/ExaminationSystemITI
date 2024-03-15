@@ -1,6 +1,7 @@
 ﻿using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Models.Tables;
 using ExaminationSystemITI.Models.ViewModels;
+using ExaminationSystemITI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
@@ -34,24 +35,20 @@ namespace ExaminationSystemITI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int Qid, string text)
+        public IActionResult Edit(int id, string text)
         {
-            var choice = _choice.FindChoice(new Choice() { Id = Qid, Text = text });
-            var viewModel = new ChoiceViewModel();
-            viewModel.Choice.Id = Qid;
-            viewModel.Choice.Text = text;
-            viewModel.NewText = "";
-            return View(viewModel);
+            return View(new Choice() { Id = id, Text = text });
         }
+
         [HttpPost]
-        public IActionResult Edit(ChoiceViewModel viewModel)
+        public IActionResult Edit(Choice choice, string newText)
         {
-            _choice.Update(new Choice() { Id = viewModel.Choice.Id, Text = viewModel.Choice.Text }, viewModel.NewText);
-            return View();
+            _choice.Update(choice, newText);
+            return RedirectToAction("Read");
         }
-        public IActionResult Delete(int Qid, string text)
+        public IActionResult Delete(int id, string text)
         {
-            _choice.Delete(new Choice() { Id = Qid, Text = text });
+            _choice.Delete(new Choice() { Id = id, Text = text });
             return RedirectToAction("Read");
         }
     }
