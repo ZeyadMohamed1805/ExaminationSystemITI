@@ -20,10 +20,9 @@ namespace ExaminationSystemITI.Services
             foreach( var course in courses )
             {
                 course.Topics = new TopicService(_context).GetCourseTopics(course.Id);
-                course.Departments = _context.Departments.FromSqlInterpolated($"SELECT * FROM DEPARTMENTS JOIN COURSEDEPARTMENT ON COURSEDEPARTMENT.COURSESID = {course.Id}").ToList();
-                course.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON COURSEINSTRUCTOR.COURSESID = {course.Id}").ToList();
-                course.StudentCourses = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {course.Id}").ToList();
-                course.StudentCourses = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {course.Id}").ToList();
+                course.Departments = _context.Departments.FromSqlInterpolated($"SELECT * FROM DEPARTMENTS JOIN COURSEDEPARTMENT ON DEPARTMENTS.ID = COURSEDEPARTMENT.DEPARTMENTSID WHERE COURSEDEPARTMENT.COURSESID = {course.Id}").ToHashSet();
+                course.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {course.Id}").ToHashSet();
+                course.StudentCourses = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {course.Id}").ToHashSet();
             }
                  
             return courses;
@@ -48,6 +47,12 @@ namespace ExaminationSystemITI.Services
         {
             var course = _context.Courses.Find(Id);
             return course;
+        }
+
+        public void InsertCourseDepartments(CourseDepartmentsViewModel viewModel)
+        {
+            foreach( int department in viewModel.Departments )
+                _context.Database.ExecuteSqlInterpolated($"INSERT INTO COURSEDEPARTMENT ( COURSESID, DEPARTMENTSID ) VALUES ( {viewModel.Course.Id}, {department} )");
         }
 
         public ICollection<StudentExamCardViewModel> FindStudentExams(int Id)

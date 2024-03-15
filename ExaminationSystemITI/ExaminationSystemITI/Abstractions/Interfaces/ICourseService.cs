@@ -12,5 +12,6 @@ namespace ExaminationSystemITI.Abstractions.Interfaces
         public void InsertCourse(Course course);
         public Course? FindCourse(int Id);
         public ICollection<StudentExamCardViewModel> FindStudentExams(int Id);
+        public void InsertCourseDepartments(CourseDepartmentsViewModel viewModel);
     }
 }

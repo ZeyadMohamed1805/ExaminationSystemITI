@@ -8,9 +8,11 @@ namespace ExaminationSystemITI.Controllers
     public class CourseController : Controller
     {
         ICourseService _course;
-        public CourseController( ICourseService course )
+        IDepartmentService _department;
+        public CourseController( ICourseService course, IDepartmentService department )
         {
             _course = course;
+            _department = department;
         }
         public IActionResult Read()
         {
@@ -21,13 +23,16 @@ namespace ExaminationSystemITI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Departments = _department.GetDepartments();
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Course course)
+        public IActionResult Create(CourseDepartmentsViewModel viewModel)
         {
-            _course.InsertCourse(course);
+            _course.InsertCourse(viewModel.Course);
+            viewModel.Course = _course.GetCourses().SingleOrDefault( course => course.Name == viewModel.Course.Name );
+            _course.InsertCourseDepartments(viewModel);
             return RedirectToAction("Read");
         }
 
