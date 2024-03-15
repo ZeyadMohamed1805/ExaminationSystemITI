@@ -1,6 +1,7 @@
 ﻿using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
 
 namespace ExaminationSystemITI.Abstractions.Interfaces
 {
@@ -11,5 +12,7 @@ namespace ExaminationSystemITI.Abstractions.Interfaces
         public void DeleteQuestion(int Id);
 
         public Question FindQuestion(int id);
+        public void Update(Question question);
+
     }
 }

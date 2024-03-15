@@ -1,50 +1,64 @@
 ﻿@using ExaminationSystemITI.Models.Tables
 @model Question
 
-<h1>Create New Question</h1>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Type">Question Type:</label>
-        <select asp-for="Type" id="questionType" class="form-control">
-            <option value="TrueOrFalse">True/False</option>
-            <option value="MCQ">Multiple Choice</option>
-        </select>
-        <span asp-validation-for="Type" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="Title">Question Title:</label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_DashboardLayout";
+}
 
-    <div class="form-group">
-        <label asp-for="CorrectAnswer">Correct Answer:</label>
-        <input type="text" asp-for="CorrectAnswer" class="form-control" />
-        <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label>Select Course:</label>
-        <select asp-for="CourseId" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))" class="form-control">
-            <option value="">-- Select Course --</option>
-        </select>
-        <span asp-validation-for="CourseId" class="text-danger"></span>
-    </div>
+<h1 class="poppins-bold" style="color: var(--custom-black)">Create Question</h1>
+<hr style="backround-color: var(--custom-black); color: var(--custom-black); height: 1px;" />
+<div class="row w-100">
+    <div class="col-md-4 w-100">
+           <form method="post" class="d-flex flex-column" style="gap: 16px;">
+              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               
+              <div class="form-group">
+                <label asp-for="Type" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Question Type:</label>
+                    <select asp-for="Type" id="questionType" class="form-control">
+                        <option value="TrueOrFalse">True/False</option>
+                        <option value="MCQ">Multiple Choice</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+               </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Question Title</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CorrectAnswer" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Correct Answer</label>
+                <input type="text" asp-for="CorrectAnswer" class="form-control" />
+                <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Select Course</label>
+                <select asp-for="CourseId" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))" class="form-control">
+                    <option value="">-- Select Course --</option>
+                </select>
+                <span asp-validation-for="CourseId" class="text-danger"></span>
+            </div>
 
-    <div id="choiceFields" style="display: none;">
-        <div class="form-group">
-            <label>Choices:</label>
-            <input type="text" name="choices" class="form-control" placeholder="Enter choice 1" />
-            <input type="text" name="choices" class="form-control" placeholder="Enter choice 2" />
-            <input type="text" name="choices" class="form-control" placeholder="Enter choice 3" />
-            <input type="text" name="choices" class="form-control" placeholder="Enter choice 4" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Create Question</button>
-</form>
+            <div id="choiceFields" style="display: none;">
+                <div class="form-group">
+                    <label>Choices:</label>
+                    <input type="text" name="choices" class="form-control" placeholder="Enter choice 1" class="form-control"/>
+                    <input type="text" name="choices" class="form-control" placeholder="Enter choice 2" class="form-control"/>
+                    <input type="text" name="choices" class="form-control" placeholder="Enter choice 3" class="form-control"/>
+                    <input type="text" name="choices" class="form-control" placeholder="Enter choice 4" class="form-control"/>
+                </div>
+            </div>
+             <div class="form-group w-100 d-flex flex-column" style="margin-top: 8px; gap: 8px;">
+                <input type="submit" value="Create Question" class="poppins-semibold w-100 rounded" style="border: none; background-color: var(--custom-red); color: var(--custom-white); padding: 8px 16px;" />
+                <a asp-action="read" asp-controller="Question" class="w-100 poppins-semibold rounded" style="background-color: var(--custom-white); color: var(--custom-red);padding: 8px 16px; border: solid 1px var(--custom-red); text-decoration: none; text-align: center;">
+                    Go Back
+                </a>
+            </div> 
+            @*  <button type="submit" class="btn btn-primary">Create Question</button>  *@
+        </form>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
