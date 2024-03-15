@@ -68,7 +68,7 @@ namespace ExaminationSystemITI.Controllers
             }
            // _dbcontext.SaveChanges();
 
-            return RedirectToAction("Getall","Exam");
+            return RedirectToAction("Read", "Exam");
            
         }
 
