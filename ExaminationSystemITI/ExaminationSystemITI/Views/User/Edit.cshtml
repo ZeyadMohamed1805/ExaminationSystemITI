@@ -13,12 +13,12 @@
     <div class="col-md-4 w-100">
         <form method="post" class="d-flex flex-column" style="gap: 16px;">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="Email" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
                 <input asp-for="Email" value="@Model.Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">
                     New Email
                 </label>

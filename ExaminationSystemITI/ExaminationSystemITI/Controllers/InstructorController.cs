@@ -54,7 +54,6 @@ namespace ExaminationSystemITI.Controllers
             return RedirectToAction("Read");
         }
 
-        [HttpPost]
         public IActionResult Delete(Instructor ins)
         {
             _instructor.DeleteInstructor(ins.ID);
