@@ -15,7 +15,8 @@ namespace ExaminationSystemITI.Services
 
         public List<Question> GetQuestions()
         {
-            var questions = _dbcontext.Questions.ToList();
+            var questions = _dbcontext.Questions.Include(a=>a.Course).ToList();
+
             return questions;
         }
 
@@ -28,6 +29,11 @@ namespace ExaminationSystemITI.Services
         {
             var question = _dbcontext.Questions.Find(id);
             return question;
+        }
+
+        public void Update(Question question)
+        {
+            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC EditQuestionsById {question.Id},{question.Type},{question.Title},{question.CorrectAnswer}");
         }
     }
 }

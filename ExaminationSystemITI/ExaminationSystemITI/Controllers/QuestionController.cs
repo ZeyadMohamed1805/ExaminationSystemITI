@@ -5,16 +5,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using ExaminationSystemITI.Abstractions.Interfaces;
 
 namespace ExaminationSystemITI.Controllers
 {
     public class QuestionController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public QuestionController(ApplicationDbContext context)
+        IQuestionInterface _questionService;
+        ICourseService _courseService;
+        public QuestionController(ApplicationDbContext context,IQuestionInterface questionService,ICourseService courseService)
         {
             _context = context;
+            _questionService = questionService;
+            _courseService = courseService;
+        }
+
+
+        public IActionResult Read()
+        {
+            var questions=_questionService.GetQuestions();
+           
+            return View(questions);
         }
 
         [HttpGet]
@@ -52,12 +64,25 @@ namespace ExaminationSystemITI.Controllers
                     _context.SaveChanges();
                 }
 
-                return RedirectToAction("Read", "Exam"); 
-           // }
-
-            
-            //ViewBag.Courses = _context.Courses.ToList();
-            //return View(question);
+            // return RedirectToAction("Read", "Exam"); 
+            return RedirectToAction("Read");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var question=_questionService.FindQuestion(id);
+            return View(question);
+        }
+        [HttpPost]
+        public IActionResult Edit(Question question)
+        {
+            _questionService.Update(question);
+            return RedirectToAction("Read");
+        }
+        public IActionResult Delete(int id)
+        {
+           _questionService.DeleteQuestion(id);   
+            return RedirectToAction("Read");
         }
     }
 }
