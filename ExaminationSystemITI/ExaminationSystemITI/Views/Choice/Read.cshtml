@@ -1,33 +1,56 @@
-﻿
-@model List<Choice> 
+﻿@using ExaminationSystemITI.Models.Tables
+@model List<Choice>
 @{
-    ViewData["Title"] = "Read";
+    ViewData["Title"] = "Dashboard";
+    Layout = "_DashboardLayout";
 }
 
-<h1>Read Choices</h1>
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Choice Text</th>
-            <th>Question Id</th>
-            <th>Operations</th>
-       </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<seciton class="w-100 d-flex flex-column" style="gap: 16px;">
+    <select class="form-select w-100">
+        <option class="form-control" onclick="location.href='/admin/read'" >Admin</option>
+        <option class="form-control" onclick="location.href='/choice/read'" selected>Choice</option>
+        <option class="form-control" onclick="location.href='/course/read'">Course</option>
+        <option class="form-control" onclick="location.href='/department/read'">Department</option>
+        <option class="form-control" onclick="location.href='/exam/read'">Exam</option>
+        <option class="form-control" onclick="location.href='/instructor/read'">Instructor</option>
+        <option class="form-control" onclick="location.href='/question/read'">Question</option>
+        <option class="form-control" onclick="location.href='/student/read'">Student</option>
+        <option class="form-control" onclick="location.href='/topic/read'">Topic</option>
+        <option class="form-control" onclick="location.href='/user/read'">User</option>
+    </select>
+    <table class="get-data table table-border table-hover">
+        <thead>
             <tr>
-                <td>@item.Text</td>
-                <td>@item.QuestionId</td>
-                <td>
-                    <a asp-controller="Choice" asp-action="Create" asp-route-id="@item.QuestionId" class="btn btn-primary">Create</a>
-
-                    <a asp-controller="Choice" asp-action="Update" asp-route-Text="@item.Text" asp-route-QuestionId="@item.QuestionId" class="btn btn-primary">Update</a>
-
-                    <a asp-controller="Choice" asp-action="Delete" asp-route-Text="@item.Text" asp-route-QuestionId="@item.QuestionId" class="btn btn-primary">Delete</a>
-                </td>
+                <th>ID</th>
+                <th>Text</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
-
+        </thead>
+        <tbody>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="9">No Choices Exist!</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var choice in Model)
+                {
+                    <tr>
+                        <td>@choice.Id</td>
+                        <td>@choice.Text</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Choice" asp-route-id="@choice.Id" asp-route-text="@choice.Text" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                                Update
+                            </a>
+                            <a asp-action="Delete" asp-controller="Choice" asp-route-id="@choice.Id" asp-route-text="@choice.Text" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</seciton>

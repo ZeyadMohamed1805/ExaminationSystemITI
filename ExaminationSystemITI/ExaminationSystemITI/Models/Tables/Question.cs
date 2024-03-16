@@ -22,3 +22,4 @@ namespace ExaminationSystemITI.Models.Tables
         public ICollection<StudentExamQuestion> StudentExamQuestions { get; set; }
     }
 }
+

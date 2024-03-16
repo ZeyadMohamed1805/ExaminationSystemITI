@@ -15,8 +15,17 @@ namespace ExaminationSystemITI.Services
  
         public void Add(Student student)
         {
-            _context.Database.ExecuteSqlInterpolated($"EXEC InsertUser {student.Email}");          
-            _context.Database.ExecuteSqlInterpolated($"EXEC InsertStudent {student.FirstName},{student.LastName},{student.Age},{student.Gender},{student.Address},{student.Faculty},{student.GraduationYear},{student.Email},{student.DepartmentId}");        
+            _context.Database.ExecuteSqlInterpolated($"EXEC InsertUser {student.Email}");
+            _context.Database.ExecuteSqlInterpolated($"EXEC InsertRoleUser 2, {student.Email}");
+            _context.Database.ExecuteSqlInterpolated($"EXEC InsertStudent {student.FirstName},{student.LastName},{student.Age},{student.Gender},{student.Address},{student.Faculty},{student.GraduationYear},{student.Email},{student.DepartmentId}");
+            student = _context.Students.SingleOrDefault( std => std.Email == student.Email  );
+            _context.Database.ExecuteSqlInterpolated($"EXEC InsertStudentCoursesByDepartmentId {student.Id}, {student.DepartmentId};");
+        }
+
+        public List<Course> GetStudentCourses(int Id)
+        {
+            var courses = _context.Courses.FromSqlInterpolated($"SELECT COURSES.ID, COURSES.NAME, COURSES.GRADE FROM COURSES JOIN STUDENTCOURSES ON COURSES.ID = STUDENTCOURSES.COURSEID WHERE STUDENTCOURSES.STUDENTID = {Id}").ToList();
+            return courses;
         }
      
         public void Delete(int id)
@@ -62,7 +71,7 @@ namespace ExaminationSystemITI.Services
         
         public void Update(Student student)
         {
-            _context.Database.ExecuteSqlInterpolated($"EXEC EditStudentById {student.Id},{student.FirstName},{student.LastName},{student.Age},{student.Gender},{student.Address},{student.Faculty},{student.GraduationYear}");
+            _context.Database.ExecuteSqlInterpolated($"EXEC EditStudentById {student.Id},{student.FirstName},{student.LastName},{student.Age},{student.Gender},{student.Address},{student.Faculty},{student.GraduationYear}, {student.DepartmentId}");
   
         }
 

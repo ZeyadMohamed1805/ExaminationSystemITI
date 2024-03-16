@@ -1,45 +1,56 @@
 ﻿@using ExaminationSystemITI.Models.Tables
 @model Exam
+@{
+    ViewData["Title"] = "Create";
+    Layout = "_DashboardLayout";
+}
 
-<h1>Create Exam</h1>
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Duration">Duration (minutes):</label>
-        <input asp-for="Duration" class="form-control" />
-        <span asp-validation-for="Duration" class="text-danger"></span>
+<h1 class="poppins-bold" style="color: var(--custom-black)">Create Exam</h1>
+<hr style="backround-color: var(--custom-black); color: var(--custom-black); height: 1px;" />
+<div class="row w-100">
+    <div class="col-md-4 w-100">
+        <form method="post" class="d-flex flex-column" style="gap: 16px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Duration (minutes)</label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Date" type="date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="QCount" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Number of Question</label>
+                <input asp-for="QCount" class="form-control" />
+                <span asp-validation-for="QCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalMarks" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="TotalMarks" class="form-control" />
+                <span asp-validation-for="TotalMarks" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CourseID" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Course</label>
+                <select asp-for="CourseID" asp-items="@(new SelectList(ViewBag.Courses,"Id", "Name"))" class="form-control"></select>
+                <span asp-validation-for="CourseID" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group w-100 d-flex flex-column" style="margin-top: 8px; gap: 8px;">
+                <input type="submit" value="Create" class="poppins-semibold w-100 rounded" style="border: none; background-color: var(--custom-red); color: var(--custom-white); padding: 8px 16px;" />
+                <a asp-action="read" asp-controller="Exam" class="w-100 poppins-semibold rounded" style="background-color: var(--custom-white); color: var(--custom-red);padding: 8px 16px; border: solid 1px var(--custom-red); text-decoration: none; text-align: center;">
+                    Go Back
+                </a>
+            </div>
+        </form>
     </div>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Date">Date:</label>
-        <input asp-for="Date" type="date" class="form-control" />
-        <span asp-validation-for="Date" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="QCount">Number of Questions:</label>
-        <input asp-for="QCount" class="form-control" />
-        <span asp-validation-for="QCount" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="TotalMarks">Total Marks:</label>
-        <input asp-for="TotalMarks" class="form-control" />
-        <span asp-validation-for="TotalMarks" class="text-danger"></span>
-    </div>
 
-    <div class="form-group">
-        <label asp-for="CourseID">Course:</label>
-        <select asp-for="CourseID" asp-items="@(new SelectList(ViewBag.Courses,"Id", "Name"))" class="form-control"></select>
-        <span asp-validation-for="CourseID" class="text-danger"></span>
-    </div>
 
-   @*  <div class="form-group">
-        <label>Select Questions:</label>
-        <select multiple asp-for="Questions" class="form-control" asp-items="@(new SelectList(ViewBag.Questions, "Id", "Title"))"></select>
-        <span asp-validation-for="Questions" class="text-danger"></span>
-    </div> *@
-
-    <button type="submit" class="btn btn-primary">Create Exam</button>
-</form>
 

@@ -1,100 +1,73 @@
-﻿@* @using ExaminationSystemITI.Models.Tables
+﻿
+@using ExaminationSystemITI.Models.Tables
 @using ExaminationSystemITI.Abstractions.Enums
-
+@using ExaminationSystemITI.Models.ViewModels
 @model List<Question>
 
-<h1>Display</h1>
+@{
+    int counter = 0;
+    string progres = "0%";
+}
 
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Question ID</th>
-            <th>Question</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var question in Model)
-        {
-            <tr>
-                <td>@question.Id</td>
-                <td>
-                    @question.Title<br /> <ul>
-                        @if (question.Type == EQuestionType.TrueOrFalse)
-                        {
-                            <li>True</li>
-                            <li>False</li>
-                        }
-                        else
-                        {
-                            @foreach (var choice in question.Choices)
-                            {
-                                <li>@choice.Text</li>
-                            }
-                        }
-                    </ul>
-                    <br />
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
- *@
+<header class="w-100 custom-wrapper d-flex justify-content-center align-items-center shadow" style="background-color: var(--custom-white); height: 120px;">
+    <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 120px;" alt="ITI Logo" />
+</header>
 
-@* @using ExaminationSystemITI.Models.Tables
-@using ExaminationSystemITI.Abstractions.Enums
+<section class="container" style="padding: 0 15px;">
 
-@model List<Question>
+    <div class="progress mt-3">
+        <div class="progress-bar" role="progressbar" style="width: @progres;" aria-valuenow="@counter" aria-valuemin="0" aria-valuemax="100">@progres</div>
+    </div>
 
-<form method="post" action="/Exam/SubmitAnswers">
-    <h1>Exam Questions</h1>
+    <div class="text-center my-4">
+        <h1 class="fw-bold" style="color:var(--custom-red)">ITI EXAMS</h1>
+    </div>
 
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Question Number</th>
-                <th>Question</th>
-                <th>Choices</th>
-            </tr>
-        </thead>
-        <tbody>
+    <form method="post" action="/Exam/SubmitAnswers" class="mb-4">
+        <input type="hidden" name="StudentEmail" value="@ViewBag.Email" />
+        <input type="hidden" name="CourseId" value="@Model.First().CourseId" />
+        <input type="hidden" name="ExamId" value="@ViewBag.ExamId" />
+        <div class="d-flex flex-column gap-3">
             @for (var i = 0; i < Model.Count; i++)
             {
                 var question = Model[i];
                 var questionNumber = i + 1;
-                <tr>
-                    <td>@questionNumber</td>
-                    <td>@question.Title</td>
-                    <td>
-                        @if (question.Type == EQuestionType.TrueOrFalse)
-                        {
 
-                            <input type="radio" id="true @questionNumber" name="@questionNumber" value="True">
-                            <label for="@questionNumber">True</label>
-
-                            <input type="radio" id="false @questionNumber" name="@questionNumber" value="False">
-                            <label for="@questionNumber">False</label>
-                        }
-                        else
+                <div class="mb-4 border p-3">
+                    <h5 style="color:var(--custom-black)" class="fw-semibold">@questionNumber. @question.Title</h5>
+                    <input type="hidden" name="Answers[@i].QuestionId" value="@question.Id" />
+                    @if (question.Type == EQuestionType.TrueOrFalse)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="true@questionNumber" name="Answers[@i].Answer" value="True" />
+                            <label style="color:var(--custom-black)" class="form-check-label fw-medium" for="true@questionNumber">True</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="false@questionNumber" name="Answers[@i].Answer" value="False" />
+                            <label style="color:var(--custom-black)" class="form-check-label fw-medium" for="false@questionNumber">False</label>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var choice in question.Choices)
                         {
-                            foreach (var choice in question.Choices)
-                            {
-                                <div>
-                                    <input type="radio" id="choice @choice.QuestionId" name="@choice.QuestionId" value="@choice.Text">
-                                    <label for="@choice.QuestionId">@choice.Text</label>
-                                </div>
-                            }
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="choice@choice.Id" name="Answers[@i].Answer" value="@choice.Text" />
+                                <label style="color:var(--custom-black)" class="form-check-label fw-medium" for="choice@choice.Id">@choice.Text</label>
+                            </div>
                         }
-                    </td>
-                </tr>
+                    }
+                </div>
             }
-        </tbody>
-    </table>
+            <div class="text-center">
+                <button type="submit" class="btn btn-lg" style="background-color: var(--custom-red); color: var(--custom-white);">Submit</button>
+            </div>
+        </div>
+    </form>
+</section>
 
-    <button type="submit" class="btn btn-primary">Submit Answers</button>
-</form> *@
 
-
- 
+@* 
 @using ExaminationSystemITI.Models.Tables
 @using ExaminationSystemITI.Abstractions.Enums
 @using ExaminationSystemITI.Models.ViewModels
@@ -149,8 +122,7 @@
         </tbody>
     </table>
 
-    <button type="submit" class="btn btn-primary">Submit Answers</button>
-</form>
+   *@
 
 
 

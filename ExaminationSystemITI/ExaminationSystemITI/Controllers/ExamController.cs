@@ -1,8 +1,11 @@
-﻿using ExaminationSystemITI.Abstractions.Enums;
+
+using ExaminationSystemITI.Abstractions.Enums;
+using Microsoft.AspNetCore.Authorization;
+using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using ExaminationSystemITI.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+using ExaminationSystemITI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -14,12 +17,18 @@ namespace ExaminationSystemITI.Controllers
     public class ExamController : Controller
     {
         ApplicationDbContext _dbcontext;
-        public ExamController(ApplicationDbContext dbcontext)
+        IExamService _examService;
+        ICourseService _courseService;
+        IQuestionInterface _QuestionServices;
+        public ExamController(ApplicationDbContext dbcontext, IExamService examService, ICourseService courseService, IQuestionInterface questionServices)
         {
             _dbcontext = dbcontext;
+            _examService = examService;
+            _courseService = courseService;
+            _QuestionServices = questionServices;
         }
 
-        public IActionResult Getall()
+        public IActionResult Read(int Id)
         {
             if (User.IsInRole(ERole.Student.ToString()))
             {
@@ -97,7 +106,7 @@ namespace ExaminationSystemITI.Controllers
             }
            // _dbcontext.SaveChanges();
 
-            return RedirectToAction("Getall","Exam");
+            return RedirectToAction("Read", "Exam");
            
         }
 
@@ -198,8 +207,32 @@ namespace ExaminationSystemITI.Controllers
                 })
                 .Distinct()
                 .ToList();
-            //temp
             return View(examsWithGrades);
+        }
+        
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var viewModel = new ExamCourseQuestionViewModel();
+
+            viewModel.Exam = _examService.FindExam(id);
+            ViewBag.Courses = _courseService.GetCourses();
+            ViewBag.Questions = _QuestionServices.GetQuestions();
+            return View(viewModel);
+
+        }
+        
+        [HttpPost]
+        public IActionResult Edit(ExamCourseQuestionViewModel model)
+        {
+            _examService.Update(model.Exam);
+            return RedirectToAction("Read");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _examService.DeleteExam(id);
+            return RedirectToAction("Read");
         }
     }
 }
