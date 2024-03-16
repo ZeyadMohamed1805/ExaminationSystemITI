@@ -1,13 +1,19 @@
-﻿using ExaminationSystemITI.Abstractions.Interfaces;
+
+using ExaminationSystemITI.Abstractions.Enums;
+using Microsoft.AspNetCore.Authorization;
+using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using ExaminationSystemITI.Models.ViewModels;
 using ExaminationSystemITI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Security.Claims;
 
 namespace ExaminationSystemITI.Controllers
 {
+    [Authorize]
     public class ExamController : Controller
     {
         ApplicationDbContext _dbcontext;
@@ -24,9 +30,41 @@ namespace ExaminationSystemITI.Controllers
 
         public IActionResult Read(int Id)
         {
-            //var Exams = _dbcontext.Exams.ToList();
-            var Exams = _dbcontext.Exams.Include(e => e.Course).ToList();
-            return View(Exams);
+            if (User.IsInRole(ERole.Student.ToString()))
+            {
+                string studentEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                
+                var student = _dbcontext.Students
+                    .Include(s => s.StudentCourses)
+                    .ThenInclude(sc => sc.Course)
+                    .FirstOrDefault(s => s.Email == studentEmail);
+                
+                int studentId = student.Id;
+
+                if (student == null)
+                {
+                    
+                    return NotFound();
+                }
+
+                
+                var courseIds = student.StudentCourses.Select(sc => sc.CourseId);
+
+               
+                var exams = _dbcontext.Exams
+                    .Where(e => courseIds.Contains(e.CourseID) && !_dbcontext.StudentExamQuestions.Any(seq => seq.StudentId == studentId && seq.ExamId == e.ID))
+                    .Include(e => e.Course)
+                    .ToList();
+
+                return View(exams);
+            }
+            else
+            {
+                var Exams = _dbcontext.Exams.Include(e => e.Course).ToList();
+                return View(Exams);
+            }
+           
         }
 
         public IActionResult Course(int Id)
@@ -73,7 +111,8 @@ namespace ExaminationSystemITI.Controllers
         }
 
 
-        [Route("Exam/Display/{ExamId}")] 
+        [Route("Exam/Display/{ExamId}")]
+        [Authorize]
         public IActionResult Display(int ExamId)
         {
             //var questions = _dbcontext.Questions
@@ -87,17 +126,24 @@ namespace ExaminationSystemITI.Controllers
                .FromSqlRaw("SELECT q.Id, q.Title, q.CorrectAnswer, q.Type, q.CourseId FROM questions q INNER JOIN ExamQuestion eq ON q.Id = eq.QuestionsId WHERE eq.ExamsId = {0}", ExamId)
                .Include(a => a.Choices)
                .ToList();
-
-           
-
+            
+            string studentEmail = User.FindFirst(ClaimTypes.Email)?.Value; ;
+            Debug.WriteLine("User Email: " + studentEmail);
+            Debug.WriteLine("asasa");
+            ViewBag.Email = studentEmail;
+            ViewBag.ExamId = ExamId;
             return View(questions);
         }
 
 
         [HttpPost]
-        public IActionResult SubmitAnswers(SubmitAnswersViewModel model)
+        public IActionResult SubmitAnswers(SubmitAnswersViewModel model , string StudentEmail , int courseId , int ExamId)
         {
-            
+
+            var student = _dbcontext.Students.FirstOrDefault(s => s.Email == StudentEmail);
+            int studentId = student.Id;
+            var studentCourse = _dbcontext.StudentCourses
+                 .FirstOrDefault(sc => sc.StudentId == student.Id && sc.CourseId == courseId);
             var submittedQuestionIds = model.Answers.Select(a => a.QuestionId).ToList();
 
             
@@ -127,9 +173,43 @@ namespace ExaminationSystemITI.Controllers
             ViewBag.TotalQuestions = totalQuestions;
             ViewBag.Percentage = percentage;
 
+            studentCourse.Grade = percentage;
+
+            foreach (var answer in model.Answers)
+            {
+                var studentExamQuestion = new StudentExamQuestion
+                {
+                    StudentId = student.Id,
+                    ExamId = ExamId, 
+                    QuestionId = answer.QuestionId,
+                    Answer = answer.Answer
+                };
+
+                _dbcontext.StudentExamQuestions.Add(studentExamQuestion);
+            }
+
+
+            _dbcontext.SaveChanges();
+
             return View("SubmitAnswers");
         }
 
+        [Route("Exam/DisplayAnsweredExams/{studentId}")]
+        public IActionResult DisplayAnsweredExams(int studentId)
+        {
+            var examsWithGrades = _dbcontext.StudentExamQuestions
+                .Where(seq => seq.StudentId == studentId)
+                .Select(seq => new StudentExamViewModel
+                {
+                    ExamId = seq.ExamId,
+                    ExamName = _dbcontext.Courses.FirstOrDefault(c => c.Id == seq.Exam.CourseID).Name,
+                    Grade = _dbcontext.StudentCourses.FirstOrDefault(sc => sc.StudentId == studentId && sc.CourseId == seq.Exam.CourseID).Grade
+                })
+                .Distinct()
+                .ToList();
+            return View(examsWithGrades);
+        }
+        
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -141,6 +221,7 @@ namespace ExaminationSystemITI.Controllers
             return View(viewModel);
 
         }
+        
         [HttpPost]
         public IActionResult Edit(ExamCourseQuestionViewModel model)
         {
@@ -153,6 +234,5 @@ namespace ExaminationSystemITI.Controllers
             _examService.DeleteExam(id);
             return RedirectToAction("Read");
         }
-
     }
 }

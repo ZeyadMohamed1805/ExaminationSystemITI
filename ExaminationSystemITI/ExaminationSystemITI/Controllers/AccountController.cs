@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Security.Claims;
 
 namespace ExaminationSystemITI.Controllers
@@ -46,11 +47,12 @@ namespace ExaminationSystemITI.Controllers
             {
                 ci.AddClaim(item);
             }
-
+            
             ClaimsPrincipal cp = new ClaimsPrincipal();
             cp.AddIdentity(ci);
             //
             await HttpContext.SignInAsync(cp);
+            Debug.WriteLine($"Email: {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Email")?.Value}");
             if (res.Roles.Any(r => r.Description.ToString() == "Admin"))
             {
                 return RedirectToAction("Index", "Student");
