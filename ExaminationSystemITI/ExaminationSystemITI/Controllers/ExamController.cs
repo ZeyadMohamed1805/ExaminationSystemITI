@@ -198,7 +198,7 @@ namespace ExaminationSystemITI.Controllers
                 })
                 .Distinct()
                 .ToList();
-
+            //temp
             return View(examsWithGrades);
         }
     }
