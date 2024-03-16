@@ -1,6 +1,7 @@
 ﻿using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -30,11 +31,29 @@ namespace ExaminationSystemITI.Services
             return instructors;
         }
 
+        public List<Course> GetInstructorCourses(int Id)
+        {
+            var courses = _dbcontext.Courses.FromSqlInterpolated($"SELECT * FROM COURSES JOIN COURSEINSTRUCTOR ON COURSES.ID = COURSEINSTRUCTOR.COURSESID WHERE COURSEINSTRUCTOR.INSTRUCTORSID = {Id}").ToList();
+            return courses;
+        }
+
+        public List<Instructor> GetActiveSupervisors()
+        {
+            var supervisors = _dbcontext.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS WHERE ID NOT IN ( SELECT SP FROM DEPARTMENTS )").ToList();
+            return supervisors;
+        }
+
         public void InsertInstructor(Instructor ins)
         {
             _dbcontext.Database.ExecuteSqlInterpolated($"EXEC InsertUser {ins.Email}");
-
+            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC InsertRoleUser 3, {ins.Email}");
             _dbcontext.Database.ExecuteSqlInterpolated($"EXEC InsertInstructor {ins.FirstName},{ins.LastName},{ins.Age},{ins.Salary},{ins.Address},{ins.Email}");
+        }
+
+        public void InsertInstructorCourses(InstructorCoursesViewModel viewModel)
+        {
+            foreach( var course in viewModel.CourseIds )
+                _dbcontext.Database.ExecuteSqlInterpolated($"EXEC InsertCourseInstructor {course}, {viewModel.Instructor.ID}");
         }
 
         public Instructor FindInstructor(int id)

@@ -1,5 +1,5 @@
-﻿@using ExaminationSystemITI.Models.Tables
-@model ExaminationSystemITI.Models.Tables.Instructor
+﻿@using ExaminationSystemITI.Models.ViewModels
+@model InstructorCoursesViewModel
 
 
 @{
@@ -15,34 +15,38 @@
         <form method="post" class="d-flex flex-column" style="gap: 16px;">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="FirstName" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <label asp-for="Instructor.FirstName" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Instructor.FirstName" class="form-control" />
+                <span asp-validation-for="Instructor.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastName" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+                <label asp-for="Instructor.LastName" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Instructor.LastName" class="form-control" />
+                <span asp-validation-for="Instructor.LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Age" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
+                <label asp-for="Instructor.Age" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Instructor.Age" class="form-control" />
+                <span asp-validation-for="Instructor.Age" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Salary" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
-                <input asp-for="Salary" class="form-control" />
-                <span asp-validation-for="Salary" class="text-danger"></span>
+                <label asp-for="Instructor.Salary" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Instructor.Salary" class="form-control" />
+                <span asp-validation-for="Instructor.Salary" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+                <label asp-for="Instructor.Address" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Instructor.Address" class="form-control" />
+                <span asp-validation-for="Instructor.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="CourseIds" class="control-label poppins-semibold mb-1" style="color: var(--custom-black);">Courses</label>
+                @Html.ListBoxFor(m => m.CourseIds, new SelectList(ViewBag.Courses, "Id", "Name"), new { @class = "w-100 form-control" })
+            </div>
+            <div class="form-group">
+                <label asp-for="Instructor.Email" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Instructor.Email" class="form-control" />
+                <span asp-validation-for="Instructor.Email" class="text-danger"></span>
             </div>
 
             <div class="form-group w-100 d-flex flex-column" style="margin-top: 8px; gap: 8px;">
