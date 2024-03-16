@@ -1,0 +1,25 @@
+﻿
+
+@model List<ExaminationSystemITI.Models.ViewModels.StudentExamViewModel>
+
+<h1>Answered Exams</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Exam ID</th>
+            <th>Exam Name</th>
+            <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exam in Model)
+        {
+            <tr>
+                <td>@exam.ExamId</td>
+                <td>@exam.ExamName</td>
+                <td>@(exam.Grade.HasValue ? exam.Grade.Value.ToString("0.00") : "Not graded")</td>
+            </tr>
+        }
+    </tbody>
+</table>

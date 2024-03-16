@@ -9,6 +9,7 @@
 }
 
 <h1>All Students</h1>
+<h1>@ViewBag.Email</h1>
 @if (isUserAdmin)
     {
         <a asp-action="create" asp-controller="student" class="btn btn-success">Create</a>
@@ -76,6 +77,10 @@
             }
         </tbody>
 </table>
+<a asp-action="Getall" asp-controller="Exam" class="btn btn-primary">GO To Exams</a>
+@foreach(var item in Model){
+    <a asp-action="DisplayAnsweredExams" asp-controller="Exam" asp-route-id="@item.Id" class="btn btn-primary">DONE Exams</a>
+}
 
 @* @foreach(var m in Model)
 {
