@@ -53,8 +53,19 @@ namespace ExaminationSystemITI.Controllers
 
         public IActionResult Read()
         {
+            var studentCourses = new List<StudentCoursesViewModel>();
             var students = _student.GetAll();
-            return View(students);
+
+            foreach (var student in students)
+                studentCourses.Add(
+                    new StudentCoursesViewModel()
+                    {
+                        Student = student,
+                        Courses = _student.GetStudentCourses(student.Id)
+                    }
+                );
+
+            return View(studentCourses);
         }
 
         [HttpGet]

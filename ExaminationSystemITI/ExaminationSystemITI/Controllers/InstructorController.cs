@@ -1,18 +1,22 @@
 ﻿using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 
 namespace ExaminationSystemITI.Controllers
 {
     public class InstructorController : Controller
     {
         IInstructorService _instructor;
+        ICourseService _course;
         
-        public InstructorController(IInstructorService instructor)
+        public InstructorController(IInstructorService instructor, ICourseService course)
         {
             _instructor = instructor;
+            _course = course;
         }
 
         public IActionResult Index(int Id)
@@ -23,20 +27,34 @@ namespace ExaminationSystemITI.Controllers
 
         public IActionResult Read()
         {
+            
+            var courseinstructors = new List<InstructorCoursesViewModel>();
             var instructors = _instructor.GetInstructors();
-            return View(instructors);
+
+            foreach (var instructor in instructors)
+                courseinstructors.Add(
+                    new InstructorCoursesViewModel() {
+                        Instructor = instructor,
+                        Courses = _instructor.GetInstructorCourses(instructor.ID)
+                    }
+                );
+
+            return View(courseinstructors);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Courses = _course.GetCourses();
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Instructor instructor)
+        public IActionResult Create(InstructorCoursesViewModel viewModel)
         {
-            _instructor.InsertInstructor(instructor);
+            _instructor.InsertInstructor(viewModel.Instructor);
+            viewModel.Instructor = _instructor.GetInstructors().SingleOrDefault( instructor => instructor.Email == viewModel.Instructor.Email );
+            _instructor.InsertInstructorCourses(viewModel);
             return RedirectToAction("Read");
         }
 

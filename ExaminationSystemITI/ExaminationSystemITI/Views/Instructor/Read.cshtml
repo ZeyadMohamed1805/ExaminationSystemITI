@@ -1,5 +1,6 @@
-﻿@using ExaminationSystemITI.Models.Tables
-@model List<Instructor>
+﻿@using System.Collections
+@using ExaminationSystemITI.Models.ViewModels
+@model List<InstructorCoursesViewModel>
 
 @{
     ViewData["Title"] = "Dashboard";
@@ -32,6 +33,7 @@
                 <th>Age</th>
                 <th>Salary</th>
                 <th>Address</th>
+                <th>Courses</th>
                 <th>Email</th>
                 <th>Actions</th>
             </tr>
@@ -48,18 +50,24 @@
                 @foreach (var instructor in Model)
                 {
                     <tr>
-                        <td>@instructor.ID</td>
-                        <td>@instructor.FirstName</td>
-                        <td>@instructor.LastName</td>
-                        <td>@instructor.Age</td>
-                        <td>@instructor.Salary</td>
-                        <td>@instructor.Address</td>
-                        <td>@instructor.Email</td>
+                        <td>@instructor.Instructor.ID</td>
+                        <td>@instructor.Instructor.FirstName</td>
+                        <td>@instructor.Instructor.LastName</td>
+                        <td>@instructor.Instructor.Age</td>
+                        <td>@instructor.Instructor.Salary</td>
+                        <td>@instructor.Instructor.Address</td>
                         <td>
-                            <a asp-action="Edit" asp-controller="Instructor" asp-route-id="@instructor.ID" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                            @foreach( var course in Model )
+                                @if( course.Instructor.ID == instructor.Instructor.ID && course.Courses.Count() > 0 )
+                                    @foreach( var c in course.Courses )
+                                        @c.Name
+                        </td>
+                        <td>@instructor.Instructor.Email</td>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Instructor" asp-route-id="@instructor.Instructor.ID" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
-                            <a asp-action="Delete" asp-controller="Instructor" asp-route-id="@instructor.ID" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
+                            <a asp-action="Delete" asp-controller="Instructor" asp-route-id="@instructor.Instructor.ID" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
                                 Delete
                             </a>
                         </td>

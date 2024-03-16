@@ -8,19 +8,23 @@ namespace ExaminationSystemITI.Controllers
     public class DepartmentController : Controller
     {
         IDepartmentService _department;
-        public DepartmentController(IDepartmentService department)
-        { 
-           _department = department;
+        IInstructorService _instructor;
+        public DepartmentController(IDepartmentService department, IInstructorService instructor)
+        {
+            _department = department;
+            _instructor = instructor;
         }
 
         public IActionResult Read()
         {
+            ViewBag.Supervisors = _instructor.GetInstructors();
             var departments = _department.GetDepartments();
             return View(departments);
         }
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Supervisors = _instructor.GetActiveSupervisors();
             return View();
         }
 

@@ -1,6 +1,6 @@
 
-@using ExaminationSystemITI.Models.Tables
-@model IEnumerable<Student>
+@using ExaminationSystemITI.Models.ViewModels
+@model IEnumerable<StudentCoursesViewModel>
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
@@ -33,6 +33,7 @@
                     <th>Faculty</th>
                     <th>GraduationYear</th>
                     <th>Department</th>
+                    <th>Courses</th>
                     <th>Options</th>
                 </tr>
             </thead>
@@ -48,20 +49,27 @@
                     foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.Id</td>
-                            <td>@item.FirstName</td>
-                            <td>@item.LastName</td>
-                            <td>@item.Age</td>
-                            <td>@item.Gender</td>
-                            <td>@item.Address</td>
-                            <td>@item.Faculty</td>
-                            <td>@item.GraduationYear</td>
-                            <td>@item.Department.Name</td>
+                            <td>@item.Student.Id</td>
+                            <td>@item.Student.FirstName</td>
+                            <td>@item.Student.LastName</td>
+                            <td>@item.Student.Age</td>
+                            <td>@item.Student.Gender</td>
+                            <td>@item.Student.Address</td>
+                            <td>@item.Student.Faculty</td>
+                            <td>@item.Student.GraduationYear</td>
+                            <td>@item.Student.Department.Name</td>
                             <td>
-                                <a asp-action="Edit" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                                @foreach (var course in Model)
+                                    @if (course.Student.Id == item.Student.Id && course.Courses.Count() > 0)
+                                        @foreach (var c in course.Courses)
+                                            @c.Name
+
+                        </td>
+                            <td style="white-space: nowrap;">
+                                <a asp-action="Edit" asp-controller="Student" asp-route-id="@item.Student.Id" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                     Update
                                 </a>
-                                <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
+                                <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.Student.Id" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
                                     Delete
                                 </a>
                             </td>

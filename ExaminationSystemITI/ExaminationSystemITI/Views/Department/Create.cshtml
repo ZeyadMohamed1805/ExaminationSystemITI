@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var supervisors = ViewBag.Supervisors;
     Layout = "_DashboardLayout";
 }
 
@@ -28,9 +29,23 @@
 
                         <div class="form-group">
                             <label asp-for="SP" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                            <select asp-for="SP" class="form-control" required>
+                                <option value="">Select Supervisor</option>
+                                @if (supervisors != null)
+                                {
+                                    @foreach (var supervisor in supervisors)
+                                    {
+                                        <option value="@supervisor.ID">@supervisor.FirstName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        @* <div class="form-group">
+                            <label asp-for="SP" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
                             <input asp-for="SP" class="form-control" />
                             <span asp-validation-for="SP" class="text-danger"></span>
-                        </div>
+                        </div> *@
 
                         <div class="form-group w-100 d-flex flex-column" style="margin-top: 8px; gap: 8px;">
                             <input type="submit" value="Create" class="poppins-semibold w-100 rounded" style="border: none; background-color: var(--custom-red); color: var(--custom-white); padding: 8px 16px;" />

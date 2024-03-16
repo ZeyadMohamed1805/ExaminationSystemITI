@@ -58,7 +58,7 @@
                 <span asp-validation-for="Student.GraduationYear" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="Student.DepartmentId" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
                 <select asp-for="Student.DepartmentId" value="@Model.Student.DepartmentId" class="form-control">
                     <option value="">Select Department</option>
@@ -69,7 +69,7 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group d-none">
                 <label asp-for="Student.Email" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
                 <input asp-for="Student.Email" value="@Model.Student.Email" class="form-control" />
 
