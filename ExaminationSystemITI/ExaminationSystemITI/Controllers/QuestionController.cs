@@ -63,8 +63,6 @@ namespace ExaminationSystemITI.Controllers
                     }
                     _context.SaveChanges();
                 }
-
-            // return RedirectToAction("Read", "Exam"); 
             return RedirectToAction("Read");
         }
         [HttpGet]

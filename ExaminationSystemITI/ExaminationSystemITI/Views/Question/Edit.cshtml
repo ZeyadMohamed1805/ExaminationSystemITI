@@ -19,7 +19,7 @@
             @*   Id Type Title CorrectAnswer CourseId *@
             <div class="form-group">
                 <label asp-for="Type" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
-                <input asp-for="Type" value="@Model.Type" class="form-control" />
+                <input asp-for="Type" value="@Model.Type" readonly class="form-control" />
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -32,7 +32,7 @@
                 <input asp-for="CorrectAnswer" value="@Model.CorrectAnswer" class="form-control" />
                 <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group d-none" >
                 <label asp-for="CourseId" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
                 <input asp-for="CourseId" value="@Model.CourseId" class="form-control" />
                 <span asp-validation-for="CourseId" class="text-danger"></span>

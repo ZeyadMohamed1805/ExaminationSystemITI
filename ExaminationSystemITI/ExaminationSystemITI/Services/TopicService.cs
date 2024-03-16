@@ -1,7 +1,9 @@
 ﻿using ExaminationSystemITI.Abstractions.Interfaces;
 using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace ExaminationSystemITI.Services
 {
@@ -49,5 +51,7 @@ namespace ExaminationSystemITI.Services
             var topic = _context.Topics.Find(Id);
             return topic;
         }
+
+ 
     }
 }

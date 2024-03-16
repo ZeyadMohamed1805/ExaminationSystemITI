@@ -34,7 +34,7 @@ namespace ExaminationSystemITI.Services
 
             public void Update(Exam exam)
             {
-            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC EditExamById {exam.ID},{exam.Duration},{exam.Date},{exam.Questions.Count},{exam.TotalMarks}");
+            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC EditExamById {exam.ID},{exam.Duration},{exam.Date},{exam.QCount},{exam.TotalMarks}");
             //_dbcontext.Database.ExecuteSqlInterpolated($"EXEC EditExamById {exam.ID},{exam.Duration},{exam.Questions.Count},{exam.TotalMarks}");
         }
     }
