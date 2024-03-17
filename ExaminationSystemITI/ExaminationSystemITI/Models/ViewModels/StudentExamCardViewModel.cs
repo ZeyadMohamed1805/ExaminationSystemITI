@@ -7,5 +7,6 @@ namespace ExaminationSystemITI.Models.ViewModels
         public Course Course { get; set; }
         public ICollection<Instructor> Instructors { get; set; }
         public Exam Exam { get; set; }
+        public List<StudentCourse> StudentCourses { get; set; }
     }
 }

@@ -64,7 +64,9 @@ namespace ExaminationSystemITI.Controllers
             }
             else 
             {
-                return RedirectToAction("Index", "Student");
+                var userEmail = res.Email;
+                var students = _dbcontext.Students.Where(s => s.Email == userEmail).AsQueryable().ToList();
+                return RedirectToAction("Exams", "Student", new { Id = students.First().Id });
             }
            
         }

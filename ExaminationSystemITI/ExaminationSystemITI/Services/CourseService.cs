@@ -3,6 +3,7 @@ using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace ExaminationSystemITI.Services
 {
@@ -58,7 +59,8 @@ namespace ExaminationSystemITI.Services
         public ICollection<StudentExamCardViewModel> FindStudentExams(int Id)
         {
             var viewModel = new List<StudentExamCardViewModel>();
-            var exams = _context.Exams.FromSqlInterpolated($"SELECT DISTINCT * FROM EXAMS JOIN STUDENTEXAMQUESTIONS ON EXAMS.ID = STUDENTEXAMQUESTIONS.EXAMID WHERE STUDENTEXAMQUESTIONS.STUDENTID = {Id}").ToList();
+            
+            var exams = _context.Exams.FromSqlInterpolated($"SELECT EXAMS.ID, EXAMS.DURATION, EXAMS.DATE, EXAMS.QCOUNT, EXAMS.TOTALMARKS, EXAMS.COURSEID FROM EXAMS JOIN COURSES ON EXAMS.COURSEID = COURSES.ID WHERE COURSES.ID IN ( SELECT COURSEID FROM STUDENTCOURSES WHERE STUDENTID = {Id} )").ToList();
 
             for ( int index = 0; index < exams.Count(); index++) 
             {
@@ -67,12 +69,64 @@ namespace ExaminationSystemITI.Services
                 if (exams.Count() > 0)
                 {
                     model.Exam = exams[index];
-                    var courseId = _context.Database.ExecuteSqlInterpolated($"SELECT COURSEID FROM EXAMS WHERE ID = {model.Exam.ID}");
-                    if (courseId > 0)
+                    model.Course = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID IN (SELECT COURSEID FROM EXAMS WHERE ID = {model.Exam.ID})").ToList()[0];
+                    model.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {model.Course.Id}").ToList();
+                }
+
+                viewModel.Add(model);
+            }
+
+            return viewModel;
+        }
+
+        public ICollection<StudentExamCardViewModel> FindStudentActiveExams(int Id)
+        {
+            var viewModel = new List<StudentExamCardViewModel>();
+
+            var exams = _context.Exams.FromSqlInterpolated($"SELECT EXAMS.ID, EXAMS.DURATION, EXAMS.DATE, EXAMS.QCOUNT, EXAMS.TOTALMARKS, EXAMS.COURSEID FROM EXAMS JOIN COURSES ON COURSES.ID = EXAMS.COURSEID WHERE EXAMS.ID NOT IN ( SELECT DISTINCT EXAMID FROM StudentExamQuestions WHERE StudentId = {Id} )").ToList();
+            for (int index = 0; index < exams.Count(); index++)
+            {
+                var model = new StudentExamCardViewModel();
+
+                if (exams.Count() > 0)
+                {
+                    model.Exam = exams[index];
+                    model.Course = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID IN (SELECT COURSEID FROM EXAMS WHERE ID = {model.Exam.ID})").ToList()[0];
+                    model.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {model.Course.Id}").ToList();
+                }
+
+                viewModel.Add(model);
+            }
+
+            return viewModel;
+        }
+
+        public ICollection<StudentExamCardViewModel> FindStudentDoneExams(int Id)
+        {
+            var viewModel = new List<StudentExamCardViewModel>();
+
+            var exams = _context.Exams.FromSqlInterpolated($"SELECT EXAMS.ID, EXAMS.DURATION, EXAMS.DATE, EXAMS.QCOUNT, EXAMS.TOTALMARKS, EXAMS.COURSEID FROM EXAMS JOIN COURSES ON COURSES.ID = EXAMS.COURSEID WHERE EXAMS.ID IN ( SELECT DISTINCT EXAMID FROM StudentExamQuestions WHERE StudentId = {Id} )").ToList();
+            for (int index = 0; index < exams.Count(); index++)
+            {
+                var model = new StudentExamCardViewModel();
+
+                if (exams.Count() > 0)
+                {
+                    bool isCourseAvailable = false;
+
+                    foreach (var item in viewModel)
                     {
-                        model.Course = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID = {courseId}").ToList()[0];
-                        model.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {model.Course.Id}").ToList();
+                        if (item.Course.Id == _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID IN (SELECT COURSEID FROM EXAMS WHERE ID = {exams[index].ID})").ToList()[0].Id)
+                        { isCourseAvailable = true; break; }
                     }
+
+                    if (isCourseAvailable)
+                        continue;
+
+                    model.Exam = exams[index];
+                    model.Course = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID IN (SELECT COURSEID FROM EXAMS WHERE ID = {model.Exam.ID})").ToList()[0];
+                    model.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {model.Course.Id}").ToList();
+                    model.StudentCourses = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {model.Course.Id}").ToList();
                 }
 
                 viewModel.Add(model);

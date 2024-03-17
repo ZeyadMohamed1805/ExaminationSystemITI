@@ -11,6 +11,8 @@ namespace ExaminationSystemITI.Abstractions.Interfaces
         public void EditTopic(Topic topic);
         public void InsertTopic(Topic topic);
         public Topic? FindTopic(int Id);
-    
+        public Course GetTopicCourse(int Id);
+
+
     }
 }

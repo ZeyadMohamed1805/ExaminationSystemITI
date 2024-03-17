@@ -127,7 +127,7 @@ namespace ExaminationSystemITI.Controllers
                .Include(a => a.Choices)
                .ToList();
             
-            string studentEmail = User.FindFirst(ClaimTypes.Email)?.Value; ;
+            string studentEmail = User.FindFirst(ClaimTypes.Email)?.Value;
             Debug.WriteLine("User Email: " + studentEmail);
             Debug.WriteLine("asasa");
             ViewBag.Email = studentEmail;

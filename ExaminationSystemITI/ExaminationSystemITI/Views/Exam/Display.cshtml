@@ -76,8 +76,8 @@
 
 <form method="post" action="/Exam/SubmitAnswers">
     <h1>Exam Questions</h1>
-      <h1>@ViewBag.Email</h1> 
-     <input type="hidden" name="StudentEmail" value="@ViewBag.Email" />
+    <h1>@ViewBag.Email</h1> 
+    <input type="hidden" name="StudentEmail" value="@ViewBag.Email" />
     <input type="hidden" name="CourseId" value="@Model.First().CourseId" />
     <input type="hidden" name="ExamId" value="@ViewBag.ExamId" />
     <table class="table table-bordered table-hover">
