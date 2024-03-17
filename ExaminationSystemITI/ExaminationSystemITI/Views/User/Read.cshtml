@@ -17,6 +17,23 @@
         <option class="form-control" onclick="location.href='/topic/read'">Topic</option>
         <option class="form-control" onclick="location.href='/user/read'" selected>User</option>
     </select>
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this user?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a id="deleteUserLink" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <table class="get-data table table-border table-hover">
         <thead>
             <tr>
@@ -43,13 +60,22 @@
                             <a asp-action="Edit" asp-controller="User" asp-route-email="@item.Email" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
-                            <a asp-action="Delete" asp-controller="User" asp-route-email="@item.Email" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
+                            @*  <a asp-action="Delete" asp-controller="User" asp-route-email="@item.Email" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
                                 Delete
                             </a>
+                            <a href="#" onclick="confirmDelete('@item.Email')" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
+ *@
                         </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
+    <script>
+        // Function to handle deletion confirmation
+        function confirmDelete(id) {
+            document.getElementById('deleteUserLink').href = '/User/Delete/' + id;
+            $('#deleteConfirmationModal').modal('show');
+        }
+    </script>
 </seciton>
