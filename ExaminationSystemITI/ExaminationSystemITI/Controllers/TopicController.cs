@@ -7,9 +7,11 @@ namespace ExaminationSystemITI.Controllers
     public class TopicController : Controller
     {
         ITopicService _topic;
-        public TopicController(ITopicService topic)
+        ICourseService _course;
+        public TopicController(ITopicService topic,ICourseService courseService)
         {
             _topic = topic;
+            _course = courseService;
         }
      
         public IActionResult Read()
@@ -22,6 +24,7 @@ namespace ExaminationSystemITI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.courses=_course.GetCourses();
             return View();
         }
 

@@ -24,14 +24,7 @@ namespace ExaminationSystemITI.Services
 
         public void DeleteDepartment(int id)
         {
-            var department = FindDepartment(id);
-            var instructor=_dbcontext.Instructors.Find(department.SP);
-            if(instructor == null)
-            {
-                _dbcontext.Database.ExecuteSqlInterpolated($"EXEC DeleteDepartmentById {id}");
-            }
-            
-            
+            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC DeleteDepartmentById {id}");
         }
 
         public void EditDepartment(Department dep)
