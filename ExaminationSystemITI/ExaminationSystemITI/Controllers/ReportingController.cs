@@ -25,13 +25,13 @@ namespace ExaminationSystemITI.Controllers
         }
 
         [HttpPost]
-        [Route("Reporting/StudentsByDepartment/{departmentId}")]
-        public IActionResult StudentsByDepartment(int departmentId)
+        [Route("Reporting/StudentsByDepartment/{Id}")]
+        public IActionResult StudentsByDepartment(int Id)
         {
 
-            var students = _dbContext.Students.FromSqlRaw("EXECUTE dbo.GetAllStudentsByDepartmentId @DepartmentId", new SqlParameter("@DepartmentId", departmentId)).ToList();
+            var students = _dbContext.Students.FromSqlRaw("EXECUTE dbo.GetAllStudentsByDepartmentId @DepartmentId", new SqlParameter("@DepartmentId", Id)).ToList();
 
-            return View(students);
+            return View();
         }
 
     }
