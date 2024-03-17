@@ -6,17 +6,17 @@
 }
 
 <seciton class="w-100 d-flex flex-column" style="gap: 16px;">
-    <select class="form-select w-100">
-        <option class="form-control" onclick="location.href='/admin/read'">Admin</option>
-        <option class="form-control" onclick="location.href='/choice/read'">Choice</option>
-        <option class="form-control" onclick="location.href='/course/read'" selected>Course</option>
-        <option class="form-control" onclick="location.href='/department/read'">Department</option>
-        <option class="form-control" onclick="location.href='/exam/read'">Exam</option>
-        <option class="form-control" onclick="location.href='/instructor/read'">Instructor</option>
-        <option class="form-control" onclick="location.href='/question/read'">Question</option>
-        <option class="form-control" onclick="location.href='/student/read'">Student</option>
-        <option class="form-control" onclick="location.href='/topic/read'">Topic</option>
-        <option class="form-control" onclick="location.href='/user/read'">User</option>
+    <select id="navigate" class="form-select w-100">
+        <option class="form-control" value="/admin/read">Admin</option>
+        <option class="form-control" value="/choice/read">Choice</option>
+        <option class="form-control" value="/course/read" selected>Course</option>
+        <option class="form-control" value="/department/read">Department</option>
+        <option class="form-control" value="/exam/read">Exam</option>
+        <option class="form-control" value="/instructor/read">Instructor</option>
+        <option class="form-control" value="/question/read">Question</option>
+        <option class="form-control" value="/student/read">Student</option>
+        <option class="form-control" value="/topic/read">Topic</option>
+        <option class="form-control" value="/user/read">User</option>
     </select>
     <a asp-action="create" asp-controller="course" class="btn btn-success poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;">
         Create
@@ -120,5 +120,15 @@
             document.getElementById('deleteCourseLink').href = '/Course/Delete/' + id;
             $('#deleteConfirmationModal').modal('show');
         }
+
+        var selectElement = document.getElementById('navigate');
+
+        selectElement.addEventListener('change', function () {
+            var selectedValue = selectElement.value;
+
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        });
     </script>
 </seciton>
