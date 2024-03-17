@@ -55,15 +55,17 @@ namespace ExaminationSystemITI.Controllers
             Debug.WriteLine($"Email: {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Email")?.Value}");
             if (res.Roles.Any(r => r.Description.ToString() == "Admin"))
             {
-                return RedirectToAction("Index", "Student");
+                return RedirectToAction("Read", "Admin");
             }
             else if (res.Roles.Any(r => r.Description.ToString() == "Instructor"))
             {
-                return RedirectToAction("Index", "Student");
+                return RedirectToAction("Read", "Instructor");
             }
             else 
             {
-                return RedirectToAction("Exams", "Student");
+                var userEmail = res.Email;
+                var students = _dbcontext.Students.Where(s => s.Email == userEmail).AsQueryable().ToList();
+                return RedirectToAction("Exams", "Student", new { Id = students.First().Id });
             }
            
         }
