@@ -67,8 +67,8 @@
 </section>
 
 
-@* 
-@using ExaminationSystemITI.Models.Tables
+
+ @* @using ExaminationSystemITI.Models.Tables
 @using ExaminationSystemITI.Abstractions.Enums
 @using ExaminationSystemITI.Models.ViewModels
 @model List<Question>
@@ -76,7 +76,7 @@
 
 <form method="post" action="/Exam/SubmitAnswers">
     <h1>Exam Questions</h1>
-@*     <h1>@ViewBag.Email</h1> 
+    <h1>@ViewBag.Email</h1> 
     <input type="hidden" name="StudentEmail" value="@ViewBag.Email" />
     <input type="hidden" name="CourseId" value="@Model.First().CourseId" />
     <input type="hidden" name="ExamId" value="@ViewBag.ExamId" />
@@ -120,9 +120,9 @@
                 </tr>
             }
         </tbody>
-    </table>
-
-   *@
+    </table> 
+ *@
+  
 
 
 

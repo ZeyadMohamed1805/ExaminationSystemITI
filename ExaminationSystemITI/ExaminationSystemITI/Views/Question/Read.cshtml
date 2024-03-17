@@ -1,11 +1,15 @@
-﻿@using ExaminationSystemITI.Models.Tables
+@using ExaminationSystemITI.Abstractions.Enums
+@using ExaminationSystemITI.Models.Tables
 @model IEnumerable<Question>
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
-   
+    bool isAdmin = User.IsInRole(ERole.Admin.ToString());
+
 }
 <seciton class="w-100 d-flex flex-column" style="gap: 16px;">
+  @if(isAdmin)
+  {
     <select id="navigate" class="form-select w-100">
         <option class="form-control" value="/admin/read">Admin</option>
         <option class="form-control" value="/choice/read">Choice</option>
@@ -18,6 +22,7 @@
         <option class="form-control" value="/topic/read">Topic</option>
         <option class="form-control" value="/user/read">User</option>
     </select>
+  }
     <a asp-action="create" asp-controller="Question" class="btn btn-success poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;">
         Create
     </a>

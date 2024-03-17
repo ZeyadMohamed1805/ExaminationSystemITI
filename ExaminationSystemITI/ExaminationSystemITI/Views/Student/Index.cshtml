@@ -208,6 +208,13 @@
             {
                 <a asp-action="DisplayAnsweredExams" asp-controller="Exam" asp-route-id="@item.Id" class="btn btn-primary">DONE Exams</a>
             }
+        }
+    </tbody>
+</table>
+<a asp-action="Read" asp-controller="Exam" class="btn btn-primary">GO To Exams</a>
+@foreach(var item in Model){
+    <a asp-action="DisplayAnsweredExams" asp-controller="Exam" asp-route-id="@item.Id" class="btn btn-primary">DONE Exams</a>
+}
         </main>
     </section>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

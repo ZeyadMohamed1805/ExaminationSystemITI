@@ -1,8 +1,9 @@
-﻿@using ExaminationSystemITI.Abstractions.Enums
+@using ExaminationSystemITI.Abstractions.Enums
 @{
     string view = this.ViewContext.View.Path.Split("/")[2].ToLower();
-    bool isStudent = User.IsInRole(ERole.Student.ToString());
+    bool isAdmin = User.IsInRole(ERole.Admin.ToString());
     bool isInstructor = User.IsInRole(ERole.Instructor.ToString());
+    bool isStudent = User.IsInRole(ERole.Student.ToString());
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -26,8 +27,7 @@
             opacity: 0.5;
         }
 
-        @@media (max-width: 500px)
-        {
+        @@media (max-width: 500px) {
             .side-text {
                 display: none;
             }
@@ -96,12 +96,37 @@
                     }
                     else
                     {
-                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
-                            <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
-                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
-                                CRUD
-                            </p>
-                        </li>
+                        if (isAdmin)
+                        {
+                            <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
+                                <a asp-action="Read" asp-controller="Student" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white); gap: 16px;">
+                                    <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
+                                    <p class="poppins-medium side-text m-0">
+                                        CRUD
+                                    </p>
+                                </a>
+                            </li>
+                        }else if(isInstructor){
+                            <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
+                                <a asp-action="Read" asp-controller="Question" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white);">
+                                    <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
+                                    <p class="poppins-medium side-text m-0">
+                                        Questions
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
+                                <a asp-action="Read" asp-controller="Exam" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white);">
+                                    <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
+                                    <p class="poppins-medium side-text m-0">
+                                        Exams
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        
+
                     }
                     <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
                         <img src="~/assets/icons/reports.svg" style="width: 24px; height: 24px;" alt="Reports" />
@@ -109,11 +134,13 @@
                             Reports
                         </p>
                     </li>
-                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
-                        <img src="~/assets/icons/account.svg" style="width: 24px; height: 24px;" alt="Account" />
-                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white); font-size: 16px;">
-                            Account
-                        </p>
+                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
+                        <a asp-action="info" asp-controller="Account" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white); gap: 16px;">
+                            <img src="~/assets/icons/account.svg" style="width: 24px; height: 24px;" alt="Crud" />
+                            <p class="poppins-medium side-text m-0">
+                                Account
+                            </p>
+                        </a>
                     </li>
                 </ul>
                 <form asp-controller="Account" asp-action="LogOut" method="post">

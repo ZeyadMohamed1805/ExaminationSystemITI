@@ -1,4 +1,5 @@
-﻿using ExaminationSystemITI.Database;
+﻿using ExaminationSystemITI.Abstractions.Enums;
+using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -55,11 +56,11 @@ namespace ExaminationSystemITI.Controllers
             Debug.WriteLine($"Email: {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "Email")?.Value}");
             if (res.Roles.Any(r => r.Description.ToString() == "Admin"))
             {
-                return RedirectToAction("Read", "Admin");
+                return RedirectToAction("Read", "Student");
             }
             else if (res.Roles.Any(r => r.Description.ToString() == "Instructor"))
             {
-                return RedirectToAction("Read", "Instructor");
+                return RedirectToAction("Read", "Question");
             }
             else 
             {
@@ -69,6 +70,28 @@ namespace ExaminationSystemITI.Controllers
             }
            
         }
+        [HttpGet]
+        [Authorize]
+        public IActionResult Info()
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email).Value;
+            if (User.IsInRole(ERole.Student.ToString()))
+            {
+                var student = _dbcontext.Students.FirstOrDefault(a => a.Email == userEmail);
+                return View(student);
+            }
+            else if (User.IsInRole(ERole.Instructor.ToString())) {
+                var instructor = _dbcontext.Instructors.FirstOrDefault(a => a.Email == userEmail);
+                return View(instructor);
+            }
+            else
+            {
+                var admin = _dbcontext.Admins.FirstOrDefault(a => a.Email == userEmail);
+                return View(admin);
+            }
+            
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> LogOut()
