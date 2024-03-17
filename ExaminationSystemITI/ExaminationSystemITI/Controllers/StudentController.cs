@@ -32,11 +32,9 @@ namespace ExaminationSystemITI.Controllers
             _exam = exam;
         }
 
-        public int GetData()
+        public void GetData()
         {
-            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable().Include(s => s.StudentCourses).ThenInclude(c => c.Course);
-            return students.SingleOrDefault().Id;
+            
         }
         
         public IActionResult Index()
@@ -125,7 +123,19 @@ namespace ExaminationSystemITI.Controllers
 
         public IActionResult Exams(int Id)
         {
-            var viewModel = _course.FindStudentExams(Id);
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable();
+            ViewBag.StudentId = students.First().Id;
+            var viewModel = _course.FindStudentActiveExams(Id);
+            return View(viewModel);
+        }
+
+        public IActionResult Done(int Id)
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable();
+            ViewBag.StudentId = students.First().Id;
+            var viewModel = _course.FindStudentDoneExams(Id);
             return View(viewModel);
         }
     }
