@@ -1,85 +1,220 @@
 ﻿@using ExaminationSystemITI.Abstractions.Enums
+@using ExaminationSystemITI.Abstractions.Enums
 @using ExaminationSystemITI.Models.Tables
 @model IEnumerable<Student>
+
 @{
     ViewData["Title"] = "Dashboard";
-    Layout = "_DashboardLayout";
+    string view = this.ViewContext.View.Path.Split("/")[2].ToLower();
+    bool isStudent = User.IsInRole(ERole.Student.ToString());
+    bool isInstructor = User.IsInRole(ERole.Instructor.ToString());
     bool isUserAdmin = User.IsInRole(ERole.Admin.ToString());
 }
 
-<h1>All Students</h1>
-<h1>@ViewBag.Email</h1>
-@if (isUserAdmin)
-{
-    <a asp-action="create" asp-controller="student" class="btn btn-success">Create</a>
-}
-<table class="table table-border table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Faculty</th>
-            <th>GraduationYear</th>
-            <th>Department</th>
-            <th>Courses</th>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ExaminationSystem</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/global/global.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ExaminationSystem.styles.css" asp-append-version="true" />
+    <style>
+        button:hover {
+            opacity: 0.5;
+        }
+
+        li:hover {
+            background-color: var(--custom-black);
+            opacity: 0.5;
+        }
+
+        @@media (max-width: 500px) {
+            .side-text {
+                display: none;
+            }
+
+            .side-bar {
+                width: 80px !important;
+            }
+
+            .avatar-name {
+                min-width: 48px !important;
+                min-height: 48px !important;
+            }
+        }
+    </style>
+</head>
+<body style="height: 100vh; overflow-y: hidden">
+    <header class="w-100 custom-wrapper d-flex justify-content-center align-items-center shadow" style="background-color: var(--custom-white); height: 120px;">
+        <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 120px;" alt="ITI Logo" />
+    </header>
+    <section class="w-100 d-flex" style="height: calc(100vh - 120px);">
+        <div class="side-bar d-flex flex-column align-items-center" style="width: 160px; background-color: var(--custom-blue); padding: 32px 16px; gap: 32px;">
+            <div class="avatar-name shadow d-flex justify-content-center align-items-center poppins-semibold rounded-circle" style="min-width: 100px; min-height: 100px; background-color: var(--custom-white); font-size: 20px;">
+                @if (isStudent)
+                {
+                    <span>S</span>
+                }
+                else if (isInstructor)
+                {
+                    <span>I</span>
+                }
+                else
+                {
+                    <span>A</span>
+                }
+            </div>
+            <hr class="w-100" style="height: 1px; background-color: var(--custom-white)" />
+            <div class="d-flex flex-column align-items-center justify-content-between" style="height: 100%; min-height: fit-content; gap: 32px;">
+                <ul class="w-100 d-flex flex-column list-group" style="gap: 16px;">
+                    @if (isStudent)
+                    {
+                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                            <img src="~/assets/icons/active.svg" style="width: 24px; height: 24px;" alt="Active" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                <a asp-action="Exams" asp-controller="Student" style="text-decoration: none; color: var(--custom-white);">
+                                    Active
+                                </a>
+                            </p>
+                        </li>
+                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                            <img src="~/assets/icons/done.svg" style="width: 24px; height: 24px;" alt="Active" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                @foreach (var item in Model)
+                                {
+                                    <a asp-action="DisplayAnsweredExams" asp-controller="Exam" asp-route-id="@item.Id" style="text-decoration: none; color: var(--custom-white);">Done</a>
+                                }
+                            </p>
+                        </li>
+                    }
+                    else if (isInstructor)
+                    {
+                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                            <img src="~/assets/icons/active.svg" style="width: 24px; height: 24px;" alt="Active" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                Generate
+                            </p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                            <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                CRUD
+                            </p>
+                        </li>
+                    }
+                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                        <img src="~/assets/icons/reports.svg" style="width: 24px; height: 24px;" alt="Reports" />
+                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                            Reports
+                        </p>
+                    </li>
+                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
+                        <img src="~/assets/icons/account.svg" style="width: 24px; height: 24px;" alt="Account" />
+                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white); font-size: 16px;">
+                            Account
+                        </p>
+                    </li>
+                </ul>
+                <form asp-controller="Account" asp-action="LogOut" method="post">
+                    <button type="submit" class="w-100 border-0 d-flex align-items-center justify-content-between rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; background-color: var(--custom-red); transition-duration: 0.25s;">
+                        <img src="~/assets/icons/signout.svg" style="width: 24px; height: 24px;" alt="Sign Out" />
+                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white); font-size: 15.75px;">
+                            Sign Out
+                        </p>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <main role="main" style="padding: 32px; overflow-y: scroll;" class="w-100">
+            <h1>All Students</h1>
+            <h1>@ViewBag.Email</h1>
             @if (isUserAdmin)
             {
-                <th>Options</th>
+                <a asp-action="create" asp-controller="student" class="btn btn-success">Create</a>
             }
-
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Count() == 0)
-        {
-            <tr>
-                <td colspan="9">No Student Exist!!</td>
-            </tr>
-        }
-        else
-        {
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.FirstName</td>
-                    <td>@item.LastName</td>
-                    <td>@item.Age</td>
-                    <td>@item.Gender</td>
-                    <td>@item.Address</td>
-                    <td>@item.Faculty</td>
-                    <td>@item.GraduationYear</td>
-                    <td>@item.Department.Name</td>
-                    <td>
-                        @foreach (var studentCourse in item.StudentCourses)
+            <table class="table table-border table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Faculty</th>
+                        <th>GraduationYear</th>
+                        <th>Department</th>
+                        <th>Courses</th>
+                        @if (isUserAdmin)
                         {
-
-                            <span>@studentCourse.Course.Name</span>
-
-                            <br />
+                            <th>Options</th>
                         }
-                    </td>
-                    @if (isUserAdmin)
-                    {
-                        <td>
-                            <a asp-action="Edit" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-primary">Update</a>
-                            <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-danger" onclick="return confirm('are you sure?')">Delete</a>
-                        </td>
-                    }
 
-                </tr>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count() == 0)
+                    {
+                        <tr>
+                            <td colspan="9">No Student Exist!!</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>
+                                <td>@item.Age</td>
+                                <td>@item.Gender</td>
+                                <td>@item.Address</td>
+                                <td>@item.Faculty</td>
+                                <td>@item.GraduationYear</td>
+                                <td>@item.Department.Name</td>
+                                <td>
+                                    @foreach (var studentCourse in item.StudentCourses)
+                                    {
+
+                                        <span>@studentCourse.Course.Name</span>
+
+                                        <br />
+                                    }
+                                </td>
+                                @if (isUserAdmin)
+                                {
+                                    <td>
+                                        <a asp-action="Edit" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-primary">Update</a>
+                                        <a asp-action="Delete" asp-controller="Student" asp-route-id="@item.Id" class="btn btn-danger" onclick="return confirm('are you sure?')">Delete</a>
+                                    </td>
+                                }
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <a asp-action="Getall" asp-controller="Exam" class="btn btn-primary">GO To Exams</a>
+            @foreach (var item in Model)
+            {
+                <a asp-action="DisplayAnsweredExams" asp-controller="Exam" asp-route-id="@item.Id" class="btn btn-primary">DONE Exams</a>
             }
-        }
-    </tbody>
-</table>
-<a asp-action="Getall" asp-controller="Exam" class="btn btn-primary">GO To Exams</a>
-@foreach(var item in Model){
-    <a asp-action="DisplayAnsweredExams" asp-controller="Exam" asp-route-id="@item.Id" class="btn btn-primary">DONE Exams</a>
-}
+        </main>
+    </section>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
 
 @* @foreach(var m in Model)
 {
