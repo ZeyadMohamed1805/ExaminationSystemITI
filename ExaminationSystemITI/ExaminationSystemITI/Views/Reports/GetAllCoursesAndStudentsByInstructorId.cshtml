@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "GetAllCoursesAndStudentsByInstructorId";
+}
+
+@model List<Instructor>;
+
+<h1>GetAllCoursesAndStudentsByInstructorId</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Instructor Id</th>
+            <th>Instructor Name</th>
+            <th>Course Name</th>
+            <th>Number of students</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ID</td>
+                <td>@item.FirstName</td>
+                <td>@item.Courses</td>
+                <td>@item.Department.Students.Count()</td>
+            </tr>
+        }
+    </tbody>
+</table>

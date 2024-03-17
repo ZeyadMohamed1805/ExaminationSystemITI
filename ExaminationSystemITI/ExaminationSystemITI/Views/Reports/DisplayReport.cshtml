@@ -1,0 +1,37 @@
+﻿<h1 class=" alert alert-warning">No Content</h1>
+
+@* @using Microsoft.AspNetCore.Mvc;
+@using Microsoft.Reporting.WebForms;
+@using ReportViewerForMvc ;
+@using System.Web;
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+
+
+@if (ViewBag.ReportViewer != null)
+{
+    @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer);
+}
+
+
+ @using Microsoft.Reporting.WebForms;
+
+ @{
+    //ReportParameter aaa = ViewBag.
+    var parameters = ViewBag.Parameters as ReportParameter[];
+
+ }
+ 
+
+<asp:ReportViewer ID="ReportViewer1" runat="server" Width="100%" Height="600px">
+    <LocalReport ReportPath="D:\ITI\ITIdata\Project\Reports\GetAllCoursesAndStudentsByInstructorId.rdl" />
+
+
+
+    @foreach (var parameter in parameters)
+    {
+        <ReportParameter Name="@parameter.Name" Value="@parameter.Values[0]" />
+    }
+</asp:ReportViewer> *@
