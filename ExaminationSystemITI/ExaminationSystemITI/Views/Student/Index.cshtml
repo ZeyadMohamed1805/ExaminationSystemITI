@@ -76,7 +76,7 @@
         }
     </tbody>
 </table>
-<a asp-action="Getall" asp-controller="Exam" class="btn btn-primary">GO To Exams</a>
+<a asp-action="Read" asp-controller="Exam" class="btn btn-primary">GO To Exams</a>
 @foreach(var item in Model){
     <a asp-action="DisplayAnsweredExams" asp-controller="Exam" asp-route-id="@item.Id" class="btn btn-primary">DONE Exams</a>
 }
