@@ -99,7 +99,7 @@
                             </li>
                         }else if(isInstructor){
                             <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
-                                <a asp-action="Read" asp-controller="Question" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white);">
+                                <a asp-action="Read" asp-controller="Question" class="d-flex align-items-center" style="gap: 16px; text-decoration: none; color: var(--custom-white);">
                                     <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
                                     <p class="poppins-medium side-text m-0">
                                         Questions
@@ -108,7 +108,7 @@
                             </li>
 
                             <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
-                                <a asp-action="Read" asp-controller="Exam" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white);">
+                                <a asp-action="Read" asp-controller="Exam" class="d-flex align-items-center" style="gap: 16px;text-decoration: none; color: var(--custom-white);">
                                     <img src="~/assets/icons/crud.svg" style="width: 24px; height: 24px;" alt="Crud" />
                                     <p class="poppins-medium side-text m-0">
                                         Exams
@@ -121,15 +121,16 @@
                     }
                    @if (isAdmin){
                     <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px;cursor: pointer; transition-duration: 0.25s;">
-                         <a asp-action="Reports" asp-controller="Reporting" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white); gap: 16px;"/>
-                        <img src="~/assets/icons/reports.svg" style="width: 24px; height: 24px;" alt="Reports" />
-                        <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
-                            Reports
-                        </p>
+                         <a asp-action="Reports" asp-controller="Reporting" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white); gap: 16px;">
+                            <img src="~/assets/icons/reports.svg" style="width: 24px; height: 24px;" alt="Reports" />
+                            <p class="poppins-medium side-text m-0" style="color: var(--custom-white);">
+                                Reports
+                            </p>
+                        </a>
                     </li>
                    }
                    
-                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="gap: 16px; padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
+                    <li class="w-100 bg-transparent list-group-item border-0 d-flex align-items-center rounded" style="padding: 8px 12px; cursor: pointer; transition-duration: 0.25s;">
                         <a asp-action="info" asp-controller="Account" class="d-flex align-items-center" style="text-decoration: none; color: var(--custom-white); gap: 16px;">
                             <img src="~/assets/icons/account.svg" style="width: 24px; height: 24px;" alt="Crud" />
                             <p class="poppins-medium side-text m-0">
