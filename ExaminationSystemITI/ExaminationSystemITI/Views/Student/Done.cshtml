@@ -36,7 +36,7 @@
                 </h3>
             </div>
             <h4 class="poppins-medium" style="font-size: 18px;">
-                Grade: @card.StudentCourses.SingleOrDefault(course => course.CourseId == card.Course.Id).Grade
+                Grade: @card.StudentCourses.FirstOrDefault().Grade
             </h4>
             <div class="d-flex align-items-center" style="gap: 8px;">
                 <button disabled style="border: none; border-radius: 16px; background-color: var(--custom-blue); color: var(--custom-white); padding: 4px 8px; transition-duration: 0.25s;">
