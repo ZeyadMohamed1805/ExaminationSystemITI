@@ -31,6 +31,13 @@ namespace ExaminationSystemITI.Controllers
             _instructor = instructor;
             _exam = exam;
         }
+
+        public int GetData()
+        {
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable().Include(s => s.StudentCourses).ThenInclude(c => c.Course);
+            return students.SingleOrDefault().Id;
+        }
         
         public IActionResult Index()
         {
@@ -50,7 +57,7 @@ namespace ExaminationSystemITI.Controllers
                 ////Debug.WriteLine("asasa");
                 //////ViewBag.Email = studentEmail;
 
-
+                
                 return View(students.ToList());
             }
             else

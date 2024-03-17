@@ -63,7 +63,7 @@ namespace ExaminationSystemITI.Controllers
             }
             else 
             {
-                return RedirectToAction("Index", "Student");
+                return RedirectToAction("Exams", "Student");
             }
            
         }
