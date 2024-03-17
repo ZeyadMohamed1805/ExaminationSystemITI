@@ -1,5 +1,6 @@
 ﻿using ExaminationSystemITI.Database;
 using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
@@ -19,20 +20,44 @@ namespace ExaminationSystemITI.Controllers
         {
 
             var departments = _dbContext.Departments.ToList();
-
-            ViewBag.Departments = departments;
-            return View();
+            var viewModel = new StudentsByDepartmentViewModel
+            {
+                Departments = departments
+            };
+            return View(viewModel);
         }
 
+       
+
         [HttpPost]
-        [Route("Reporting/StudentsByDepartment/{Id}")]
-        public IActionResult StudentsByDepartment(int Id)
+        public IActionResult StudentsByDepartment(StudentsByDepartmentViewModel viewModel)
         {
+            var students = _dbContext.Students.FromSqlRaw("EXECUTE dbo.GetAllStudentsByDepartmentId @DepartmentId", new SqlParameter("@DepartmentId", viewModel.DepartmentId)).ToList();
+            viewModel.Students = students;
+            return View(viewModel);
+        }
 
-            var students = _dbContext.Students.FromSqlRaw("EXECUTE dbo.GetAllStudentsByDepartmentId @DepartmentId", new SqlParameter("@DepartmentId", Id)).ToList();
-
+        public IActionResult reports (){
+           
             return View();
         }
 
     }
 }
+
+
+
+
+
+
+
+
+//[HttpPost]
+//[Route("Reporting/StudentsByDepartment/{departmentId}")]
+//public IActionResult StudentsByDepartment(int departmentId)
+//{
+
+//    var students = _dbContext.Students.FromSqlRaw("EXECUTE dbo.GetAllStudentsByDepartmentId @DepartmentId", new SqlParameter("@DepartmentId", departmentId)).ToList();
+
+//    return View();
+//}

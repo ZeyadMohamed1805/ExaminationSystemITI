@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "reports";
+}
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: #333; 
+    }
+
+    .btn-primary {
+        background-color: #007bff; 
+        border-color: #007bff;
+        color: #fff; 
+        padding: 10px 20px; 
+        font-size: 16px;
+        text-transform: uppercase;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; 
+            border-color: #0056b3;
+        }
+
+    iframe {
+        width: 1024px;
+        height: 1060px;
+        border: none;
+    }
+</style>
+
+<div class="container">
+    <iframe title="ProjectReport (1)" width="1024" height="1060" src="https://app.powerbi.com/view?r=eyJrIjoiNDBiMDAzZDQtYjE1Ni00ZTBjLTkzOGQtODM4NWNhMDY1Y2I4IiwidCI6ImVhZjYyNGM4LWEwYzQtNDE5NS04N2QyLTQ0M2U1ZDc1MTZjZCIsImMiOjh9" frameborder="0" allowFullScreen="true"></iframe>
+    <a class="btn btn-primary" asp-action="Read" asp-controller="Student">HOME</a>
+</div>
