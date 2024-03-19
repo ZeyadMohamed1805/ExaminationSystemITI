@@ -31,13 +31,12 @@
                     @if (card.Instructors != null)
                         @foreach (var instructor in card.Instructors)
                         {
-                            @instructor.FirstName @instructor.LastName
+                            <span>Eng</span>
+                            <span>@instructor.FirstName</span>
+                            <span>@instructor.LastName</span>
                         }
                 </h3>
             </div>
-            <p class="poppins-regular" style="font-size: 16px;">
-                This course provides a comprehensive understanding of fundamental data  structures, essential for efficient problem-solving and software  development.
-            </p>
             <div class="d-flex align-items-center" style="gap: 8px;">
                 <button disabled style="border: none; border-radius: 16px; background-color: var(--custom-blue); color: var(--custom-white); padding: 4px 8px; transition-duration: 0.25s;">
                     @if (card.Exam != null)

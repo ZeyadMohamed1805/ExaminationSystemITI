@@ -4,20 +4,6 @@
     Layout = "_DashboardLayout";
 }
 <seciton class="w-100 d-flex flex-column" style="gap: 16px;">
-    <select class="form-select w-100">
-        <option class="form-control">Admin</option>
-        <option class="form-control">Choice</option>
-        <option class="form-control">Course</option>
-        <option class="form-control">Department</option>
-        <option class="form-control">Exam</option>
-        <option class="form-control">Instructor</option>
-        <option class="form-control">Question</option>
-        <option class="form-control" selected>Student</option>
-        <option class="form-control">Topic</option>
-        <option class="form-control">User</option>
-        <option class="form-control">Admin</option>
-    </select>
-
     <style>
 .result-card {
     opacity: 0;
@@ -39,23 +25,18 @@
                     <div style="background-color:var(--custom-blue)" class="card-header text-center text-white">
                             <h1 class="fw-bold" style="color:var(--custom-white)">Student Result</h1>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column align-items-center">
                             <h6 class="text-center fw-semibold">Correct Answers: <span class="font-weight-bold">@ViewBag.CorrectCount</span></h6>
                             <h6 class="text-center fw-semibold">Total Questions: <span class="font-weight-bold">@ViewBag.TotalQuestions</span></h6>
                             <h6 class="text-center fw-semibold">Percentage: <span class="font-weight-bold">@ViewBag.Percentage%</span></h6>
+                            <a asp-action="Done" asp-controller="Student" asp-route-id="@ViewBag.StudentId" class="poppins-semibold rounded" style="background-color: var(--custom-red); color: var(--custom-white);padding: 8px 16px; border: solid 1px var(--custom-red); text-decoration: none; text-align: center;">
+                                Home
+                            </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-        <div class="form-group w-100 d-flex flex-column" style="margin-top: 8px; gap: 8px;">
-
-          
-            <a asp-action="Exams" asp-controller="Student" class="w-100 poppins-semibold rounded" style="background-color: var(--custom-red); color: var(--custom-white);padding: 8px 16px; border: solid 1px var(--custom-red); text-decoration: none; text-align: center;">
-                Home
-            </a>
-        </div>
         <script>
 
 document.addEventListener("DOMContentLoaded", function (event) {

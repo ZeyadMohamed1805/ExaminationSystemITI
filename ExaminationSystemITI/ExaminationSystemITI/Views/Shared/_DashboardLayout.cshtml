@@ -37,8 +37,7 @@
             }
 
             .avatar-name {
-                min-width: 48px !important;
-                min-height: 48px !important;
+                width: 48px !important;
             }
         }
     </style>
@@ -49,20 +48,18 @@
     </header>
     <section class="w-100 d-flex" style="height: calc(100vh - 120px);">
         <div class="side-bar d-flex flex-column align-items-center" style="width: 160px; background-color: var(--custom-blue); padding: 32px 16px; gap: 32px;">
-            <div class="avatar-name shadow d-flex justify-content-center align-items-center poppins-semibold rounded-circle" style="min-width: 100px; min-height: 100px; background-color: var(--custom-white); font-size: 20px;">
-                @if(isStudent)
-                {
-                    <span>S</span>
-                }
-                else if(isInstructor)
-                {
-                    <span>I</span>
-                }
-                else
-                {
-                    <span>A</span>
-                }
-            </div>
+            @if (isStudent)
+            {
+                <img src="~/assets/images/avatars/student.svg" class="avatar-name rounded-circle" />
+            }
+            else if (isInstructor)
+            {
+                <img src="~/assets/images/avatars/instructor.svg" class="avatar-name rounded-circle" />
+            }
+            else
+            {
+                <img src="~/assets/images/avatars/admin.svg" class="avatar-name rounded-circle" />
+            }
             <hr class="w-100" style="height: 1px; background-color: var(--custom-white)" />
             <div class="d-flex flex-column align-items-center justify-content-between" style="height: 100%; min-height: fit-content; gap: 32px;">
                 <ul class="w-100 d-flex flex-column list-group" style="gap: 16px;">

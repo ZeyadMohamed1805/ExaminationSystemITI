@@ -126,6 +126,7 @@ namespace ExaminationSystemITI.Controllers
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
             var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable();
             ViewBag.StudentId = students.First().Id;
+            ViewBag.StudentName = students.First().FirstName;
             var viewModel = _course.FindStudentActiveExams(Id);
             return View(viewModel);
         }
@@ -135,6 +136,7 @@ namespace ExaminationSystemITI.Controllers
             var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
             var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable();
             ViewBag.StudentId = students.First().Id;
+            ViewBag.StudentName = students.First().FirstName;
             var viewModel = _course.FindStudentDoneExams(Id);
             return View(viewModel);
         }

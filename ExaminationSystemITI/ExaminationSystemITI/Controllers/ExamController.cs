@@ -20,12 +20,14 @@ namespace ExaminationSystemITI.Controllers
         IExamService _examService;
         ICourseService _courseService;
         IQuestionInterface _QuestionServices;
-        public ExamController(ApplicationDbContext dbcontext, IExamService examService, ICourseService courseService, IQuestionInterface questionServices)
+        IStudentService _student;
+        public ExamController(ApplicationDbContext dbcontext, IExamService examService, ICourseService courseService, IQuestionInterface questionServices, IStudentService student)
         {
             _dbcontext = dbcontext;
             _examService = examService;
             _courseService = courseService;
             _QuestionServices = questionServices;
+            _student = student;
         }
 
         public IActionResult Read(int Id)
@@ -191,6 +193,11 @@ namespace ExaminationSystemITI.Controllers
 
             _dbcontext.SaveChanges();
 
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            var students = _student.GetAll().Where(s => s.Email == userEmail).AsQueryable();
+            ViewBag.StudentId = students.First().Id;
+            ViewBag.StudentName = students.First().FirstName;
+
             return View("SubmitAnswers");
         }
 
@@ -207,6 +214,7 @@ namespace ExaminationSystemITI.Controllers
                 })
                 .Distinct()
                 .ToList();
+            ViewBag.StudentId = studentId;
             return View(examsWithGrades);
         }
         

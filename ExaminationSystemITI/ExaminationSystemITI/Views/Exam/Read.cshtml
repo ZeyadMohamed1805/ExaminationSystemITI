@@ -59,7 +59,7 @@
             @if (Model.Count() == 0)
             {
                 <tr>
-                    <td colspan="8">No Courses Exist!</td>
+                    <td colspan="8">No Exams Exist!</td>
                 </tr>
             }
             else
@@ -74,8 +74,6 @@
                         <td>@exam.TotalMarks</td>
                         <td>@exam.Course.Name</td>                      
                         <td> 
-                            <a asp-controller="Exam" asp-action="Display" asp-route-id="@exam.ID" class="btn btn-primary">Enter</a>
-
                             <a asp-action="Edit" asp-controller="Exam" asp-route-id="@exam.ID" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
