@@ -1,6 +1,11 @@
 @using ExaminationSystemITI.Abstractions.Enums
 @using ExaminationSystemITI.Models.Tables
-@model IEnumerable<Question>
+@using ExaminationSystemITI.Models.ViewModels
+
+@model questioncourses
+
+
+
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
@@ -56,7 +61,7 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model.Count() == 0)
+            @if (Model.Questions.Count() == 0)
             {
                 <tr>
                     <td colspan="7">No Student Exist!!</td>
@@ -64,7 +69,7 @@
             }
             else
             {
-                foreach (var item in Model)
+                foreach (var item in Model.Questions)
                 {
                     <tr>
                         <td>@item.Id</td>

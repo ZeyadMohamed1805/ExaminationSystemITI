@@ -1,6 +1,7 @@
 ﻿@using ExaminationSystemITI.Abstractions.Enums
 @using ExaminationSystemITI.Models.Tables
-@model List<Exam>
+@using ExaminationSystemITI.Models.ViewModels
+@model ExamCourses
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "_DashboardLayout";
@@ -56,7 +57,7 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model.Count() == 0)
+            @if (Model.Exams.Count() == 0)
             {
                 <tr>
                     <td colspan="8">No Courses Exist!</td>
@@ -64,7 +65,7 @@
             }
             else
             {
-                foreach (var exam in Model)
+                foreach (var exam in Model.Exams)
                 {
                   <tr>    
                         <td>@exam.ID</td>
@@ -72,7 +73,7 @@
                         <td>@exam.Date.ToString("yyyy-MM-dd")</td>
                         <td>@exam.QCount</td>
                         <td>@exam.TotalMarks</td>
-                        <td>@exam.Course.Name</td>                      
+                        <td>@exam.Course.Name</td>
                         <td> 
                             <a asp-controller="Exam" asp-action="Display" asp-route-id="@exam.ID" class="btn btn-primary">Enter</a>
 

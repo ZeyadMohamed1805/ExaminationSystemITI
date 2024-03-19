@@ -1,4 +1,5 @@
-﻿@using ExaminationSystemITI.Models.Tables
+﻿@using ExaminationSystemITI.Abstractions.Enums
+@using ExaminationSystemITI.Models.Tables
 @model Exam
 @{
     ViewData["Title"] = "Create";
@@ -34,7 +35,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="CourseID" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Course</label>
-                <select asp-for="CourseID" asp-items="@(new SelectList(ViewBag.Courses,"Id", "Name"))" class="form-control"></select>
+                @if (User.IsInRole(ERole.Instructor.ToString()))
+                {
+                    <select asp-for="CourseID" asp-items="@(new SelectList(ViewBag.insCourses,"Id", "Name"))" class="form-control"></select>
+                }
+                else
+                {
+                    <select asp-for="CourseID" asp-items="@(new SelectList(ViewBag.Courses,"Id", "Name"))" class="form-control"></select>
+                }
+             
                 <span asp-validation-for="CourseID" class="text-danger"></span>
             </div>
 
