@@ -82,8 +82,8 @@ namespace ExaminationSystemITI.Services
         public ICollection<StudentExamCardViewModel> FindStudentActiveExams(int Id)
         {
             var viewModel = new List<StudentExamCardViewModel>();
-
-            var exams = _context.Exams.FromSqlInterpolated($"SELECT EXAMS.ID, EXAMS.DURATION, EXAMS.DATE, EXAMS.QCOUNT, EXAMS.TOTALMARKS, EXAMS.COURSEID FROM EXAMS JOIN COURSES ON COURSES.ID = EXAMS.COURSEID WHERE EXAMS.ID NOT IN ( SELECT DISTINCT EXAMID FROM StudentExamQuestions WHERE StudentId = {Id} )").ToList();
+            //join with sc table not c . Join with st id also not only c id. 
+            var exams = _context.Exams.FromSqlInterpolated($"SELECT EXAMS.ID, EXAMS.DURATION, EXAMS.DATE, EXAMS.QCOUNT, EXAMS.TOTALMARKS, EXAMS.COURSEID FROM EXAMS JOIN StudentCOURSES ON StudentCOURSES.CourseId = EXAMS.COURSEID WHERE StudentCOURSES.StudentId={Id} AND EXAMS.ID NOT IN ( SELECT DISTINCT EXAMID FROM StudentExamQuestions WHERE StudentId = {Id} )").ToList();
             for (int index = 0; index < exams.Count(); index++)
             {
                 var model = new StudentExamCardViewModel();

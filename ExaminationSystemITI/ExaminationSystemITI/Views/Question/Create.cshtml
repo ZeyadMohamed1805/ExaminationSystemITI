@@ -1,4 +1,5 @@
-﻿@using ExaminationSystemITI.Models.Tables
+﻿@using ExaminationSystemITI.Abstractions.Enums
+@using ExaminationSystemITI.Models.Tables
 @model Question
 
 
@@ -36,9 +37,19 @@
             </div>
             <div class="form-group">
                 <label class="control-label poppins-semibold mb-1" style="color: var(--custom-black)">Select Course</label>
-                <select asp-for="CourseId" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))" class="form-control">
-                    <option value="">-- Select Course --</option>
-                </select>
+                @if (User.IsInRole(ERole.Instructor.ToString()))
+                {
+                    <select asp-for="CourseId" asp-items="@(new SelectList(ViewBag.insCourses, "Id", "Name"))" class="form-control">
+                        <option value="">-- Select Course --</option>
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="CourseId" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))" class="form-control">
+                        <option value="">-- Select Course --</option>
+                    </select>
+                }
+               
                 <span asp-validation-for="CourseId" class="text-danger"></span>
             </div>
 

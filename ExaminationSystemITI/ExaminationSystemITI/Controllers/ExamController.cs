@@ -59,10 +59,24 @@ namespace ExaminationSystemITI.Controllers
 
                 return View(exams);
             }
+            else if (User.IsInRole(ERole.Instructor.ToString()))
+            {
+                string insEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+                var model = new ExamCourses();
+
+
+                var exams = _dbcontext.Exams.FromSqlInterpolated($"SELECT\r\n    e.*\r\nFROM\r\n    Exams e\r\nJOIN\r\n    Courses c ON e.CourseID = c.ID\r\nJOIN\r\n    CourseInstructor ic ON c.ID = ic.CoursesID\r\nJOIN\r\n    Instructors i ON ic.InstructorsID = i.ID\r\nWHERE\r\n    i.Email = {insEmail};\r\n").ToList();
+                var course = _dbcontext.Courses.FromSqlInterpolated($"SELECT C.* FROM COURSES C JOIN Courseinstructor I ON C.ID=I.CoursesId JOIN INSTRUCTORS INS ON INS.EMAIL ={insEmail}").ToList();
+                model.Exams = exams;
+                model.Courses = course;
+                return View(model);
+            }
             else
             {
                 var Exams = _dbcontext.Exams.Include(e => e.Course).ToList();
-                return View(Exams);
+                var model = new ExamCourses();
+                model.Exams = Exams;
+                return View(model);
             }
            
         }
@@ -75,6 +89,8 @@ namespace ExaminationSystemITI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            string insEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            ViewBag.insCourses = _dbcontext.Courses.FromSqlInterpolated($"SELECT distinct C.* FROM COURSES C JOIN Courseinstructor I ON C.ID=I.CoursesId JOIN INSTRUCTORS INS ON INS.EMAIL ={insEmail}");
             ViewBag.Courses = _dbcontext.Courses.ToList();
             ViewBag.Questions = _dbcontext.Questions.ToList();
             return View();
@@ -172,7 +188,7 @@ namespace ExaminationSystemITI.Controllers
             ViewBag.CorrectCount = correctCount;
             ViewBag.TotalQuestions = totalQuestions;
             ViewBag.Percentage = percentage;
-
+            ViewBag.StudentId = studentId;
             studentCourse.Grade = percentage;
 
             foreach (var answer in model.Answers)
