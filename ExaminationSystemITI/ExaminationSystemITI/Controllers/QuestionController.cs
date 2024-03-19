@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using ExaminationSystemITI.Abstractions.Interfaces;
+using ExaminationSystemITI.Models.ViewModels;
+using System.Security.Claims;
 
 namespace ExaminationSystemITI.Controllers
 {
@@ -24,14 +26,33 @@ namespace ExaminationSystemITI.Controllers
 
         public IActionResult Read()
         {
-            var questions=_questionService.GetQuestions();
-           
-            return View(questions);
+            if (User.IsInRole(ERole.Instructor.ToString()))
+            {
+                string insEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+                var model = new questioncourses();
+
+
+                var questions = _context.Questions.FromSqlInterpolated($"SELECT\r\n    e.*\r\nFROM\r\n    QUESTIONS e\r\nJOIN\r\n    Courses c ON e.CourseID = c.ID\r\nJOIN\r\n    CourseInstructor ic ON c.ID = ic.CoursesID\r\nJOIN\r\n    Instructors i ON ic.InstructorsID = i.ID\r\nWHERE\r\n    i.Email = {insEmail};\r\n").ToList();
+                var course = _context.Courses.FromSqlInterpolated($"SELECT C.* FROM COURSES C JOIN Courseinstructor I ON C.ID=I.CoursesId JOIN INSTRUCTORS INS ON INS.EMAIL ={insEmail}").ToList();
+                model.Questions = questions;
+                model.Courses = course;
+                return View(model);
+            }
+            else
+            {
+                var questions = _questionService.GetQuestions();
+                var model = new questioncourses();
+                model.Questions = questions;
+                return View(model);
+            }
+            
         }
 
         [HttpGet]
         public IActionResult Create()
         {
+            string insEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+            ViewBag.insCourses = _context.Courses.FromSqlInterpolated($"SELECT distinct C.* FROM COURSES C JOIN Courseinstructor I ON C.ID=I.CoursesId JOIN INSTRUCTORS INS ON INS.EMAIL ={insEmail}");
             ViewBag.Courses = _context.Courses.ToList();
             return View();
         }
