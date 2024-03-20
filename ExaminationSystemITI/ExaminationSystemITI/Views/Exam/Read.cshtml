@@ -74,15 +74,11 @@
                         <td>@exam.QCount</td>
                         <td>@exam.TotalMarks</td>
                         <td>@exam.Course.Name</td>
-                        <td> 
+                        <td style="white-space: nowrap;">
                             <a asp-action="Edit" asp-controller="Exam" asp-route-id="@exam.ID" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
-                          @*   <a asp-action="Delete" asp-controller="Exam" asp-route-id="@exam.ID" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
-                                Delete
-                            </a> *@
                             <a href="#" onclick="confirmDelete('@exam.ID')" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
-
                         </td>
                    </tr>
                     

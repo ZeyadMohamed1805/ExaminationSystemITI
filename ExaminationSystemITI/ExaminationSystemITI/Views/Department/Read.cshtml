@@ -67,15 +67,11 @@
                             <td>@department.Name</td>
                             <td>@department.Branch</td>
                             <td>@supervisors.Find(supervisor => supervisor.ID == department.SP).FirstName</td>
-                            <td>
-                                <a asp-action="Edit" asp-controller="Department" asp-route-id="@department.Id" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
-                                    Update
-                                </a>
-                          @*       <a asp-action="Delete" asp-controller="Department" asp-route-id="@department.Id" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
-                                    Delete
-                                </a> *@
-                            <a href="#" onclick="confirmDelete('@department.Id')" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
-
+                                <td style="white-space: nowrap;">
+                                    <a asp-action="Edit" asp-controller="Department" asp-route-id="@department.Id" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                                        Update
+                                    </a>
+                                <a href="#" onclick="confirmDelete('@department.Id')" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
                             </td>
                         </tr>
                     }

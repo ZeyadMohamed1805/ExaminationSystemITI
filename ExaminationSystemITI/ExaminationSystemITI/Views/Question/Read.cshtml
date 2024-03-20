@@ -57,7 +57,7 @@
                 <th>Title</th>
                 <th>Correct Answer</th>
                 <th>Course</th>
-                <th>Options</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -76,16 +76,12 @@
                         <td>@item.Type</td>
                         <td>@item.Title</td>
                         <td>@item.CorrectAnswer</td>             
-                        <td>@item.Course.Name</td>  
-                        <td>
+                        <td>@item.Course.Name</td>
+                        <td style="white-space: nowrap;">
                             <a asp-action="Edit" asp-controller="Question" asp-route-id="@item.Id" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
-                         @*    <a asp-action="Delete" asp-controller="Question" asp-route-id="@item.Id" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
-                                Delete
-                            </a> *@
                             <a href="#" onclick="confirmDelete('@item.Id')" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
-
                         </td> 
                     </tr>
                 }

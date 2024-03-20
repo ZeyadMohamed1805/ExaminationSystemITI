@@ -58,16 +58,13 @@
                     <tr>
                         <td>@choice.Id</td>
                         <td>@choice.Text</td>
-                        <td>
+                        <td style="white-space: nowrap;">
                             <a asp-action="Edit" asp-controller="Choice" asp-route-id="@choice.Id" asp-route-text="@choice.Text" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
                             <a asp-action="Delete" asp-controller="Choice" asp-route-id="@choice.Id" asp-route-text="@choice.Text" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;" onclick="return confirm('Are you sure?')">
                                 Delete
                             </a>
-
-                         @*    <a href="#" onclick="return confirmDelete('@choice.Id',@choice.Text)" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
- *@
                         </td>
                     </tr>
                 }

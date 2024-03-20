@@ -39,7 +39,7 @@
             <tr>
                 <th>Email</th>
                 <th>Password</th>
-                <th>Options</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -56,11 +56,10 @@
                     <tr>
                         <td>@item.Email</td>
                         <td>@item.Password</td>
-                        <td>
+                        <td style="white-space: nowrap;">
                             <a asp-action="Edit" asp-controller="User" asp-route-email="@item.Email" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
                                 Update
                             </a>
-
                         </td>
                     </tr>
                 }
