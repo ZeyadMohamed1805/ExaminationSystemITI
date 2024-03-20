@@ -153,6 +153,7 @@ namespace ExaminationSystemITI.Controllers
             Debug.WriteLine("asasa");
             ViewBag.Email = studentEmail;
             ViewBag.ExamId = ExamId;
+            ViewBag.CourseName = _courseService.FindCourse(questions[0].CourseId).Name;
             return View(questions);
         }
 

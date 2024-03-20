@@ -82,7 +82,10 @@
                         @foreach (var course in Model)
                             @if (course.Student.Id == item.Student.Id && course.Courses.Count() > 0)
                                 @foreach (var c in course.Courses)
-                                    @c.Name
+                                {
+                                        <span>@c.Name,</span>
+                                }
+
 
 
                     </td>
