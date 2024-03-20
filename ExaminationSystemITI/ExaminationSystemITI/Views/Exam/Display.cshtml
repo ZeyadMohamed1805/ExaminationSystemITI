@@ -7,21 +7,20 @@
     var course = ViewBag.CourseName;
 }
 
-<header class="w-100 custom-wrapper d-flex justify-content-center align-items-center shadow" style="background-color: var(--custom-white); height: 120px;">
+<header class="w-100 custom-wrapper d-flex flex-column justify-content-center align-items-center shadow" style="background-color: var(--custom-white); position: fixed; top: 0;">
     <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 120px;" alt="ITI Logo" />
-</header>
-
-<section class="container" style="padding: 16px;">
-
-    <div class="progress">
+    <div class="progress w-100" style="margin: 40px 0 20px 0;">
         <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%; background-color: var(--custom-red); color: var(--custom-white)" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
     </div>
+</header>
 
-    <div class="text-center my-4">
-        <h1 class="poppins-bold" style="color:var(--custom-black);">@course Exam</h1>
+<section style="margin-top: 280px;">
+    <div class="text-center d-flex justify-content-center w-100">
+        <h1 class="poppins-bold" style="text-align: center; color:var(--custom-black);">
+            <span>@course Exam</span>
+        </h1>
     </div>
-
-    <form method="post" action="/Exam/SubmitAnswers" class="mb-4">
+    <form method="post" action="/Exam/SubmitAnswers" class="mb-4" style="padding: 16px">
         <input type="hidden" name="StudentEmail" value="@ViewBag.Email" />
         <input type="hidden" name="CourseId" value="@Model.First().CourseId" />
         <input type="hidden" name="ExamId" value="@ViewBag.ExamId" />
