@@ -24,7 +24,7 @@ namespace ExaminationSystemITI.Services
 
         public List<Course> GetStudentCourses(int Id)
         {
-            var courses = _context.Courses.FromSqlInterpolated($"SELECT COURSES.ID, COURSES.NAME, COURSES.GRADE FROM COURSES JOIN STUDENTCOURSES ON COURSES.ID = STUDENTCOURSES.COURSEID WHERE STUDENTCOURSES.STUDENTID = {Id}").ToList();
+            var courses = _context.Courses.FromSqlInterpolated($"SELECT COURSES.ID, COURSES.NAME, COURSES.GRADE, COURSES.DESCRIPTION FROM COURSES JOIN STUDENTCOURSES ON COURSES.ID = STUDENTCOURSES.COURSEID WHERE STUDENTCOURSES.STUDENTID = {Id}").ToList();
             return courses;
         }
      

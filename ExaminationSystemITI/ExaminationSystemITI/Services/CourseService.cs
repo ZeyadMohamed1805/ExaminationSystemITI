@@ -36,12 +36,12 @@ namespace ExaminationSystemITI.Services
 
         public void EditCourse(Course course)
         {
-            _context.Database.ExecuteSqlInterpolated($"EXEC EditCourseById {course.Id},{course.Name},{course.Grade}");
+            _context.Database.ExecuteSqlInterpolated($"EXEC EditCourseById {course.Id},{course.Name},{course.Grade}, {course.Description}");
         }
 
         public void InsertCourse(Course course)
         {
-            _context.Database.ExecuteSqlInterpolated($"EXEC InsertCourse {course.Name},{course.Grade}");
+            _context.Database.ExecuteSqlInterpolated($"EXEC InsertCourse {course.Name}, {course.Description}, {course.Grade}");
         }
 
         public Course? FindCourse(int Id)
@@ -126,7 +126,7 @@ namespace ExaminationSystemITI.Services
                     model.Exam = exams[index];
                     model.Course = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES WHERE ID IN (SELECT COURSEID FROM EXAMS WHERE ID = {model.Exam.ID})").ToList()[0];
                     model.Instructors = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS JOIN COURSEINSTRUCTOR ON INSTRUCTORS.ID = COURSEINSTRUCTOR.INSTRUCTORSID WHERE COURSEINSTRUCTOR.COURSESID = {model.Course.Id}").ToList();
-                    model.StudentCourses = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {model.Course.Id}").ToList();
+                    model.StudentCourses = _context.StudentCourses.FromSqlInterpolated($"SELECT * FROM STUDENTCOURSES WHERE COURSEID = {model.Course.Id} AND STUDENTID = {Id}").ToList();
                 }
 
                 viewModel.Add(model);

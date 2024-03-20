@@ -20,6 +20,11 @@
                 <span asp-validation-for="Course.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Course.Description" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Course.Description" class="form-control" />
+                <span asp-validation-for="Course.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Course.Grade" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
                 <input asp-for="Course.Grade" class="form-control" />
                 <span asp-validation-for="Course.Grade" class="text-danger"></span>

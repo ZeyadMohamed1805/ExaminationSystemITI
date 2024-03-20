@@ -21,13 +21,15 @@ namespace ExaminationSystemITI.Controllers
         ICourseService _courseService;
         IQuestionInterface _QuestionServices;
         IStudentService _student;
-        public ExamController(ApplicationDbContext dbcontext, IExamService examService, ICourseService courseService, IQuestionInterface questionServices, IStudentService student)
+        IInstructorService _instructor;
+        public ExamController(ApplicationDbContext dbcontext, IExamService examService, ICourseService courseService, IQuestionInterface questionServices, IStudentService student, IInstructorService instructor)
         {
             _dbcontext = dbcontext;
             _examService = examService;
             _courseService = courseService;
             _QuestionServices = questionServices;
             _student = student;
+            _instructor = instructor;
         }
 
         public IActionResult Read(int Id)
@@ -92,7 +94,8 @@ namespace ExaminationSystemITI.Controllers
         public IActionResult Create()
         {
             string insEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            ViewBag.insCourses = _dbcontext.Courses.FromSqlInterpolated($"SELECT distinct C.* FROM COURSES C JOIN Courseinstructor I ON C.ID=I.CoursesId JOIN INSTRUCTORS INS ON INS.EMAIL ={insEmail}");
+            Instructor instructor = _dbcontext.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS WHERE EMAIL = {insEmail}").ToList()[0];
+            ViewBag.insCourses = _dbcontext.Courses.FromSqlInterpolated($"SELECT * FROM COURSES JOIN COURSEINSTRUCTOR ON COURSES.ID = COURSEINSTRUCTOR.COURSESID WHERE COURSEINSTRUCTOR.INSTRUCTORSID = {instructor.ID}").ToList();
             ViewBag.Courses = _dbcontext.Courses.ToList();
             ViewBag.Questions = _dbcontext.Questions.ToList();
             return View();

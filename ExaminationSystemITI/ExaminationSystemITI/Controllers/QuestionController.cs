@@ -52,7 +52,8 @@ namespace ExaminationSystemITI.Controllers
         public IActionResult Create()
         {
             string insEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-            ViewBag.insCourses = _context.Courses.FromSqlInterpolated($"SELECT distinct C.* FROM COURSES C JOIN Courseinstructor I ON C.ID=I.CoursesId JOIN INSTRUCTORS INS ON INS.EMAIL ={insEmail}");
+            Instructor instructor = _context.Instructors.FromSqlInterpolated($"SELECT * FROM INSTRUCTORS WHERE EMAIL = {insEmail}").ToList()[0];
+            ViewBag.insCourses = _context.Courses.FromSqlInterpolated($"SELECT * FROM COURSES JOIN COURSEINSTRUCTOR ON COURSES.ID = COURSEINSTRUCTOR.COURSESID WHERE COURSEINSTRUCTOR.INSTRUCTORSID = {instructor.ID}").ToList();
             ViewBag.Courses = _context.Courses.ToList();
             return View();
         }
