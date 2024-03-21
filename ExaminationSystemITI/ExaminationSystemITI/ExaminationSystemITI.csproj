@@ -25,10 +25,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+<<<<<<< HEAD
     <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.WebForms" Version="150.1620.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="ReportViewerForMvc14" Version="140.1000.523" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+=======
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+>>>>>>> ae7b927146dd60c13461467735145c160d6a29b8
   </ItemGroup>
 
   <ItemGroup>

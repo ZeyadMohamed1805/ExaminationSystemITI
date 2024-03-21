@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Login Page";
+}
+
+<style>
+    @@media (max-width: 1000px) {
+        .side-form {
+            width: 100%;
+            height: fit-content !important;
+            padding: 48px 24px !important;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px;
+        }
+    }
+
+    @@media (max-width: 400px) {
+        .side-form {
+            min-width: 100% !important;
+            max-width: 100% !important;
+            width: 100%;
+            height: 100vh !important;
+            position: absolute;
+        }
+    }
+</style>
+
+
+<div style="display:flex;width: 100%; height: 100vh;">
+
+    <div style=" background-image:url(' /assets/images/backgrounds/login.svg'); background-size: cover; background-position: bottom; background-repeat: no-repeat;width: 100%; height: 100vh;"></div>
+
+
+
+    <div class="shadow-lg side-form d-flex justify-content-center align-items-center" style="background-color:var(--custom-white); width: 400px; height: 100vh; padding: 80px 24px; background-color: var(--custom-white); z-index: 1;">
+
+        <div class="d-flex flex-column w-100 " style="gap:40px;align-items:center;">
+
+            <img src="~/assets/images/logos/logo.svg" class="w-100" style="max-width: 120px;" alt="ITI Logo" />
+
+            <form method="post" action="/Account/Login" class="d-flex flex-column w-100" style="gap:16px;gap:16px;">
+                <input type="text" placeholder="Email" name="Email" class="form-control" />
+                <input type="password" placeholder="Password" name="Password" class="form-control" />
+                <input type="submit" value="Login" class="submit-button form-control" style="background-color:var(--custom-red);color:var(--custom-white);" />
+
+            </form>
+
+        </div>
+
+    </div>
+

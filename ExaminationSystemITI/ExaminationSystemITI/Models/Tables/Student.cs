@@ -24,5 +24,11 @@ namespace ExaminationSystemITI.Models.Tables
         public string Email { get; set; }
         [ForeignKey("Email")]
         public User User { get; set; }
+
+        public Student()
+        {
+           
+            StudentCourses = new List<StudentCourse>();
+        }
     }
 }

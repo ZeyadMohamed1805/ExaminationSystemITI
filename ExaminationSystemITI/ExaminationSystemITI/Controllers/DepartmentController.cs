@@ -8,27 +8,31 @@ namespace ExaminationSystemITI.Controllers
     public class DepartmentController : Controller
     {
         IDepartmentService _department;
-        public DepartmentController(IDepartmentService department)
-        { 
-           _department = department;
+        IInstructorService _instructor;
+        public DepartmentController(IDepartmentService department, IInstructorService instructor)
+        {
+            _department = department;
+            _instructor = instructor;
         }
 
-        public IActionResult GetDep()
+        public IActionResult Read()
         {
+            ViewBag.Supervisors = _instructor.GetInstructors();
             var departments = _department.GetDepartments();
             return View(departments);
         }
         [HttpGet]
-        public IActionResult AddDep()
+        public IActionResult Create()
         {
+            ViewBag.Supervisors = _instructor.GetActiveSupervisors();
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddDep(Department department)
+        public IActionResult Create(Department department)
         {
             _department.InsertDepartment(department);
-            return RedirectToAction("GetDep");
+            return RedirectToAction("Read");
         }
 
         [HttpGet]
@@ -42,14 +46,15 @@ namespace ExaminationSystemITI.Controllers
         public IActionResult Edit(Department dep)
         {
             _department.EditDepartment(dep);
-            return RedirectToAction("GetDep");
+            return RedirectToAction("Read");
         }
 
-        [HttpPost]
-        public IActionResult Delete(Department dep)
+ 
+        public IActionResult Delete(int id)
         {
-            _department.DeleteDepartment(dep.Id);
-            return RedirectToAction("GetDep");
+            _department.DeleteDepartment(id);
+             return RedirectToAction("Read");
+
         }
 
 

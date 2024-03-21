@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "reports";
+    Layout = "_DashboardLayout";
+}
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: #333; 
+    }
+
+    .btn-primary {
+        background-color: #007bff; 
+        border-color: #007bff;
+        color: #fff; 
+        padding: 10px 20px; 
+        font-size: 16px;
+        text-transform: uppercase;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; 
+            border-color: #0056b3;
+        }
+
+    iframe {
+        width: 1024px;
+        height: 1060px;
+        border: none;
+    }
+</style>
+
+
+<h1 class="poppins-bold" style="color: var(--custom-black)">Reports</h1>
+<hr style="backround-color: var(--custom-black); color: var(--custom-black); height: 1px;" />
+
+<div class="w-100 d-flex flex-wrap" style="gap: 16px;border: solid 1px var(--custom-black);">
+    <iframe title="ProjectPBI" style="width: 100%; aspect-ratio: 5 / 4;" src="https://app.powerbi.com/view?r=eyJrIjoiNzExYzI1YzgtNTU4OS00OWYwLThjYWUtZTViOTk1ZWUzM2Q1IiwidCI6ImVhZjYyNGM4LWEwYzQtNDE5NS04N2QyLTQ0M2U1ZDc1MTZjZCIsImMiOjh9&pageName=ReportSection" frameborder="0" allowFullScreen="true"></iframe>
+</div>
+

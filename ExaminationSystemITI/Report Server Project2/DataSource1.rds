@@ -3,6 +3,7 @@
   <ConnectionProperties>
     <Extension>SQL</Extension>
     <ConnectString>server= . ;database=ExaminationDB;</ConnectString>
+    <IntegratedSecurity>true</IntegratedSecurity>
   </ConnectionProperties>
   <DataSourceID>9c1d6401-1fb3-46c0-9dc6-88b5a7ec6a98</DataSourceID>
 </RptDataSource>

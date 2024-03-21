@@ -1,0 +1,113 @@
+﻿@using System.Collections
+@using ExaminationSystemITI.Models.ViewModels
+@model List<InstructorCoursesViewModel>
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_DashboardLayout";
+}
+<seciton class="w-100 d-flex flex-column" style="gap: 16px;">
+    <select id="navigate" class="form-select w-100">
+        <option class="form-control" value="/admin/read" selected>Admin</option>
+        <option class="form-control" value="/choice/read">Choice</option>
+        <option class="form-control" value="/course/read">Course</option>
+        <option class="form-control" value="/department/read">Department</option>
+        <option class="form-control" value="/exam/read">Exam</option>
+        <option class="form-control" value="/instructor/read" selected>Instructor</option>
+        <option class="form-control" value="/question/read">Question</option>
+        <option class="form-control" value="/student/read">Student</option>
+        <option class="form-control" value="/topic/read">Topic</option>
+        <option class="form-control" value="/user/read">User</option>
+    </select>
+    <a asp-action="create" asp-controller="Instructor" class="btn btn-success poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;">
+        Create
+    </a>
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this Instructor?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a id="deleteInstructorLink" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="get-data table table-border table-hover">
+        <thead>
+            <tr>
+                <th>Instructor ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Salary</th>
+                <th>Address</th>
+                <th>Courses</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @if(Model.Count()==0)
+            {
+                <tr>
+                    <td colspan="9">No Instructors Exist!</td>
+                </tr>
+            }else
+            {
+                @foreach (var instructor in Model)
+                {
+                    <tr>
+                        <td>@instructor.Instructor.ID</td>
+                        <td>@instructor.Instructor.FirstName</td>
+                        <td>@instructor.Instructor.LastName</td>
+                        <td>@instructor.Instructor.Age</td>
+                        <td>@instructor.Instructor.Salary</td>
+                        <td>@instructor.Instructor.Address</td>
+                        <td>
+                            @foreach( var course in Model )
+                                @if( course.Instructor.ID == instructor.Instructor.ID && course.Courses.Count() > 0 )
+                                    @foreach( var c in course.Courses )
+                                        @c.Name
+                        </td>
+                        <td>@instructor.Instructor.Email</td>
+                        <td style="white-space: nowrap;">
+                            <a asp-action="Edit" asp-controller="Instructor" asp-route-id="@instructor.Instructor.ID" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                                Update
+                            </a>
+                            <a href="#" onclick="confirmDelete('@instructor.Instructor.ID')" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+    </table>
+    <script>
+        // Function to handle deletion confirmation
+        function confirmDelete(id) {
+            document.getElementById('deleteInstructorLink').href = '/Instructor/Delete/' + id;
+            $('#deleteConfirmationModal').modal('show');
+        }
+
+        var selectElement = document.getElementById('navigate');
+
+        selectElement.addEventListener('change', function () {
+            var selectedValue = selectElement.value;
+
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        });
+    </script>
+</seciton>

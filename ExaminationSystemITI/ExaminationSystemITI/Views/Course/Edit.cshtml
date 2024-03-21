@@ -1,24 +1,40 @@
 ﻿@using ExaminationSystemITI.Models.Tables
 @model ExaminationSystemITI.Models.Tables.Course
 
-<h1>Edit Course</h1>
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_DashboardLayout";
+}
 
-<form action="/Course/Edit" method="post">
-    <div class="form-group">
-        <label for="Id">ID</label>
-        <input type="text" id="Id" name="Id" class="form-control" value="@Model.Id" readonly />
-    </div>
+<h1 class="poppins-bold" style="color: var(--custom-black)">Edit Course</h1>
+<hr style="backround-color: var(--custom-black); color: var(--custom-black); height: 1px;" />
+<div class="row w-100">
+    <div class="col-md-4 w-100">
+        <form method="post" class="d-flex flex-column" style="gap: 16px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
 
-    <div class="form-group">
-        <label for="Name">Name</label>
-        <input type="text" id="Name" name="Name" class="form-control" value="@Model.Name" />
-    </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Name" value="@Model.Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Description" value="@Model.Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Grade" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Grade" value="@Model.Grade" class="form-control" />
+                <span asp-validation-for="Grade" class="text-danger"></span>
+            </div>
 
-    <div class="form-group">
-        <label for="Grade">Grade</label>
-        <input type="text" id="Grade" name="Grade" class="form-control" value="@Model.Grade" />
-    </div>
+            <div class="form-group w-100 d-flex flex-column" style="margin-top: 8px; gap: 8px;">
+                <input type="submit" value="Edit" class="poppins-semibold w-100 rounded" style="border: none; background-color: var(--custom-red); color: var(--custom-white); padding: 8px 16px;" />
+                <a asp-action="read" asp-controller="course" class="w-100 poppins-semibold rounded" style="background-color: var(--custom-white); color: var(--custom-red);padding: 8px 16px; border: solid 1px var(--custom-red); text-decoration: none; text-align: center;">
+                    Go Back
+                </a>
+            </div>
 
-    <input type="submit" value="SAVE" class="btn btn-primary" />
-    <input type="submit" value="Delete" class="btn btn-danger" asp-action="Delete" asp-controller="Course" />
-</form>
+        </form>

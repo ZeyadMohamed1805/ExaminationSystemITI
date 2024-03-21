@@ -1,30 +1,35 @@
-﻿
-@model Choice
+﻿@using ExaminationSystemITI.Models.Tables
+@model Choice;
+
 @{
     ViewData["Title"] = "Create";
+    Layout = "_DashboardLayout";
 }
 
-<h1>Create</h1>
-<form method="post">
-    <div asp-validation-summary="ModelOnly"></div>
+<h1 class="poppins-bold" style="color: var(--custom-black)">Create Choice</h1>
+<hr style="backround-color: var(--custom-black); color: var(--custom-black); height: 1px;" />
+<div class="row w-100">
+    <div class="col-md-4 w-100">
+        <form method="post" class="d-flex flex-column" style="gap: 16px;">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label poppins-semibold mb-1" style="color: var(--custom-black)"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
 
-    <div class="form-group">
-        <label asp-for="@Model.Text"></label>
-        <input asp-for="@Model.Text" class="form-control" />
-        <span asp-validation-for="@Model.Text"></span>
-
+            <div class="form-group w-100 d-flex flex-column" style="margin-top: 8px; gap: 8px;">
+                <input type="submit" value="Create" class="poppins-semibold w-100 rounded" style="border: none; background-color: var(--custom-red); color: var(--custom-white); padding: 8px 16px;" />
+                <a asp-action="read" asp-controller="choice" class="w-100 poppins-semibold rounded" style="background-color: var(--custom-white); color: var(--custom-red);padding: 8px 16px; border: solid 1px var(--custom-red); text-decoration: none; text-align: center;">
+                    Go Back
+                </a>
+            </div>
+        </form>
     </div>
+</div>
 
-    <div class="form-group">
-        <label asp-for="@Model.QuestionId"></label>
-        <input asp-for="@Model.QuestionId" class="form-control" />
-        <span asp-validation-for="@Model.QuestionId"></span>
-
-    </div>
-
-    <input type="submit" value="Add Choice" class="btn btn-primary" />
-</form>
-
-@section Scripts{
-    <partial src="_ValidationScriptsPartial"></partial>
-}

@@ -9,11 +9,18 @@ namespace ExaminationSystemITI.Models.Tables
         [Required]
         public string Name { get; set; }
         public int Grade { get; set; }
+        public string Description { get; set; }
         public ICollection<Department> Departments { get; set; } = new HashSet<Department>();
         public ICollection<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
         public ICollection<Exam> Exams { get; set; } = new HashSet<Exam>();
         public ICollection<Topic> Topics { get; set; } = new HashSet<Topic>();
-        public ICollection<StudentCourse> CourseStudents { get; set; }
+        public ICollection<StudentCourse> StudentCourses { get; set; }
         public ICollection<Question> Questions { get; set; }
+
+        public Course()
+        {
+
+            StudentCourses = new List<StudentCourse>();
+        }
     }
 }

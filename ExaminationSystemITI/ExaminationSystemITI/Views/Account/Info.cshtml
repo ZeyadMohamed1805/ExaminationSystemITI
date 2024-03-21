@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewData["Title"] = "Info";
+    Layout = "_DashboardLayout";
+}
+
+@model dynamic
+
+<h1 class="poppins-bold" style="color: var(--custom-black)">Account</h1>
+<hr style="backround-color: var(--custom-black); color: var(--custom-black); height: 1px;" />
+
+@if (Model != null)
+{
+    if (Model is Student)
+    {
+        var student = Model as Student;
+       @*  var student = Model as Student;
+        <p>Student Name: @student.FirstName @student.LastName</p>
+        <p>Age: @student.Age</p>
+        <!-- Display other student-specific information --> *@
+        <table class="table table-hover table-bordered" style="color: var(--custom-black)">
+            <tr>
+                <th>First Name</th>
+                <td>@student.FirstName</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>@student.LastName</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>@student.Age</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>@student.Address</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@student.Email</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>@student.Gender</td>
+            </tr>
+        </table>
+    }
+    else if (Model is Instructor)
+    {
+        var instructor = Model as Instructor;
+        @* <p>Instructor Name: @instructor.FirstName @instructor.LastName</p>
+        <p>Age: @instructor.Age</p>
+        <!-- Display other instructor-specific information --> *@
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th>First Name</th>
+                <td>@instructor.FirstName</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>@instructor.LastName</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>@instructor.Age</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>@instructor.Address</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@instructor.Email</td>
+            </tr>
+            
+        </table>
+    }
+    else if (Model is Admin)
+    {
+        var admin = Model as Admin;
+      @*   <p>Admin Name: @admin.FirstName @admin.LastName</p>
+        <p>Age: @admin.Age</p>
+        <!-- Display other admin-specific information --> *@
+
+        <table class="table table-hover table-bordered">
+            <tr>
+                <th>First Name</th>
+                <td>@admin.FirstName</td>
+            </tr>
+            <tr>
+                <th>Last Name</th>
+                <td>@admin.LastName</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>@admin.Age</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>@admin.Address</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@admin.Email</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>@admin.Gender</td>
+            </tr>
+        </table>
+    }
+}
+else
+{
+    <p>No user information found.</p>
+}
+
+

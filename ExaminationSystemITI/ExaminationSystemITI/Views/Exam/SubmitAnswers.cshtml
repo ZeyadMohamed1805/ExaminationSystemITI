@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_DashboardLayout";
+}
+<seciton class="w-100 d-flex flex-column" style="gap: 16px;">
+    <style>
+.result-card {
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateY(50px);
+}
+
+    .result-card.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 result-card">
+                <div class="card shadow">
+                    <div style="background-color:var(--custom-blue)" class="card-header text-center text-white">
+                            <h1 class="fw-bold" style="color:var(--custom-white)">Student Result</h1>
+                    </div>
+                    <div class="card-body d-flex flex-column align-items-center">
+                            <h6 class="text-center fw-semibold">Correct Answers: <span class="font-weight-bold">@ViewBag.CorrectCount</span></h6>
+                            <h6 class="text-center fw-semibold">Total Questions: <span class="font-weight-bold">@ViewBag.TotalQuestions</span></h6>
+                            <h6 class="text-center fw-semibold">Percentage: <span class="font-weight-bold">@ViewBag.Percentage%</span></h6>
+                            <a asp-action="Done" asp-controller="Student" asp-route-id="@ViewBag.StudentId" class="poppins-semibold rounded" style="background-color: var(--custom-red); color: var(--custom-white);padding: 8px 16px; border: solid 1px var(--custom-red); text-decoration: none; text-align: center;">
+                                Home
+                            </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script>
+
+document.addEventListener("DOMContentLoaded", function (event) {
+    var resultCard = document.querySelector('.result-card');
+    resultCard.classList.add('show');
+});
+</script>
+</body>
+</html>
+</seciton>

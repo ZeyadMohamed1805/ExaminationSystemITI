@@ -1,0 +1,109 @@
+﻿@using ExaminationSystemITI.Abstractions.Enums
+@using ExaminationSystemITI.Models.Tables
+@using ExaminationSystemITI.Models.ViewModels
+@model ExamCourses
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_DashboardLayout";
+    bool isAdmin = User.IsInRole(ERole.Admin.ToString());
+}
+
+<seciton class="w-100 d-flex flex-column" style="gap: 16px;">
+  @if (isAdmin)
+  {
+        <select id="navigate" class="form-select w-100">
+        <option class="form-control" value="/admin/read">Admin</option>
+        <option class="form-control" value="/choice/read">Choice</option>
+        <option class="form-control" value="/course/read">Course</option>
+        <option class="form-control" value="/department/read">Department</option>
+        <option class="form-control" value="/exam/read" selected>Exam</option>
+        <option class="form-control" value="/instructor/read">Instructor</option>
+        <option class="form-control" value="/question/read">Question</option>
+        <option class="form-control" value="/student/read">Student</option>
+        <option class="form-control" value="/topic/read">Topic</option>
+        <option class="form-control" value="/user/read">User</option>
+    </select>
+    }
+    <a asp-action="create" asp-controller="Exam" class="btn btn-success poppins-semibold rounded" style="padding: 8px 16px; border: none;text-decoration: none; text-align: center;">
+        Create
+    </a>
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this Exam?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a id="deleteExamLink" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="get-data table table-border table-hover">
+        <thead>
+            <tr>
+                <th>Exam ID</th>
+                <th>Duration (minutes)</th>
+                <th>Date</th>
+                <th>Number of Questions</th>
+                <th>Total Marks</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Exams.Count() == 0)
+            {
+                <tr>
+                    <td colspan="8">No Exams Exist!</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var exam in Model.Exams)
+                {
+                  <tr>    
+                        <td>@exam.ID</td>
+                        <td>@exam.Duration</td>
+                        <td>@exam.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@exam.QCount</td>
+                        <td>@exam.TotalMarks</td>
+                        <td>@exam.Course.Name</td>
+                        <td style="white-space: nowrap;">
+                            <a asp-action="Edit" asp-controller="Exam" asp-route-id="@exam.ID" class="btn btn-primary poppins-semibold rounded" style="padding: 8px 16px; border: none;transition-duration: 0.25s; text-decoration: none; text-align: center;">
+                                Update
+                            </a>
+                            <a href="#" onclick="confirmDelete('@exam.ID')" class="btn btn-danger poppins-semibold rounded" style="padding: 8px 16px; border: none; text-decoration: none; text-align: center;">Delete</a>
+                        </td>
+                   </tr>
+                    
+                }
+            }
+        </tbody>
+    </table>
+    <script>
+        // Function to handle deletion confirmation
+        function confirmDelete(id) {
+            document.getElementById('deleteExamLink').href = '/Exam/Delete/' + id;
+            $('#deleteConfirmationModal').modal('show');
+        }
+
+        var selectElement = document.getElementById('navigate');
+
+        selectElement.addEventListener('change', function () {
+            var selectedValue = selectElement.value;
+
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        });
+    </script>
+</seciton>
+
+           
+

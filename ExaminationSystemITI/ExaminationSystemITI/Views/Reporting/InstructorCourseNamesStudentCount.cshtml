@@ -1,0 +1,59 @@
+﻿@using ExaminationSystemITI.Models.ViewModels
+@model IEnumerable<InstructorCourseNamesStudentCountViewModel>
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_DashboardLayout";
+}
+<seciton class="w-100 d-flex flex-column" style="gap: 16px;">
+    <select id="navigate" class="form-select w-100">
+        <option class="form-control" value="/reporting">Admin</option>
+        <option class="form-control" value="/reporting">Choice</option>
+        <option class="form-control" value="/reporting">Course</option>
+        <option class="form-control" value="/reporting">Department</option>
+        <option class="form-control" value="/reporting">Exam</option>
+        <option class="form-control" value="/reporting">Instructor</option>
+    </select>
+
+    <table class="get-data table table-border table-hover">
+        <thead>
+            <tr>
+                <th>Instructor Id</th>
+                <th>Instructor Name</th>
+                <th>Course Name</th>
+                <th>Student Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() == 0)
+            {
+                <tr>
+                    <td colspan="9">No Courses Exist!!</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.InstructorId</td>
+                        <td>@item.InstructorName</td>
+                        <td>@item.CourseName</td>
+                        <td>@item.StudentCount</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <script>
+        var selectElement = document.getElementById('navigate');
+
+        selectElement.addEventListener('change', function () {
+            var selectedValue = selectElement.value;
+
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
+        });
+    </script>
+</seciton>

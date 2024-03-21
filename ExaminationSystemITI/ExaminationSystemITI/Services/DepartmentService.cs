@@ -22,9 +22,9 @@ namespace ExaminationSystemITI.Services
             return departments;
         }
 
-        public void DeleteDepartment(int insID)
+        public void DeleteDepartment(int id)
         {
-            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC DeleteDepartmentById {insID}");
+            _dbcontext.Database.ExecuteSqlInterpolated($"EXEC DeleteDepartmentById {id}");
         }
 
         public void EditDepartment(Department dep)

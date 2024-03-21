@@ -1,4 +1,5 @@
 ﻿using ExaminationSystemITI.Models.Tables;
+using ExaminationSystemITI.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -20,7 +21,7 @@ namespace ExaminationSystemITI.Database
         {
             modelBuilder
                .Entity<Choice>()
-               .HasKey(a => new { a.Text, a.QuestionId });
+               .HasKey(a => new { a.Text, a.Id });
 
             modelBuilder
                 .Entity<StudentCourse>()
@@ -29,6 +30,10 @@ namespace ExaminationSystemITI.Database
             modelBuilder
                 .Entity<StudentExamQuestion>()
                 .HasKey(c => new { c.StudentId, c.ExamId, c.QuestionId });
+
+         
+
+
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
@@ -67,6 +72,8 @@ namespace ExaminationSystemITI.Database
         public DbSet<StudentExamQuestion> StudentExamQuestions { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<User> Users { get; set; }
+
+       
     }
     
     

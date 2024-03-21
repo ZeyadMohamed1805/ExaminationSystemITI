@@ -1,0 +1,59 @@
+﻿@using ExaminationSystemITI.Models.ViewModels
+@using ExaminationSystemITI.Abstractions.Enums
+
+@model List<StudentExamCardViewModel>;
+
+@{
+    ViewData["Title"] = "Exams";
+    Layout = "_DashboardLayout";
+}
+
+<style>
+    a:hover {
+        opacity: 0.5 !important;
+    }
+</style>
+
+<h1 class="poppins-bold" style="color: var(--custom-black)">Completed Exams</h1>
+<hr style="backround-color: var(--custom-black); color: var(--custom-black); height: 1px;" />
+
+<div class="w-100 d-flex flex-wrap" style="gap: 16px;">
+    @foreach (var card in Model)
+    {
+        <div class="rounded shadow d-flex flex-column justify-content-between w-100" style="gap: 16px; padding: 16px; color: var(--custom-black); max-width: 320px;">
+            <div class="d-flex flex-column">
+                <h2 class="poppins-bold" style="font-size: 24px; color: var(--custom-black)">
+                    @if (card.Course != null)
+                        @card.Course.Name
+
+                </h2>
+                <h3 class="poppins-semibold" style="font-size: 20px; color: var(--custom-black)">
+                    @if (card.Instructors != null)
+                        @foreach (var instructor in card.Instructors)
+                        {
+                            <span>Eng.</span>
+                            <span>@instructor.FirstName</span>
+                            <span>@instructor.LastName</span>
+                        }
+                </h3>
+            </div>
+            <p class="poppins-regular" style="font-size: 16px; color: var(--custom-black)">
+                @card.Course.Description
+            </p>
+            <h4 class="poppins-semibold" style="font-size: 18px; color: var(--custom-black)">
+                Grade: @card.StudentCourses.FirstOrDefault().Grade
+            </h4>
+            <div class="d-flex align-items-center" style="gap: 8px;">
+                <button class="poppins-medium" disabled style="border: none; border-radius: 16px; background-color: var(--custom-white); border: solid 2px var(--custom-red); color: var(--custom-black); padding: 4px 8px; transition-duration: 0.25s;">
+                    @if (card.Exam != null)
+                        @card.Exam.QCount Questions
+                </button>
+                <button class="poppins-medium" disabled style="border: none; border-radius: 16px; background-color: var(--custom-white); border: solid 2px var(--custom-red); color: var(--custom-black); padding: 4px 8px; transition-duration: 0.25s;">
+                    @if (card.Exam != null)
+                        @card.Exam.Duration Minutes
+                </button>
+            </div>
+        </div>
+    }
+</div>
+

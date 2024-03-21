@@ -1,0 +1,96 @@
+﻿@* @using ExaminationSystemITI.Models.Tables
+@model List<Student>
+
+
+
+<h1>Students By DepartmentID</h1>
+
+
+
+
+<form asp-controller="Reporting" asp-action="StudentsByDepartment" method="post">
+    <div class="form-group">
+        <label for="departmentId">Select Department:</label>
+        <select asp-for="departmentId" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name"))" class="form-control">
+            <option value="">-- Select Department --</option>
+        </select>
+    </div>
+     
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+   
+
+
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Address</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.FirstName</td>
+                    <td>@student.LastName</td>
+                    <td>@student.Age</td>
+                    <td>@student.Gender</td>
+                    <td>@student.Address</td>
+
+                </tr>
+            }
+        </tbody>
+    </table> 
+ }
+ *@
+ @using ExaminationSystemITI.Models.Tables;
+ @using ExaminationSystemITI.Models.ViewModels;
+ @model StudentsByDepartmentViewModel
+
+<form asp-controller="Reporting" asp-action="StudentsByDepartment" method="post">
+    <div class="form-group">
+        <label for="departmentId">Select Department:</label>
+        <select asp-for="DepartmentId" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))" class="form-control">
+            <option value="">-- Select Department --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@if (Model.Students != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model.Students)
+            {
+                <tr>
+                    <td>@student.FirstName</td>
+                    <td>@student.LastName</td>
+                    <td>@student.Age</td>
+                    <td>@student.Gender</td>
+                    <td>@student.Address</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
